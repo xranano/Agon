@@ -1,0 +1,11 @@
+[
+  {
+    "id": "prob_001",
+    "category": "ethical_reasoning",
+    "difficulty": "medium",
+    "question": "Placeholder problem. Replace with a verified philosophical or reasoning problem.",
+    "expected_answer": "Placeholder expected answer.",
+    "grading_notes": "Explain what counts as correct and what common mistakes should be penalized."
+  }
+]
+
