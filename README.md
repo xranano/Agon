@@ -92,3 +92,17 @@ Run the pipeline:
 python main.py
 ```
 
+Run the web app:
+
+```bash
+python web_app.py
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000
+```
+
+The debate UI calls `/api/debate` on the local Python server. Keep `OPENAI_API_KEY`
+in `.env`; do not put API keys in `website/index.html`.
