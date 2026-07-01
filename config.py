@@ -1,7 +1,12 @@
 from pathlib import Path
 
-from dotenv import load_dotenv
 import os
+
+try:
+    from dotenv import load_dotenv
+except ModuleNotFoundError:
+    def load_dotenv(*args, **kwargs):
+        return False
 
 
 ROOT_DIR = Path(__file__).resolve().parent
