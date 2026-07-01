@@ -78,22 +78,22 @@ Weakest part:
 
 ### Dataset
 
-- [ ] Replace placeholder `data/problems.json`.
-- [ ] Create 25 challenging problems.
+- [x] Replace placeholder `data/problems.json`.
+- [x] Create 25 challenging problems.
 - [ ] Include multiple categories, for example:
-  - [ ] mathematical/logical reasoning
-  - [ ] physics/scientific reasoning
-  - [ ] logic puzzles/constraint satisfaction
-  - [ ] strategic game theory
-  - [ ] philosophical/ethical reasoning, if kept relevant and verifiable
+  - [x] mathematical/logical reasoning
+  - [x] physics/scientific reasoning
+  - [x] logic puzzles/constraint satisfaction
+  - [x] strategic game theory
+  - [x] philosophical/ethical reasoning, if kept relevant and verifiable
 - [ ] Each problem must include:
-  - [ ] id
-  - [ ] category
-  - [ ] difficulty
-  - [ ] question
-  - [ ] expected answer
-  - [ ] grading notes
-- [ ] Make sure every expected answer is verifiable.
+  - [x] id
+  - [x] category
+  - [x] difficulty
+  - [x] question
+  - [x] expected answer
+  - [x] grading notes
+- [x] Make sure every expected answer is verifiable.
 
 ### Pipeline
 
@@ -124,26 +124,26 @@ Weakest part:
 
 ### Evaluation
 
-- [ ] Implement single-LLM baseline.
-- [ ] Implement simple voting baseline.
-- [ ] Implement full debate evaluation.
-- [ ] Implement metrics:
-  - [ ] overall accuracy
-  - [ ] improvement rate
-  - [ ] consensus rate
-  - [ ] judge accuracy
-- [ ] Save evaluation results as JSON/CSV.
-- [ ] Generate required plots.
-- [ ] Add plots to `results/plots/`.
+- [x] Implement single-LLM baseline.
+- [x] Implement simple voting baseline.
+- [x] Implement full debate evaluation.
+- [x] Implement metrics:
+  - [x] overall accuracy
+  - [x] improvement rate
+  - [x] consensus rate
+  - [x] judge accuracy
+- [x] Save evaluation results as JSON/CSV.
+- [x] Generate required plots.
+- [x] Add plots to `results/plots/`.
 
 ### Notebook
 
-- [ ] Add or complete analysis notebook.
-- [ ] Load final results.
-- [ ] Show metric tables.
-- [ ] Show generated plots.
-- [ ] Explain where debate improved or failed.
-- [ ] Compare against baselines.
+- [x] Add or complete analysis notebook.
+- [x] Load final results.
+- [x] Show metric tables.
+- [x] Show generated plots.
+- [x] Explain where debate improved or failed.
+- [x] Compare against baselines.
 
 ### README
 
@@ -208,14 +208,14 @@ Main responsibility: make the project measurable.
 
 Tasks:
 
-- [ ] Build `data/problems.json` with 25 real problems.
-- [ ] Add expected answers and grading notes.
-- [ ] Implement `evaluation/baseline.py`.
-- [ ] Implement `evaluation/metrics.py`.
-- [ ] Implement `evaluation/plots.py`.
-- [ ] Generate plots into `results/plots/`.
-- [ ] Create/update notebook analysis.
-- [ ] Compare full debate system to baselines.
+- [x] Build `data/problems.json` with 25 real problems.
+- [x] Add expected answers and grading notes.
+- [x] Implement `evaluation/baseline.py`.
+- [x] Implement `evaluation/metrics.py`.
+- [x] Implement `evaluation/plots.py`.
+- [x] Generate plots into `results/plots/`.
+- [x] Create/update notebook analysis.
+- [x] Compare full debate system to baselines.
 
 Estimated project weight: 35%.
 

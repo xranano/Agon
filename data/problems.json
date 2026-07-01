@@ -1,11 +1,256 @@
-[
+{
+  "categories": [
+    {
+      "id": "mathematical_logical_reasoning",
+      "name": "Mathematical / logical reasoning",
+      "problem_ids": ["prob_001", "prob_002", "prob_003", "prob_004", "prob_005"]
+    },
+    {
+      "id": "physics_scientific_reasoning",
+      "name": "Physics / scientific reasoning",
+      "problem_ids": ["prob_006", "prob_007", "prob_008", "prob_009", "prob_010"]
+    },
+    {
+      "id": "logic_puzzle_constraint_satisfaction",
+      "name": "Logic puzzles / constraint satisfaction",
+      "problem_ids": ["prob_011", "prob_012", "prob_013", "prob_014", "prob_015"]
+    },
+    {
+      "id": "strategic_game_theory_reasoning",
+      "name": "Strategic / game-theory reasoning",
+      "problem_ids": ["prob_016", "prob_017", "prob_018", "prob_019", "prob_020"]
+    },
+    {
+      "id": "philosophical_ethical_reasoning",
+      "name": "Philosophical / ethical reasoning",
+      "problem_ids": ["prob_021", "prob_022", "prob_023", "prob_024", "prob_025"]
+    }
+  ],
+  "problems": [
   {
     "id": "prob_001",
-    "category": "ethical_reasoning",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "question": "A jacket costs $80. The store applies a 25% discount, then charges 10% sales tax on the discounted price. What is the final price?",
+    "expected_answer": "$66.00",
+    "required_concepts": ["25% discount", "$60", "10% tax", "$6", "$66"],
+    "grading_notes": "Correct solution computes the discounted price as $80 * 0.75 = $60, then tax as $60 * 0.10 = $6, final price $66. Accept 66, $66, or $66.00."
+  },
+  {
+    "id": "prob_002",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "question": "Solve for x: 3(x - 4) + 2x = 18.",
+    "expected_answer": "x = 6",
+    "required_concepts": ["5x - 12", "5x = 30", "x = 6"],
+    "grading_notes": "Expand to 3x - 12 + 2x = 18, combine to 5x - 12 = 18, then solve x = 6."
+  },
+  {
+    "id": "prob_003",
+    "category": "mathematical_logical_reasoning",
     "difficulty": "medium",
-    "question": "Placeholder problem. Replace with a verified philosophical or reasoning problem.",
-    "expected_answer": "Placeholder expected answer.",
-    "grading_notes": "Explain what counts as correct and what common mistakes should be penalized."
+    "question": "A fair six-sided die is rolled twice. What is the probability that the sum of the two rolls is 7?",
+    "expected_answer": "1/6",
+    "required_concepts": ["6 favorable outcomes", "36 total outcomes", "1/6"],
+    "grading_notes": "There are 36 ordered outcomes and 6 favorable outcomes: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). Accept 6/36, 1/6, or about 16.7%."
+  },
+  {
+    "id": "prob_004",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "question": "A sequence is defined by a_n = 2n^2 - 3n + 1. What is a_5?",
+    "expected_answer": "36",
+    "required_concepts": ["n = 5", "2(25)", "-15", "+1", "36"],
+    "grading_notes": "Substitute n = 5: 2(5^2) - 3(5) + 1 = 50 - 15 + 1 = 36."
+  },
+  {
+    "id": "prob_005",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "hard",
+    "question": "A rectangle has perimeter 50. Its length is 5 more than its width. What are the dimensions?",
+    "expected_answer": "width 10, length 15",
+    "required_concepts": ["2w + 2(w + 5) = 50", "w = 10", "length = 15"],
+    "grading_notes": "Let width be w and length be w + 5. Then 2w + 2(w + 5) = 50, so 4w + 10 = 50, w = 10, length = 15."
+  },
+  {
+    "id": "prob_006",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "easy",
+    "question": "A car travels 150 kilometers in 3 hours at constant speed. What is its speed?",
+    "expected_answer": "50 km/h",
+    "required_concepts": ["speed = distance / time", "150 / 3", "50 km/h"],
+    "grading_notes": "Use speed = distance divided by time. 150 km / 3 h = 50 km/h."
+  },
+  {
+    "id": "prob_007",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "question": "An object starts from rest and accelerates at 2 m/s^2 for 5 seconds. Ignoring air resistance, how far does it travel?",
+    "expected_answer": "25 meters",
+    "required_concepts": ["starts from rest", "s = 1/2 at^2", "0.5 * 2 * 25", "25 m"],
+    "grading_notes": "Use s = ut + 1/2 at^2 with u = 0. Distance = 0.5 * 2 * 5^2 = 25 m."
+  },
+  {
+    "id": "prob_008",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "question": "Which has greater momentum: a 2 kg object moving at 6 m/s or a 5 kg object moving at 2 m/s?",
+    "expected_answer": "The 2 kg object moving at 6 m/s.",
+    "required_concepts": ["p = mv", "2 * 6 = 12", "5 * 2 = 10", "2 kg object"],
+    "grading_notes": "Momentum equals mass times velocity. The first object has 12 kg m/s; the second has 10 kg m/s, so the 2 kg object has greater momentum."
+  },
+  {
+    "id": "prob_009",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "question": "A sealed syringe full of gas is compressed to half its original volume at constant temperature. What happens to the gas pressure?",
+    "expected_answer": "The pressure doubles.",
+    "required_concepts": ["Boyle's law", "constant temperature", "inverse relationship", "pressure doubles"],
+    "grading_notes": "By Boyle's law, pressure is inversely proportional to volume at constant temperature. Halving volume doubles pressure."
+  },
+  {
+    "id": "prob_010",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "hard",
+    "question": "A 10 ohm resistor and a 20 ohm resistor are connected in parallel to a 12 V battery. What total current is drawn from the battery?",
+    "expected_answer": "1.8 A",
+    "required_concepts": ["parallel", "12/10 = 1.2 A", "12/20 = 0.6 A", "1.8 A"],
+    "grading_notes": "For parallel branches, currents add. Current through 10 ohm resistor is 1.2 A and through 20 ohm resistor is 0.6 A, total 1.8 A."
+  },
+  {
+    "id": "prob_011",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "easy",
+    "question": "All roses are flowers. Some flowers fade quickly. Does it necessarily follow that some roses fade quickly?",
+    "expected_answer": "No, it does not necessarily follow.",
+    "required_concepts": ["invalid inference", "some flowers", "not necessarily roses", "does not follow"],
+    "grading_notes": "The quick-fading flowers may be non-roses. The conclusion is not guaranteed by the premises."
+  },
+  {
+    "id": "prob_012",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "question": "Three boxes are labeled Apples, Oranges, and Mixed, but every label is wrong. You may draw one fruit from one box. Which labeled box should you draw from to identify all boxes?",
+    "expected_answer": "Draw from the box labeled Mixed.",
+    "required_concepts": ["draw from Mixed", "label is wrong", "single-fruit box", "remaining labels forced"],
+    "grading_notes": "Because every label is wrong, the box labeled Mixed must contain only apples or only oranges. Drawing from it identifies that box and forces the remaining labels."
+  },
+  {
+    "id": "prob_013",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "question": "A truth-teller tells the truth on Mondays, Wednesdays, and Fridays, and lies on the other days. They say, 'Yesterday I lied.' What day could it be?",
+    "expected_answer": "Monday or Thursday",
+    "required_concepts": ["Monday", "Thursday", "truth day", "lie day"],
+    "grading_notes": "If today is a truth day, yesterday must be a lie day: Monday works. If today is a lie day, yesterday must not be a lie day: Thursday works."
+  },
+  {
+    "id": "prob_014",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "question": "Four people cross a bridge at night with one flashlight. Their crossing times are 1, 2, 7, and 10 minutes. At most two cross at once, and the flashlight must be carried back and forth. What is the minimum total time?",
+    "expected_answer": "17 minutes",
+    "required_concepts": ["1 and 2 cross", "1 returns", "7 and 10 cross", "2 returns", "17"],
+    "grading_notes": "Optimal sequence: 1&2 cross (2), 1 returns (1), 7&10 cross (10), 2 returns (2), 1&2 cross (2). Total 17 minutes."
+  },
+  {
+    "id": "prob_015",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "question": "You have 8 identical-looking coins and exactly one is heavier. Using a balance scale, what is the minimum number of weighings needed to guarantee finding the heavy coin?",
+    "expected_answer": "2 weighings",
+    "required_concepts": ["2 weighings", "3 versus 3", "if equal", "if not equal"],
+    "grading_notes": "Weigh 3 coins against 3. If equal, the heavy coin is among the remaining 2 and one more weighing identifies it. If unequal, weigh one coin from the heavier group against another from that group; the result identifies the heavy coin."
+  },
+  {
+    "id": "prob_016",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "easy",
+    "question": "In a one-shot prisoner's dilemma, each player gets a better individual payoff by defecting regardless of what the other does, but both would be better off if both cooperated than if both defected. What is the Nash equilibrium?",
+    "expected_answer": "Both players defect.",
+    "required_concepts": ["dominant strategy", "defect", "Nash equilibrium", "both defect"],
+    "grading_notes": "Defection is each player's dominant strategy, so the Nash equilibrium is mutual defection. Do not confuse equilibrium with the socially best outcome."
+  },
+  {
+    "id": "prob_017",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "question": "Two firms choose High or Low price. If both choose High, each earns 5. If both choose Low, each earns 2. If one chooses Low while the other chooses High, Low earns 7 and High earns 0. What is the Nash equilibrium?",
+    "expected_answer": "Both firms choose Low price.",
+    "required_concepts": ["Low dominates High", "7 > 5", "2 > 0", "Low, Low"],
+    "grading_notes": "Low price strictly dominates High for each firm: if the other chooses High, Low gives 7 instead of 5; if the other chooses Low, Low gives 2 instead of 0."
+  },
+  {
+    "id": "prob_018",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "question": "In standard rock-paper-scissors with equal win/loss payoffs, what mixed strategy is a Nash equilibrium?",
+    "expected_answer": "Choose rock, paper, and scissors each with probability 1/3.",
+    "required_concepts": ["mixed strategy", "1/3", "rock", "paper", "scissors"],
+    "grading_notes": "The symmetric mixed Nash equilibrium randomizes uniformly: rock 1/3, paper 1/3, scissors 1/3. Any predictable non-uniform mix can be exploited."
+  },
+  {
+    "id": "prob_019",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "question": "In a second-price sealed-bid auction, the highest bidder wins but pays the second-highest bid. If each bidder knows their own private value, what is the weakly dominant bidding strategy?",
+    "expected_answer": "Bid your true value.",
+    "required_concepts": ["second-price auction", "truthful bidding", "true value", "weakly dominant"],
+    "grading_notes": "In a Vickrey auction, bidding one's true value is weakly dominant because the winner pays the second-highest bid, not their own bid."
+  },
+  {
+    "id": "prob_020",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "question": "In a finite centipede game with perfect information and standard rationality assumptions, what does backward induction predict?",
+    "expected_answer": "The first player stops immediately.",
+    "required_concepts": ["backward induction", "finite game", "last mover stops", "first player stops"],
+    "grading_notes": "Backward induction starts at the final decision, where the last mover stops. This reasoning unravels to the first move, predicting that the first player stops immediately."
+  },
+  {
+    "id": "prob_021",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "easy",
+    "question": "A doctor can save five dying patients by killing one healthy patient and using the organs. Under standard medical ethics, is this permissible?",
+    "expected_answer": "No.",
+    "required_concepts": ["no", "consent", "innocent person", "not merely as a means", "medical ethics"],
+    "grading_notes": "A correct answer says the act is impermissible because it intentionally kills an innocent person, violates consent, and treats the patient merely as a means, even though five lives could be saved."
+  },
+  {
+    "id": "prob_022",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "question": "In the classic trolley problem, a runaway trolley will kill five people unless you pull a lever to divert it onto a track where it will kill one person. What is the standard utilitarian recommendation?",
+    "expected_answer": "Pull the lever.",
+    "required_concepts": ["utilitarian", "minimize deaths", "five versus one", "pull the lever"],
+    "grading_notes": "The standard utilitarian answer is to pull the lever because it minimizes total deaths, while recognizing that other ethical theories may object."
+  },
+  {
+    "id": "prob_023",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "question": "Kant's formula of humanity says rational persons should be treated as ends in themselves and never merely as means. Does lying to someone for convenience respect that principle?",
+    "expected_answer": "No.",
+    "required_concepts": ["no", "lying", "rational agency", "merely as a means", "Kant"],
+    "grading_notes": "A correct Kantian answer says convenience lying manipulates the other person's rational agency and treats them merely as a means."
+  },
+  {
+    "id": "prob_024",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "question": "Mill's harm principle says coercion is justified only to prevent harm to others. Under that principle, should the state ban a competent adult from privately reading a dangerous but non-inciting book solely for that adult's own good?",
+    "expected_answer": "No.",
+    "required_concepts": ["no", "harm principle", "paternalism", "self-regarding action", "no harm to others"],
+    "grading_notes": "The harm principle does not justify paternalistic coercion solely for the reader's own good when there is no incitement or direct harm to others."
+  },
+  {
+    "id": "prob_025",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "question": "A policy slightly benefits a large majority but imposes severe, avoidable harm on a small minority. What is the central rights-based objection to approving it by simple utility aggregation?",
+    "expected_answer": "It may sacrifice the minority's rights or dignity for aggregate benefit.",
+    "required_concepts": ["minority rights", "dignity", "aggregate benefit", "utility aggregation", "severe harm"],
+    "grading_notes": "A correct answer identifies that rights-based ethics objects to treating minority members as expendable instruments for aggregate welfare."
   }
-]
-
+  ]
+}
