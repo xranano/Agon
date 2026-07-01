@@ -31,27 +31,54 @@ def extract_json(text: str) -> Dict[str, Any]:
         return json.loads(cleaned)
     except json.JSONDecodeError:
         pass
-    match = re.search(r"\{.*\}", cleaned, flags=re.DOTALL)
-    if not match:
-        raise ValueError(f"No JSON object found in LLM output:\n{text}")
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        raise ValueError(f"No complete JSON object found in LLM output:\n{text}")
+    possible_json = cleaned[start: end + 1]
+    return json.loads(possible_json)
 
-    return json.loads(match.group(0))
 
+def call_llm_json(
+    system_prompt: str,
+    user_prompt: str,
+    max_output_tokens: int = 6000,
+    retries: int = 3,
+) -> Dict[str, Any]:
 
-def call_llm_json(system_prompt: str, user_prompt: str, max_output_tokens: int = 2000) -> Dict[str, Any]:
-    raw = call_llm(system_prompt, user_prompt, max_output_tokens=max_output_tokens)
-    try:
-        return extract_json(raw)
-    except Exception:
-        repair_prompt = f"""
-Your previous response was not valid JSON.
-
-Return only one valid JSON object.
+    last_raw = ""
+    strict_system_prompt = (
+        system_prompt
+        + """
+Important JSON rules:
+- Return only one valid JSON object.
+- Do not use markdown fences.
+- Do not include text before or after the JSON.
+- Keep string values concise.
+- Do not write extremely long reasoning.
+- Make sure every opened bracket and quote is closed.
+"""
+    )
+    current_prompt = user_prompt
+    for attempt in range(1, retries + 1):
+        raw = call_llm(
+            strict_system_prompt,
+            current_prompt,
+            max_output_tokens=max_output_tokens,
+        )
+        last_raw = raw
+        try:
+            return extract_json(raw)
+        except Exception as error:
+            current_prompt = f"""
+Your previous response was invalid JSON.
+Error:
+{str(error)}
+Return the same content again, but as one complete valid JSON object.
 Do not include markdown.
 Do not include explanations outside JSON.
-
-Previous response:
+Keep all string fields concise enough that the response is not cut off.
+Previous invalid response:
 {raw}
 """
-        repaired = call_llm(system_prompt, repair_prompt, max_output_tokens=max_output_tokens)
-        return extract_json(repaired)
+    raise ValueError(f"Failed to get valid JSON after {retries} attempts.\nLast output:\n{last_raw}")
