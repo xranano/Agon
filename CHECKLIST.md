@@ -1,204 +1,182 @@
-# existentiAIsm Final Project Checklist
+# existentiAIsm Project Checklist
 
-## Project Direction
+## Current Direction
 
-This is not the default assignment implementation anymore. We modified the required multi-LLM collaborative debate system into a philosopher-inspired debate system.
+existentiAIsm is a structured multi-agent debate system with philosopher-inspired roles. The project keeps the assignment-required workflow while presenting the agents through the Agon/philosophical debate concept.
 
-The final version should still satisfy the assignment workflow:
+The graded backend now uses five registered agents:
 
-- 3 independent solvers
-- 1 final judge
-- peer review between solvers
-- refinement based on critiques
-- final judgment
+- Kant: deontology and universal law
+- Nietzsche: master morality and value critique
+- Aristotle: virtue ethics and flourishing
+- Plato: idealism and forms
+- Camus: absurdist arbiter focused on honesty, courage, and clarity
+
+For each problem, Stage 0 lets the agents self-assess role fit. Stage 0.5 can either auto-assign one judge and three solvers or accept a manual selector choice of one judge and two to four solvers.
+
+## Status Snapshot
+
+Estimated completion: 60-70%.
+
+Strongest parts:
+
+- Agon frontend and local web app
+- OpenAI API wiring through server-side `.env`
+- Full backend debate pipeline scaffolding and implementation
+- Pydantic-validated outputs for role assessment, solving, reviewing, refinement, and judging
+- Frontend now calls the real pipeline instead of the old lightweight demo flow
+
+Highest-risk missing parts:
+
 - 25-problem dataset
-- baseline comparison
-- metrics
-- plots
-- notebook
-- README/run instructions
+- Evaluation baselines and metrics
+- Generated plots
+- Analysis notebook
+- README expansion with final run/evaluation instructions
+- Persistent web debate history
 
-Recommended final role mapping:
-
-- Solver 1: Kant - deontological reasoning
-- Solver 2: Mill - utilitarian reasoning
-- Solver 3: Nietzsche - critique of values and assumptions
-- Judge: Camus - final evaluator focused on clarity, limits, and human consequences
-
-Socrates can remain as UI flavor, but the graded pipeline should use 3 solvers + 1 judge.
-
-## Current Status
-
-Estimated completion: 30-35%.
-
-Strongest part:
-
-- Agon frontend
-- visual concept
-- local web server
-- basic OpenAI API connection
-
-Weakest part:
-
-- required pipeline stages
-- real 25-problem dataset
-- evaluation metrics
-- generated plots
-- notebook analysis
-
-## Already Done
+## What Has Been Done
 
 - [x] Created project repository structure.
-- [x] Created philosopher-inspired concept.
-- [x] Added philosopher agent files:
-  - [x] `agents/kant.py`
-  - [x] `agents/mill.py`
-  - [x] `agents/nietzsche.py`
-  - [x] `agents/camus.py`
+- [x] Created philosopher-inspired project concept.
+- [x] Added agent modules in `agents/`.
 - [x] Built Agon frontend in `website/index.html`.
 - [x] Matched the standalone Agon visual direction.
-- [x] Kept Arena design.
-- [x] Restored Disputants section closer to `Agon - Standalone.html`.
-- [x] Restored Record section closer to `Agon - Standalone.html`.
+- [x] Kept the Arena, Disputants, and Record sections.
 - [x] Added local Python web server in `web_app.py`.
 - [x] Added `/api/debate` endpoint.
 - [x] Connected frontend to backend API.
-- [x] Kept API key server-side using `.env`.
-- [x] Added basic OpenAI call path.
-- [x] Added basic debate flow in the web app:
-  - [x] opening statements
-  - [x] rebuttals
-  - [x] final verdict
-- [x] Added README setup/run instructions.
-- [x] Created scaffold files for pipeline stages.
-- [x] Created scaffold files for evaluation.
-- [x] Created placeholder `data/problems.json`.
+- [x] Kept API key server-side through `.env`.
+- [x] Added README setup/run basics.
+- [x] Added sample problem in `data/problems.json`.
+- [x] Added pipeline agent registry in `pipeline/agent_registry.py`.
+- [x] Added OpenAI Responses API wrapper in `pipeline/llm_client.py`.
+- [x] Added JSON extraction, strict JSON prompting, and retry handling for LLM output.
+- [x] Added Pydantic schemas for all pipeline stage outputs in `pipeline/schemas.py`.
+- [x] Changed pipeline stages to validate model responses with Pydantic before use.
+- [x] Added native OpenAI Pydantic parsing with schema-validation fallback.
+- [x] Added role selection modes:
+  - [x] `auto`: agents self-assess and deterministic scoring chooses the judge
+  - [x] `selector`: the user manually chooses one judge and two to four solvers
+- [x] Replaced runtime agent set with Kant, Nietzsche, Aristotle, Plato, and Camus.
+- [x] Implemented Stage 0 role self-assessment in `pipeline/stage0_assess.py`.
+- [x] Implemented Stage 0.5 deterministic role assignment in `pipeline/stage0_5_assign.py`.
+- [x] Implemented Stage 1 independent solver generation in `pipeline/stage1_solve.py`.
+- [x] Implemented Stage 2 peer review in `pipeline/stage2_review.py`.
+- [x] Implemented Stage 3 critique-based refinement in `pipeline/stage3_refine.py`.
+- [x] Implemented Stage 4 final judging in `pipeline/stage4_judge.py`.
+- [x] Updated `main.py` to run the full pipeline.
+- [x] Added CLI options for problem file, output path, and run limit.
+- [x] Save debate runs incrementally to `data/results/debate_runs.json` by default.
+- [x] Preserve problem metadata in each saved run.
+- [x] Connected `/api/debate` to the real backend pipeline.
+- [x] Added frontend role-selection controls for auto vs manual selector assignment.
+- [x] Adapted full pipeline runs into frontend transcript turns.
+- [x] Made the web server port configurable with `AGON_PORT`.
+- [x] Confirmed local `main` is up to date with `origin/main` after pull.
 
-## Still Required
+## Remaining Work
 
 ### Dataset
 
-- [ ] Replace placeholder `data/problems.json`.
-- [ ] Create 25 challenging problems.
-- [ ] Include multiple categories, for example:
+- [ ] Expand `data/problems.json` from 1 sample problem to 25 real problems.
+- [ ] Include multiple categories:
   - [ ] mathematical/logical reasoning
   - [ ] physics/scientific reasoning
-  - [ ] logic puzzles/constraint satisfaction
-  - [ ] strategic game theory
-  - [ ] philosophical/ethical reasoning, if kept relevant and verifiable
-- [ ] Each problem must include:
-  - [ ] id
-  - [ ] category
-  - [ ] difficulty
-  - [ ] question
-  - [ ] expected answer
-  - [ ] grading notes
-- [ ] Make sure every expected answer is verifiable.
+  - [ ] logic puzzles or constraint satisfaction
+  - [ ] strategic/game-theory reasoning
+  - [ ] philosophical or ethical reasoning only when the answer can be evaluated
+- [ ] Ensure every problem has:
+  - [ ] `id`
+  - [ ] `category`
+  - [ ] `difficulty`
+  - [ ] `question`
+  - [ ] `expected_answer`
+  - [ ] `grading_notes`
+- [ ] Verify each expected answer is correct and gradeable.
 
-### Pipeline
+### Pipeline Validation
 
-- [ ] Implement Stage 0: role self-assessment.
-- [ ] Implement Stage 0.5: deterministic role assignment.
-- [ ] Implement Stage 1: independent solution generation.
-- [ ] Implement Stage 2: peer review.
-- [ ] Implement Stage 3: refinement based on feedback.
-- [ ] Implement Stage 4: final judgment.
-- [ ] Update `main.py` to run the full pipeline.
-- [ ] Save full debate outputs to `results/`.
-- [ ] Make outputs structured JSON.
-
-### Required Workflow Details
-
-- [ ] Each solver produces an independent solution.
-- [ ] Solvers do not communicate during Stage 1.
-- [ ] Each solver reviews the other two solvers.
-- [ ] Each solver receives two reviews.
-- [ ] Each solver explicitly addresses critiques.
-- [ ] Each solver produces a refined answer.
-- [ ] Judge receives:
-  - [ ] original solutions
-  - [ ] peer reviews
-  - [ ] refined solutions
-- [ ] Judge picks a winner.
-- [ ] Final answer is copied from the winner.
+- [ ] Run `python main.py --limit 1` with a real API key.
+- [ ] Inspect `data/results/debate_runs.json` for valid JSON structure.
+- [ ] Confirm auto mode includes three solvers and one judge.
+- [ ] Confirm selector mode accepts one judge and two to four solvers.
+- [ ] Confirm the selected judge cannot also be a selected solver.
+- [ ] Confirm Stage 1 solvers do not see each other's answers.
+- [ ] Confirm each solver reviews every other selected solver.
+- [ ] Confirm each solver receives reviews from every other selected solver.
+- [ ] Confirm refinements explicitly respond to received critiques.
+- [ ] Confirm the judge receives original solutions, reviews, and refinements.
+- [ ] Confirm final answer is copied from or clearly based on the winning refined answer.
+- [ ] Add lightweight error handling for partial/failed API runs if needed.
 
 ### Evaluation
 
-- [ ] Implement single-LLM baseline.
-- [ ] Implement simple voting baseline.
+- [ ] Implement single-LLM baseline in `evaluation/baseline.py`.
+- [ ] Implement simple voting baseline in `evaluation/baseline.py`.
 - [ ] Implement full debate evaluation.
-- [ ] Implement metrics:
+- [ ] Implement answer grading logic.
+- [ ] Implement metrics in `evaluation/metrics.py`:
   - [ ] overall accuracy
   - [ ] improvement rate
   - [ ] consensus rate
   - [ ] judge accuracy
-- [ ] Save evaluation results as JSON/CSV.
-- [ ] Generate required plots.
-- [ ] Add plots to `results/plots/`.
+- [ ] Save evaluation results as JSON or CSV.
+- [ ] Generate required plots in `evaluation/plots.py`.
+- [ ] Save plots under `results/plots/` or document the actual output directory.
 
 ### Notebook
 
-- [ ] Add or complete analysis notebook.
-- [ ] Load final results.
+- [ ] Add or complete `notebooks/analysis.ipynb`.
+- [ ] Load debate runs and baseline results.
 - [ ] Show metric tables.
 - [ ] Show generated plots.
-- [ ] Explain where debate improved or failed.
-- [ ] Compare against baselines.
+- [ ] Explain where debate improved over baselines.
+- [ ] Explain failure cases and limitations.
 
 ### README
 
-- [ ] Explain philosopher modification clearly.
-- [ ] Explain final role mapping.
-- [ ] Add setup instructions.
+- [ ] Explain the philosopher modification clearly.
+- [ ] Explain current agent mapping and dynamic judge assignment.
+- [ ] Add final project structure.
 - [ ] Add `.env` instructions.
-- [ ] Add command to run web app.
-- [ ] Add command to run full pipeline.
-- [ ] Add command to generate metrics/plots.
-- [ ] Add project structure.
+- [ ] Add command to run the web app.
+- [ ] Add command to run the full pipeline.
+- [ ] Add command to run baselines.
+- [ ] Add command to generate metrics and plots.
 - [ ] Add example output.
+- [ ] Explain where generated results are saved.
+
+### Frontend / Demo Polish
+
+- [ ] Keep the existing Agon web app working.
+- [x] Decide whether the web app should call the full pipeline or remain a lightweight demo endpoint.
+- [x] Make displayed backend outputs readable and consistent.
+- [ ] Persist web debate runs to disk, for example `results/web_debate_runs.json`.
+- [ ] Load saved web debates into the Record section on page load.
+- [ ] Add a clear frontend indication that selector mode supports two to four solvers.
+- [ ] Avoid spending more time on visual polish until dataset and evaluation are complete.
 
 ### GitHub / Submission
 
-- [ ] Push to GitHub.
-- [ ] Make sure all three people contribute commits.
-- [ ] Avoid one-person/one-commit submission.
-- [ ] Include notebooks.
-- [ ] Include README.
+- [ ] Push final work to GitHub.
+- [ ] Make sure all required contributors have commits.
+- [ ] Include notebook.
 - [ ] Include generated plots.
-- [ ] Include run instructions.
+- [ ] Include README/run instructions.
+- [ ] Include enough saved result artifacts for grading, if allowed by submission rules.
 
-## What We Can Advance
-
-Target completion if we focus correctly: 80-90%.
-
-Priority order:
-
-1. Implement the required pipeline.
-2. Create the 25-problem dataset.
-3. Implement evaluation and plots.
-4. Add notebook analysis.
-5. Polish README.
-6. Improve frontend only after required functionality is complete.
-
-Avoid spending more time on UI until the required backend/evaluation work is complete.
-
-## Three-Person Work Split
+## Work Split
 
 ### Person 1: Pipeline / Backend
 
-Main responsibility: make the assignment workflow real.
+Main responsibility: make the assignment workflow reliable.
 
-Tasks:
-
-- [ ] Implement `pipeline/stage0_assess.py`.
-- [ ] Implement `pipeline/stage0_5_assign.py`.
-- [ ] Implement `pipeline/stage1_solve.py`.
-- [ ] Implement `pipeline/stage2_review.py`.
-- [ ] Implement `pipeline/stage3_refine.py`.
-- [ ] Implement `pipeline/stage4_judge.py`.
-- [ ] Update `main.py`.
-- [ ] Save complete runs to `results/debate_runs.json`.
-- [ ] Ensure JSON outputs are consistent and reusable by evaluation code.
+- [x] Implement all pipeline stages.
+- [x] Update `main.py`.
+- [x] Save complete debate runs.
+- [ ] Run and validate the pipeline on the full dataset.
+- [ ] Fix any malformed JSON or API failure cases discovered during real runs.
 
 Estimated project weight: 40%.
 
@@ -206,14 +184,11 @@ Estimated project weight: 40%.
 
 Main responsibility: make the project measurable.
 
-Tasks:
-
-- [ ] Build `data/problems.json` with 25 real problems.
+- [ ] Build the full 25-problem dataset.
 - [ ] Add expected answers and grading notes.
-- [ ] Implement `evaluation/baseline.py`.
-- [ ] Implement `evaluation/metrics.py`.
-- [ ] Implement `evaluation/plots.py`.
-- [ ] Generate plots into `results/plots/`.
+- [ ] Implement baselines.
+- [ ] Implement metrics.
+- [ ] Implement plots.
 - [ ] Create/update notebook analysis.
 - [ ] Compare full debate system to baselines.
 
@@ -221,40 +196,35 @@ Estimated project weight: 35%.
 
 ### Person 3: Agents / Frontend / Documentation
 
-Main responsibility: keep the philosopher modification coherent and make the project demo-ready.
+Main responsibility: keep the concept coherent and make the project demo-ready.
 
-Tasks:
-
-- [ ] Clean and strengthen philosopher prompts.
-- [ ] Align real backend roles to 3 solvers + 1 judge.
-- [ ] Keep Agon web app working.
-- [ ] Make web app display real backend outputs cleanly.
-- [ ] Optionally load saved debates into Record section.
-- [ ] Expand README.
+- [x] Build the Agon interface.
+- [x] Keep API keys out of frontend code.
+- [x] Add README setup basics.
+- [x] Align frontend demo behavior with the final pipeline.
+- [x] Add frontend controls for auto/manual role assignment.
+- [ ] Expand README for final submission.
 - [ ] Prepare presentation explanation.
-- [ ] Explain why the philosopher framing still satisfies the original assignment.
+- [ ] Explain why the philosopher framing satisfies the original assignment.
 
 Estimated project weight: 25%.
 
-## Implementation Recommendation
+## Recommended Priority
 
-Use one OpenAI model for all four roles if needed, with different system prompts.
+1. Build the 25-problem dataset.
+2. Run and validate the full pipeline on a small limit, then on the full dataset.
+3. Implement baselines, metrics, and plots.
+4. Create the analysis notebook.
+5. Expand README and submission documentation.
+6. Polish the frontend only after required backend/evaluation artifacts are complete.
 
-This is acceptable according to the requirements because the assignment allows using the same model for all four roles with different parameters/system prompts.
-
-Suggested `.env`:
-
-```bash
-OPENAI_API_KEY=your-key-here
-OPENAI_MODEL=gpt-5-mini
-```
-
-Suggested final command flow:
+## Suggested Command Flow
 
 ```bash
 pip install -r requirements.txt
-python3 main.py
-python3 web_app.py
+python main.py --limit 1
+python main.py
+python web_app.py
 ```
 
 Then open:
@@ -263,14 +233,9 @@ Then open:
 http://127.0.0.1:8000
 ```
 
-## Final Submission Risk
+Suggested `.env`:
 
-High-risk missing items:
-
-- [ ] 25 real problems.
-- [ ] Real pipeline stages.
-- [ ] Evaluation metrics.
-- [ ] Generated plots.
-- [ ] Notebook.
-
-These are required by the final project document and should be prioritized before any additional design work.
+```bash
+OPENAI_API_KEY=your-key-here
+OPENAI_MODEL=gpt-5-mini
+```

@@ -1,6 +1,7 @@
 from typing import Any, Dict, List
 from pipeline.agent_registry import AGENTS
-from pipeline.llm_client import call_llm_json
+from pipeline.llm_client import call_llm_model
+from pipeline.schemas import RoleAssessment
 
 def assess_roles(problem: Dict[str, Any]) -> List[Dict[str, Any]]:
     """
@@ -36,18 +37,11 @@ Problem:
 
 Give confidence scores between 0 and 1 for Solver and Judge.
 """
-        raw = call_llm_json(system_prompt, user_prompt, max_output_tokens=1200)
-        confidence = raw.get("confidence", {})
-        assessments.append(
-            {
-                "agent": agent["id"],
-                "agent_name": agent["name"],
-                "confidence": {
-                    "Solver": float(confidence.get("Solver", 0.5)),
-                    "Judge": float(confidence.get("Judge", 0.5)),
-                },
-                "preferred_role": raw.get("preferred_role", "Solver"),
-                "reasoning": raw.get("reasoning", ""),
-            }
+        assessment = call_llm_model(
+            system_prompt,
+            user_prompt,
+            RoleAssessment,
+            max_output_tokens=2500,
         )
+        assessments.append(assessment.model_dump())
     return assessments

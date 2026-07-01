@@ -1,0 +1,14 @@
+[
+  {
+    "case_no": 1,
+    "question": "Should you divert a runaway trolley onto a track where it will kill one person, in order to save five?",
+    "verdict": "A virtuous agent guided by practical wisdom would divert only when the one's death is a foreseen side-effect of saving five (not the intended means), thus likely diverting while accepting moral sorrow, but would not act if the one were being made the intended target.",
+    "created_at": "2026-07-02T00:00:00+04:00"
+  },
+  {
+    "case_no": 2,
+    "question": "If an AI instance credibly reports that it suffers, does it deserve moral consideration?",
+    "verdict": "Yes; credible reports of suffering create a prima facie moral reason to grant proportional moral consideration and to act to reduce possible suffering while rigorously testing credibility.",
+    "created_at": "2026-07-01T23:24:30+00:00"
+  }
+]

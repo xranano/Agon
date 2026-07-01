@@ -1,9 +1,10 @@
 import json
 import os
 import re
-from typing import Any, Dict
+from typing import Any, Dict, Type, TypeVar
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import LengthFinishReasonError, OpenAI
+from pydantic import BaseModel, ValidationError
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -12,6 +13,9 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
 if not OPENAI_API_KEY:
     raise RuntimeError("OPENAI_API_KEY is missing. Add it to your local .env file.")
 client = OpenAI(api_key=OPENAI_API_KEY)
+ModelT = TypeVar("ModelT", bound=BaseModel)
+
+
 def call_llm(system_prompt: str, user_prompt: str, max_output_tokens: int = 2000) -> str:
     response = client.responses.create(
         model=OPENAI_MODEL,
@@ -82,3 +86,62 @@ Previous invalid response:
 {raw}
 """
     raise ValueError(f"Failed to get valid JSON after {retries} attempts.\nLast output:\n{last_raw}")
+
+
+def call_llm_model(
+    system_prompt: str,
+    user_prompt: str,
+    model: Type[ModelT],
+    max_output_tokens: int = 6000,
+    retries: int = 3,
+) -> ModelT:
+    if not hasattr(client.responses, "parse"):
+        raise RuntimeError(
+            "The installed OpenAI SDK does not support responses.parse. "
+            "Install openai>=1.90.0 to use Pydantic structured outputs."
+        )
+
+    token_budget = max_output_tokens
+    last_error = ""
+
+    for attempt in range(1, retries + 1):
+        try:
+            response = client.responses.parse(
+                model=OPENAI_MODEL,
+                instructions=system_prompt,
+                input=user_prompt,
+                max_output_tokens=token_budget,
+                text_format=model,
+                reasoning={"effort": "minimal"},
+                text={"verbosity": "low"},
+            )
+        except LengthFinishReasonError as error:
+            last_error = str(error)
+            token_budget = min(token_budget * 2, 12000)
+            continue
+        except Exception as error:
+            raise RuntimeError(
+                f"Structured output request failed for {model.__name__}: {error}"
+            ) from error
+
+        parsed = getattr(response, "output_parsed", None)
+        if parsed is not None:
+            if isinstance(parsed, model):
+                return parsed
+            return model.model_validate(parsed)
+
+        raw_text = getattr(response, "output_text", "")
+        if raw_text:
+            try:
+                return model.model_validate_json(raw_text)
+            except ValidationError as error:
+                last_error = str(error)
+                token_budget = min(token_budget * 2, 12000)
+                continue
+
+        last_error = "empty structured output"
+
+    raise ValueError(
+        f"Failed to get structured Pydantic output as {model.__name__} "
+        f"after {retries} attempts. Last error: {last_error}"
+    )

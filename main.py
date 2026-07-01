@@ -22,9 +22,19 @@ def save_runs(runs: List[Dict[str, Any]], output_path: Path) -> None:
     with output_path.open("w", encoding="utf-8") as file:
         json.dump(runs, file, indent=2, ensure_ascii=False)
 
-def run_single_problem(problem: Dict[str, Any]) -> Dict[str, Any]:
+def run_single_problem(
+    problem: Dict[str, Any],
+    selection_mode: str = "auto",
+    selected_judge: str | None = None,
+    selected_solvers: List[str] | None = None,
+) -> Dict[str, Any]:
     role_assessments = assess_roles(problem)
-    assigned_roles = assign_roles(role_assessments)
+    assigned_roles = assign_roles(
+        role_assessments,
+        mode=selection_mode,
+        selected_judge=selected_judge,
+        selected_solvers=selected_solvers,
+    )
     initial_solutions = generate_solutions(problem, assigned_roles)
     peer_reviews = generate_peer_reviews(problem, assigned_roles, initial_solutions)
     refinements = refine_solutions(
@@ -41,6 +51,7 @@ def run_single_problem(problem: Dict[str, Any]) -> Dict[str, Any]:
         refinements,
     )
     return {
+        "problem": dict(problem),
         "problem_id": problem.get("id"),
         "category": problem.get("category"),
         "difficulty": problem.get("difficulty"),
@@ -55,6 +66,7 @@ def run_single_problem(problem: Dict[str, Any]) -> Dict[str, Any]:
         "judge_decision": judge_decision,
         "winner": judge_decision.get("winner"),
         "final_answer": judge_decision.get("final_answer"),
+        "selection_mode": selection_mode,
     }
 
 def main() -> None:
@@ -79,6 +91,23 @@ def main() -> None:
         default=None,
         help="Optional number of problems to run.",
     )
+    parser.add_argument(
+        "--selection-mode",
+        choices=["auto", "selector"],
+        default="auto",
+        help="Use agent self-assessment scoring or a selector model for role assignment.",
+    )
+    parser.add_argument(
+        "--judge",
+        default=None,
+        help="Manual selector mode judge id, for example agent_5.",
+    )
+    parser.add_argument(
+        "--solvers",
+        nargs="*",
+        default=None,
+        help="Manual selector mode solver ids, for example agent_1 agent_2 agent_3.",
+    )
     args = parser.parse_args()
     problems = load_problems(args.problems)
 
@@ -91,7 +120,12 @@ def main() -> None:
     for index, problem in enumerate(problems, start=1):
         print("=" * 80)
         print(f"Running problem {index}/{len(problems)}: {problem.get('id')}")
-        run = run_single_problem(problem)
+        run = run_single_problem(
+            problem,
+            selection_mode=args.selection_mode,
+            selected_judge=args.judge,
+            selected_solvers=args.solvers,
+        )
         runs.append(run)
 
         # Save after every problem so progress is not lost if a later API call fails.

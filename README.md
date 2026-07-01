@@ -21,10 +21,11 @@ existentiAIsm/
     results/
   agents/
     base_agent.py
-    nietzsche.py
-    kant.py
-    mill.py
+    aristotle.py
     camus.py
+    kant.py
+    nietzsche.py
+    plato.py
   pipeline/
     stage0_assess.py
     stage0_5_assign.py

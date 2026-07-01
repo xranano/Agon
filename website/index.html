@@ -350,6 +350,15 @@
         grid-template-columns: minmax(300px, 0.78fr) minmax(360px, 1.22fr);
         gap: 34px;
         align-items: stretch;
+        overflow: hidden;
+        transition:
+          grid-template-columns 0.28s ease,
+          gap 0.28s ease;
+      }
+
+      .arena-grid.proceedings-mode {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
       }
 
       .panel {
@@ -378,6 +387,18 @@
       .prompt-panel {
         display: flex;
         flex-direction: column;
+        transition:
+          opacity 0.24s ease,
+          transform 0.28s ease;
+        will-change: opacity, transform;
+      }
+
+      .arena-grid.proceedings-mode .prompt-panel {
+        grid-column: 1;
+        grid-row: 1;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-110%);
       }
 
       .prompt-body {
@@ -464,10 +485,111 @@
         color: var(--ink);
       }
 
+      .mode-select {
+        min-height: 50px;
+        min-width: 142px;
+        padding: 0 34px 0 14px;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        appearance: none;
+        background:
+          linear-gradient(45deg, transparent 50%, #fff 50%) right 16px center / 7px 7px no-repeat,
+          linear-gradient(135deg, #fff 50%, transparent 50%) right 11px center / 7px 7px no-repeat,
+          var(--ink);
+        color: #fff;
+        cursor: pointer;
+        font-family: "Special Elite", monospace;
+        font-size: 11px;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+      }
+
+      .selector-panel {
+        display: none;
+        margin: 12px 0 18px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .selector-panel.active {
+        display: grid;
+        gap: 16px;
+      }
+
+      .selector-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      .selector-label {
+        color: var(--ink-soft);
+        font-size: 10.5px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .selector-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+        gap: 8px;
+      }
+
+      .selector-options label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        background: #fbfaf7;
+        color: var(--ink);
+        cursor: pointer;
+        font-family: "Special Elite", monospace;
+        font-size: 11px;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .selector-options input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .selector-options label:has(input:checked) {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .selector-options label:has(input:disabled) {
+        opacity: 0.36;
+        cursor: not-allowed;
+      }
+
+      .selector-options label:hover:not(:has(input:disabled)) {
+        border-color: var(--accent);
+      }
+
       .transcript {
         display: flex;
         min-height: 590px;
         flex-direction: column;
+        transition:
+          min-height 0.28s ease,
+          transform 0.28s ease;
+      }
+
+      .arena-grid.proceedings-mode .transcript {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 720px;
       }
 
       .phase {
@@ -489,6 +611,36 @@
         border-radius: 50%;
         background: currentColor;
         animation: pulseDot 1s ease-in-out infinite;
+      }
+
+      .transcript-tools {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .cancel-button {
+        display: none;
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        font-family: "Special Elite", monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+      }
+
+      .arena-grid.proceedings-mode .cancel-button {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .cancel-button:hover {
+        border-color: var(--red);
+        color: var(--red);
       }
 
       .transcript-body {
@@ -545,6 +697,7 @@
         color: var(--ink);
         font-size: 16px;
         line-height: 1.68;
+        white-space: pre-line;
       }
 
       .cursor::after {
@@ -838,6 +991,99 @@
         line-height: 1.5;
       }
 
+      .history-verdict-button {
+        min-height: 28px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        font-family: "Special Elite", monospace;
+        font-size: 10.5px;
+        line-height: 1;
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      .history-verdict-button:hover,
+      .history-verdict-button:focus-visible {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .verdict-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(20, 20, 20, 0.3);
+      }
+
+      .verdict-modal.active {
+        display: flex;
+      }
+
+      .verdict-dialog {
+        width: min(620px, 100%);
+        max-height: min(78vh, 720px);
+        overflow: auto;
+        border: 1px solid var(--ink);
+        background: #ffffff;
+        box-shadow: 0 24px 70px rgba(20, 20, 20, 0.22);
+      }
+
+      .verdict-dialog-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .verdict-dialog-title {
+        color: var(--ink);
+        font-family: "Special Elite", monospace;
+        font-size: 12px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .verdict-close {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .verdict-dialog-body {
+        padding: 22px;
+      }
+
+      .verdict-dialog-question {
+        margin-bottom: 18px;
+        color: var(--ink);
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 19px;
+        font-style: italic;
+        line-height: 1.35;
+      }
+
+      .verdict-dialog-text {
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.7;
+        white-space: pre-line;
+      }
+
       footer {
         padding: 44px 48px;
         color: var(--ink-soft);
@@ -989,7 +1235,7 @@
           <div class="eyebrow">An AI Debate Chamber</div>
           <h1>AGON</h1>
           <div class="subtitle">a chamber of dialectic</div>
-          <p>Four models. Four philosophies. <span>Bound to argue to the end.</span></p>
+          <p>Five philosophers. Shifting roles. <span>Bound to argue to the end.</span></p>
           <div class="hero-actions">
             <a class="primary-link" href="#arena">Enter the Arena</a>
             <a class="secondary-link" href="#philosophers">Meet the Disputants</a>
@@ -997,10 +1243,10 @@
           <div class="tribunal-strip" aria-label="Today's tribunal">
             <span class="strip-label">Today's Tribunal</span>
             <span class="initial-chip" style="--chip-color: #141414"><span class="initial">K</span>Kant</span>
-            <span class="initial-chip" style="--chip-color: #dc2626"><span class="initial">M</span>Mill</span>
             <span class="initial-chip" style="--chip-color: #7c5cfc"><span class="initial">N</span>Nietzsche</span>
-            <span class="initial-chip" style="--chip-color: #a9784f"><span class="initial">C</span>Camus</span>
-            <span class="initial-chip" style="--chip-color: #9c2c53"><span class="initial">S</span>Socrates</span>
+            <span class="initial-chip" style="--chip-color: #a9784f"><span class="initial">A</span>Aristotle</span>
+            <span class="initial-chip" style="--chip-color: #dc2626"><span class="initial">P</span>Plato</span>
+            <span class="initial-chip" style="--chip-color: #9c2c53"><span class="initial">C</span>Camus</span>
           </div>
         </div>
       </section>
@@ -1012,8 +1258,8 @@
             <div>
               <h2>The Arena</h2>
               <p class="section-copy">
-                Submit a moral problem and the chamber stages an austere tribunal: opening statements,
-                cross-examination, and a Socratic verdict.
+                Submit a problem and the chamber assigns a judge, selects solvers, stages peer review,
+                and renders a final verdict.
               </p>
             </div>
           </div>
@@ -1022,7 +1268,7 @@
             <article class="panel prompt-panel">
               <div class="panel-header">
                 <span>Question before the tribunal</span>
-                <span class="case-id" id="caseId">XLVIII</span>
+                <span class="case-id" id="caseId">I</span>
               </div>
               <div class="prompt-body">
                 <textarea id="questionInput" spellcheck="true" placeholder="Is it permissible to lie to a murderer at the door, to protect an innocent life?"></textarea>
@@ -1034,7 +1280,21 @@
                 </div>
                 <div class="prompt-actions">
                   <button class="primary-button" id="startButton">Open Proceedings</button>
+                  <select class="mode-select" id="selectionMode" aria-label="Role selection mode">
+                    <option value="auto">Auto roles</option>
+                    <option value="selector">Selector roles</option>
+                  </select>
                   <button class="ghost-button" id="resetButton">Reset Case</button>
+                </div>
+                <div class="selector-panel" id="selectorPanel">
+                  <div class="selector-group">
+                    <div class="selector-label">Judge</div>
+                    <div class="selector-options" id="judgeOptions"></div>
+                  </div>
+                  <div class="selector-group">
+                    <div class="selector-label">Solvers, choose 2-4</div>
+                    <div class="selector-options" id="solverOptions"></div>
+                  </div>
                 </div>
               </div>
             </article>
@@ -1042,7 +1302,10 @@
             <article class="panel transcript">
               <div class="panel-header">
                 <span>Live Transcript</span>
-                <span class="phase" id="phase"><span class="phase-dot" id="phaseDot"></span><span id="phaseText"></span></span>
+                <span class="transcript-tools">
+                  <button class="cancel-button" id="cancelButton" type="button">Cancel</button>
+                  <span class="phase" id="phase"><span class="phase-dot" id="phaseDot"></span><span id="phaseText"></span></span>
+                </span>
               </div>
               <div class="transcript-body" id="transcriptBody">
                 <div class="empty-state" id="emptyState">
@@ -1070,26 +1333,10 @@
             <h3>Immanuel Kant</h3>
             <div class="disputant-framework">Deontology</div>
             <div class="disputant-quote-wrap">
-              <blockquote class="disputant-quote">Act only according to that maxim whereby you can at the same time will that it should become a universal law.</blockquote>
+              <blockquote class="disputant-quote">Act only according to that maxim by which you can at the same time will that it should become a universal law.</blockquote>
             </div>
             <div class="disputant-work">- Groundwork of the Metaphysics of Morals</div>
-            <p class="disputant-style">Tests every proposal against universal law and the treatment of persons as ends, never means.</p>
-          </div>
-        </article>
-
-        <article class="disputant-row" style="--person-color: #dc2626">
-          <div class="disputant-mark">
-            <div class="disputant-initial">M</div>
-            <div class="disputant-dates">1806 - 1873</div>
-          </div>
-          <div>
-            <h3>John Stuart Mill</h3>
-            <div class="disputant-framework">Utilitarianism</div>
-            <div class="disputant-quote-wrap">
-              <blockquote class="disputant-quote">It is better to be a human being dissatisfied than a pig satisfied; better to be Socrates dissatisfied than a fool satisfied.</blockquote>
-            </div>
-            <div class="disputant-work">- Utilitarianism</div>
-            <p class="disputant-style">Calculates aggregate welfare, favoring higher pleasures over lower ones.</p>
+            <p class="disputant-style">Tests every proposal against universal law and the treatment of persons as ends, never merely as means.</p>
           </div>
         </article>
 
@@ -1105,40 +1352,56 @@
               <blockquote class="disputant-quote">There are no moral phenomena at all, only a moral interpretation of phenomena.</blockquote>
             </div>
             <div class="disputant-work">- Beyond Good and Evil</div>
-            <p class="disputant-style">Rejects universal duty and utilitarian calculus alike as symptoms of herd morality.</p>
+            <p class="disputant-style">Rejects universal duty and rational systems alike as symptoms of herd morality dressed as virtue.</p>
           </div>
         </article>
 
         <article class="disputant-row" style="--person-color: #a9784f">
           <div class="disputant-mark">
-            <div class="disputant-initial">C</div>
-            <div class="disputant-dates">1913 - 1960</div>
+            <div class="disputant-initial">A</div>
+            <div class="disputant-dates">384 - 322 BC</div>
           </div>
           <div>
-            <h3>Albert Camus</h3>
-            <div class="disputant-framework">Absurdism</div>
+            <h3>Aristotle</h3>
+            <div class="disputant-framework">Virtue Ethics</div>
             <div class="disputant-quote-wrap">
-              <blockquote class="disputant-quote">I rebel - therefore we exist.</blockquote>
+              <blockquote class="disputant-quote">We are what we repeatedly do. Excellence, then, is not an act, but a habit.</blockquote>
             </div>
-            <div class="disputant-work">- The Rebel</div>
-            <p class="disputant-style">Argues from lucidity - no illusions, no despair, only revolt.</p>
+            <div class="disputant-work">- Nicomachean Ethics</div>
+            <p class="disputant-style">Seeks the golden mean and human flourishing - virtue is not a rule but a practiced character.</p>
+          </div>
+        </article>
+
+        <article class="disputant-row" style="--person-color: #dc2626">
+          <div class="disputant-mark">
+            <div class="disputant-initial">P</div>
+            <div class="disputant-dates">428 - 348 BC</div>
+          </div>
+          <div>
+            <h3>Plato</h3>
+            <div class="disputant-framework">Idealism</div>
+            <div class="disputant-quote-wrap">
+              <blockquote class="disputant-quote">The measure of a man is what he does with power.</blockquote>
+            </div>
+            <div class="disputant-work">- Republic</div>
+            <p class="disputant-style">Looks beyond appearances to eternal Forms - truth is not found in this world but beyond it.</p>
           </div>
         </article>
 
         <aside class="disputant-row" style="--person-color: #9c2c53">
           <div class="disputant-mark">
-            <div class="disputant-initial">S</div>
-            <div class="disputant-dates">c. 470 - 399 BC</div>
+            <div class="disputant-initial">C</div>
+            <div class="disputant-dates">1913 - 1960</div>
           </div>
           <div>
             <div class="arbiter-label">The Arbiter</div>
-            <h3>Socrates</h3>
-            <div class="disputant-framework">The Arbiter</div>
+            <h3>Albert Camus</h3>
+            <div class="disputant-framework">Absurdism - The Arbiter</div>
             <div class="disputant-quote-wrap">
-              <blockquote class="disputant-quote">I know that I know nothing.</blockquote>
+              <blockquote class="disputant-quote">One must imagine Sisyphus happy.</blockquote>
             </div>
-            <div class="disputant-work">- Apology (Plato)</div>
-            <p class="disputant-style">Neither attacks nor defends - questions each premise until one position stands, or none does.</p>
+            <div class="disputant-work">- The Myth of Sisyphus</div>
+            <p class="disputant-style">Commits to no system. Judges not by doctrine but by honesty, courage, and clarity of argument.</p>
           </div>
         </aside>
       </section>
@@ -1153,53 +1416,55 @@
               <div>Question</div>
               <div>Verdict</div>
             </div>
-            <div class="history-row">
-              <div class="history-no">XLVII</div>
-              <div class="history-question">"Does a promise made under duress still bind the promisor?"</div>
-              <div class="history-verdict">Kant's duty holds; Mill dissents on grounds of foreseeable harm.</div>
-            </div>
-            <div class="history-row">
-              <div class="history-no">XLVI</div>
-              <div class="history-question">"Is rebellion against an absurd universe a moral obligation?"</div>
-              <div class="history-verdict">Camus's lucid revolt prevails; Nietzsche's affirmation a close second.</div>
-            </div>
-            <div class="history-row">
-              <div class="history-no">XLV</div>
-              <div class="history-question">"Can suffering be justified if it forges a stronger self?"</div>
-              <div class="history-verdict">No consensus reached; the tribunal divided on the value of strength.</div>
-            </div>
-            <div class="history-row">
-              <div class="history-no">XLIV</div>
-              <div class="history-question">"Should a promise to the dead be kept when it harms the living?"</div>
-              <div class="history-verdict">Mill's calculus prevails; Kant's objection entered as dissent.</div>
-            </div>
-            <div class="history-row">
-              <div class="history-no">XLIII</div>
-              <div class="history-question">"Does pleasure admit degrees of worth, or only quantity?"</div>
-              <div class="history-verdict">Mill's higher pleasures upheld over Nietzsche's objection.</div>
-            </div>
-            <div class="history-row">
-              <div class="history-no">XLII</div>
-              <div class="history-question">"Is truth-telling a duty even when the truth kills hope?"</div>
-              <div class="history-verdict">Kant's maxim affirmed; Camus warns of its cruelty.</div>
-            </div>
           </div>
         </div>
       </section>
     </main>
 
+    <div class="verdict-modal" id="verdictModal" aria-hidden="true">
+      <div class="verdict-dialog" role="dialog" aria-modal="true" aria-labelledby="verdictModalTitle">
+        <div class="verdict-dialog-head">
+          <div class="verdict-dialog-title" id="verdictModalTitle">Full Verdict</div>
+          <button class="verdict-close" id="verdictClose" type="button" aria-label="Close verdict">x</button>
+        </div>
+        <div class="verdict-dialog-body">
+          <div class="verdict-dialog-question" id="verdictModalQuestion"></div>
+          <div class="verdict-dialog-text" id="verdictModalText"></div>
+        </div>
+      </div>
+    </div>
+
     <footer>AGON - every voice above is a language model instructed to argue, not a philosopher's testimony.</footer>
 
     <script>
       let running = false;
-      let caseNo = 48;
+      let cancelled = false;
+      let activeController = null;
+      let caseNo = 1;
+      const arenaGrid = document.querySelector(".arena-grid");
       const transcriptBody = document.getElementById("transcriptBody");
       const emptyState = document.getElementById("emptyState");
       const phaseText = document.getElementById("phaseText");
       const phaseDot = document.getElementById("phaseDot");
       const startButton = document.getElementById("startButton");
+      const cancelButton = document.getElementById("cancelButton");
       const questionInput = document.getElementById("questionInput");
       const historyList = document.getElementById("historyList");
+      const selectionMode = document.getElementById("selectionMode");
+      const selectorPanel = document.getElementById("selectorPanel");
+      const judgeOptions = document.getElementById("judgeOptions");
+      const solverOptions = document.getElementById("solverOptions");
+      const verdictModal = document.getElementById("verdictModal");
+      const verdictModalQuestion = document.getElementById("verdictModalQuestion");
+      const verdictModalText = document.getElementById("verdictModalText");
+      const verdictClose = document.getElementById("verdictClose");
+      const agentOptions = [
+        { id: "agent_1", name: "Kant" },
+        { id: "agent_2", name: "Nietzsche" },
+        { id: "agent_3", name: "Aristotle" },
+        { id: "agent_4", name: "Plato" },
+        { id: "agent_5", name: "Camus" }
+      ];
 
       function toRoman(num) {
         const vals = [
@@ -1252,9 +1517,19 @@
 
       function typeTurn(entry) {
         return new Promise((resolve) => {
+          if (cancelled) {
+            resolve();
+            return;
+          }
           const node = addTurn({ ...entry, text: "", live: true });
           let i = 0;
           const interval = window.setInterval(() => {
+            if (cancelled) {
+              window.clearInterval(interval);
+              node.classList.remove("cursor");
+              resolve();
+              return;
+            }
             i += 5;
             node.textContent = entry.text.slice(0, i);
             transcriptBody.scrollTop = transcriptBody.scrollHeight;
@@ -1269,13 +1544,163 @@
 
       function verdictFromTurns(turns) {
         const verdict = turns.find((turn) => turn.role === "Verdict");
-        const match = verdict?.text?.match(/VERDICT:\s*(.+)/i);
+        const match = verdict?.text?.match(/Verdict:\s*([\s\S]+)/i);
         return match ? match[1].trim() : "Proceedings closed; verdict entered into the record.";
+      }
+
+      function shortVerdict(text) {
+        const cleaned = text.replace(/\s+/g, " ").trim();
+        if (!cleaned) return "Verdict entered.";
+        return "View verdict";
+      }
+
+      function openVerdictModal(question, verdict) {
+        verdictModalQuestion.textContent = `"${question}"`;
+        verdictModalText.textContent = verdict;
+        verdictModal.classList.add("active");
+        verdictModal.setAttribute("aria-hidden", "false");
+        verdictClose.focus();
+      }
+
+      function closeVerdictModal() {
+        verdictModal.classList.remove("active");
+        verdictModal.setAttribute("aria-hidden", "true");
+      }
+
+      function enterProceedingsMode() {
+        arenaGrid.classList.add("proceedings-mode");
+      }
+
+      function exitProceedingsMode() {
+        arenaGrid.classList.remove("proceedings-mode");
+      }
+
+      function cancelProceedings() {
+        if (!running) return;
+        cancelled = true;
+        activeController?.abort();
+        phaseText.textContent = "Proceedings Cancelled";
+        addTurn({
+          name: "Agon",
+          role: "System Notice",
+          color: "#9c2c53",
+          text: "Proceedings cancelled."
+        });
+        exitProceedingsMode();
+      }
+
+      function createHistoryRow(entry) {
+        const row = document.createElement("div");
+        row.className = "history-row";
+        row.innerHTML = `
+          <div class="history-no"></div>
+          <div class="history-question"></div>
+          <div class="history-verdict"><button class="history-verdict-button" type="button"></button></div>
+        `;
+        const caseNumber = Number(entry.case_no) || caseNo;
+        const question = String(entry.question || "");
+        const verdict = String(entry.verdict || "Verdict entered.");
+        row.querySelector(".history-no").textContent = toRoman(caseNumber);
+        row.querySelector(".history-question").textContent = `"${question}"`;
+        const verdictButton = row.querySelector(".history-verdict-button");
+        verdictButton.textContent = shortVerdict(verdict);
+        verdictButton.title = "Open full verdict";
+        verdictButton.addEventListener("click", () => openVerdictModal(question, verdict));
+        return row;
+      }
+
+      function renderHistory(history) {
+        historyList.querySelectorAll(".history-row").forEach((row) => row.remove());
+        const entries = [...history].sort((a, b) => Number(b.case_no || 0) - Number(a.case_no || 0));
+        const header = historyList.querySelector(".history-head");
+        let anchor = header;
+        for (const entry of entries) {
+          const row = createHistoryRow(entry);
+          anchor.after(row);
+          anchor = row;
+        }
+        const maxCaseNo = entries.reduce((max, entry) => Math.max(max, Number(entry.case_no) || 0), 0);
+        caseNo = maxCaseNo + 1;
+        document.getElementById("caseId").textContent = toRoman(caseNo);
+      }
+
+      async function loadHistory() {
+        try {
+          const response = await fetch("/api/history");
+          const payload = await response.json();
+          if (!response.ok) throw new Error(payload.error || "History could not be loaded.");
+          renderHistory(Array.isArray(payload.history) ? payload.history : []);
+        } catch (_error) {
+          renderHistory([]);
+        }
+      }
+
+      async function saveHistoryEntry(question, verdict) {
+        const response = await fetch("/api/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, verdict })
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || "History could not be saved.");
+        return payload.entry;
+      }
+
+      function renderSelectorOptions() {
+        judgeOptions.innerHTML = "";
+        solverOptions.innerHTML = "";
+        for (const agent of agentOptions) {
+          const judgeLabel = document.createElement("label");
+          judgeLabel.innerHTML = `
+            <input type="radio" name="judgeAgent" value="${agent.id}" ${agent.id === "agent_5" ? "checked" : ""}>
+            ${agent.name}
+          `;
+          judgeOptions.appendChild(judgeLabel);
+
+          const solverLabel = document.createElement("label");
+          solverLabel.innerHTML = `
+            <input type="checkbox" name="solverAgent" value="${agent.id}" ${
+              ["agent_1", "agent_2", "agent_3"].includes(agent.id) ? "checked" : ""
+            }>
+            ${agent.name}
+          `;
+          solverOptions.appendChild(solverLabel);
+        }
+        syncSelectorState();
+      }
+
+      function selectedJudge() {
+        return document.querySelector('input[name="judgeAgent"]:checked')?.value || "agent_5";
+      }
+
+      function selectedSolvers() {
+        return [...document.querySelectorAll('input[name="solverAgent"]:checked')].map((input) => input.value);
+      }
+
+      function syncSelectorState() {
+        const manual = selectionMode.value === "selector";
+        selectorPanel.classList.toggle("active", manual);
+        const judge = selectedJudge();
+        document.querySelectorAll('input[name="solverAgent"]').forEach((input) => {
+          if (input.value === judge) input.checked = false;
+          input.disabled = input.value === judge;
+        });
+      }
+
+      function phaseForRole(role) {
+        if (role === "Role Assignment") return "I. Role Assignment";
+        if (role.includes("Initial Solution")) return "II. Independent Solutions";
+        if (role.startsWith("Review of")) return "III. Peer Review";
+        if (role.includes("Refinement")) return "IV. Refinement";
+        if (role === "Verdict") return "V. Verdict";
+        return "Pipeline";
       }
 
       async function startProceedings() {
         if (running) return;
         running = true;
+        cancelled = false;
+        activeController = new AbortController();
         const question =
           questionInput.value.trim() ||
           "Is it permissible to lie to a murderer at the door, to protect an innocent life?";
@@ -1285,21 +1710,32 @@
         startButton.textContent = "Proceedings in Session";
         phaseDot.style.display = "inline-block";
         phaseText.textContent = "Awaiting model responses";
+        enterProceedingsMode();
 
         try {
+          const body = { question, selection_mode: selectionMode.value };
+          if (selectionMode.value === "selector") {
+            const solvers = selectedSolvers();
+            if (solvers.length < 2 || solvers.length > 4) {
+              throw new Error("Choose between 2 and 4 solvers.");
+            }
+            body.selected_judge = selectedJudge();
+            body.selected_solvers = solvers;
+          }
           const response = await fetch("/api/debate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question })
+            body: JSON.stringify(body),
+            signal: activeController.signal
           });
           const payload = await response.json();
+          if (cancelled) return;
           if (!response.ok) throw new Error(payload.error || "The debate API returned an error.");
 
           const turns = Array.isArray(payload.turns) ? payload.turns : [];
           for (const turn of turns) {
-            if (turn.role === "Rebuttal") phaseText.textContent = "II. Cross-Examination";
-            else if (turn.role === "Verdict") phaseText.textContent = "III. Verdict";
-            else phaseText.textContent = "I. Opening Statements";
+            if (cancelled) return;
+            phaseText.textContent = phaseForRole(turn.role || "");
             await typeTurn({
               name: turn.speaker,
               role: turn.role,
@@ -1308,20 +1744,16 @@
             });
           }
 
+          if (cancelled) return;
           phaseText.textContent = "Proceedings Closed";
-          const row = document.createElement("div");
-          row.className = "history-row";
-          row.innerHTML = `
-            <div class="history-no">${toRoman(caseNo)}</div>
-            <div class="history-question"></div>
-            <div class="history-verdict"></div>
-          `;
-          row.querySelector(".history-question").textContent = `"${question}"`;
-          row.querySelector(".history-verdict").textContent = verdictFromTurns(turns);
-          historyList.prepend(row);
-          caseNo += 1;
+          const fullVerdict = verdictFromTurns(turns);
+          const historyEntry = await saveHistoryEntry(question, fullVerdict);
+          const row = createHistoryRow(historyEntry);
+          historyList.querySelector(".history-head").after(row);
+          caseNo = Math.max(caseNo, Number(historyEntry.case_no || 0) + 1);
           document.getElementById("caseId").textContent = toRoman(caseNo);
         } catch (error) {
+          if (cancelled || error.name === "AbortError") return;
           phaseText.textContent = "Proceedings Interrupted";
           addTurn({
             name: "Agon",
@@ -1333,7 +1765,9 @@
           phaseDot.style.display = "none";
           startButton.disabled = false;
           startButton.textContent = "Open Proceedings";
+          if (!cancelled) exitProceedingsMode();
           running = false;
+          activeController = null;
         }
       }
 
@@ -1344,9 +1778,28 @@
         });
       });
 
+      renderSelectorOptions();
+      loadHistory();
+      selectionMode.addEventListener("change", syncSelectorState);
+      judgeOptions.addEventListener("change", syncSelectorState);
+      verdictClose.addEventListener("click", closeVerdictModal);
+      verdictModal.addEventListener("click", (event) => {
+        if (event.target === verdictModal) closeVerdictModal();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && verdictModal.classList.contains("active")) {
+          closeVerdictModal();
+        }
+      });
+
       document.getElementById("startButton").addEventListener("click", startProceedings);
+      cancelButton.addEventListener("click", cancelProceedings);
       document.getElementById("resetButton").addEventListener("click", () => {
         running = false;
+        cancelled = true;
+        activeController?.abort();
+        activeController = null;
+        exitProceedingsMode();
         transcriptBody.innerHTML = `
           <div class="empty-state" id="emptyState">
             <div>

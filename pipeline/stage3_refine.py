@@ -1,7 +1,8 @@
 import json
 from typing import Any, Dict
 from pipeline.agent_registry import get_agent
-from pipeline.llm_client import call_llm_json
+from pipeline.llm_client import call_llm_model
+from pipeline.schemas import RefinedSolution
 
 def refine_solutions(
     problem: Dict[str, Any],
@@ -23,6 +24,9 @@ You already gave an initial solution and now received peer reviews.
 Address each critique explicitly.
 Accept valid critiques and revise your solution.
 Reject invalid critiques only if you clearly justify why.
+Be concise and structured. Limit changes_made to at most 3 items.
+Limit refined_solution to 3-5 short numbered points, each one sentence.
+Do not write an essay.
 
 Return only valid JSON with exactly this structure:
 {{
@@ -36,8 +40,8 @@ Return only valid JSON with exactly this structure:
       "accepted": true
     }}
   ],
-  "refined_solution": "improved step-by-step solution in at most 8 sentences",
-  "refined_answer": "final concise answer",
+  "refined_solution": "3-5 short numbered points, each one sentence",
+  "refined_answer": "final answer in one sentence",
   "confidence": 0.0
 }}
 """
@@ -50,9 +54,11 @@ Peer reviews you received:
 {json.dumps(received_reviews, indent=2, ensure_ascii=False)}
 Now refine your solution.
 """
-        refinements[solver_role] = call_llm_json(
+        refinement = call_llm_model(
             system_prompt,
             user_prompt,
-            max_output_tokens=4000,
+            RefinedSolution,
+            max_output_tokens=3500,
         )
+        refinements[solver_role] = refinement.model_dump()
     return refinements

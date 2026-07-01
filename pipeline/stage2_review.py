@@ -1,7 +1,8 @@
 import json
 from typing import Any, Dict
 from pipeline.agent_registry import get_agent
-from pipeline.llm_client import call_llm_json
+from pipeline.llm_client import call_llm_model
+from pipeline.schemas import PeerReview
 
 def generate_peer_reviews(
     problem: Dict[str, Any],
@@ -9,12 +10,8 @@ def generate_peer_reviews(
     solutions: Dict[str, Any],
 ) -> Dict[str, Any]:
 
-    reviews: Dict[str, Any] = {
-        "solver_1": {},
-        "solver_2": {},
-        "solver_3": {},
-    }
-    solver_roles = ["solver_1", "solver_2", "solver_3"]
+    solver_roles = list(roles["solver_roles"].keys())
+    reviews: Dict[str, Any] = {solver_role: {} for solver_role in solver_roles}
 
     for reviewer_role in solver_roles:
         reviewer_agent_id = roles["solver_roles"][reviewer_role]
@@ -31,6 +28,8 @@ You are acting as {reviewer_role}.
 Your task is to critically review {target_role}'s solution.
 Be fair, strict, and specific.
 Look for logical errors, calculation mistakes, missing cases, unsupported claims, or unclear reasoning.
+Be concise. Use at most 2 strengths, 2 weaknesses, 2 errors, and 2 suggested changes.
+Each list item must be one short sentence.
 
 Return only valid JSON with exactly this structure:
 {{
@@ -58,9 +57,11 @@ Solution to review:
 {json.dumps(target_solution, indent=2, ensure_ascii=False)}
 Review this solution.
 """
-            reviews[target_role][reviewer_role] = call_llm_json(
+            review = call_llm_model(
                 system_prompt,
                 user_prompt,
+                PeerReview,
                 max_output_tokens=3000,
             )
+            reviews[target_role][reviewer_role] = review.model_dump()
     return reviews

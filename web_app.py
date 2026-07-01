@@ -3,228 +3,198 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+import os
+import re
+from datetime import datetime, timezone
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
 from typing import Any
 
-from openai import OpenAI
-
-from config import OPENAI_API_KEY, OPENAI_MODEL, ROOT_DIR
+from config import DATA_DIR, ROOT_DIR
+from main import run_single_problem
 
 
 WEBSITE_DIR = ROOT_DIR / "website"
+HISTORY_PATH = DATA_DIR / "history.json"
 DEFAULT_HOST = "127.0.0.1"
-DEFAULT_PORT = 8000
+DEFAULT_PORT = int(os.getenv("AGON_PORT", "8000"))
 
 
-@dataclass(frozen=True)
-class DebateAgent:
-    id: str
-    name: str
-    role_name: str
-    color: str
-    framework: str
-    system_prompt: str
+AGENT_META = {
+    "agent_1": {"name": "Kant", "color": "#141414"},
+    "agent_2": {"name": "Nietzsche", "color": "#7c5cfc"},
+    "agent_3": {"name": "Aristotle", "color": "#a9784f"},
+    "agent_4": {"name": "Plato", "color": "#dc2626"},
+    "agent_5": {"name": "Camus", "color": "#9c2c53"},
+}
 
 
-AGENTS = [
-    DebateAgent(
-        id="kant",
-        name="Immanuel Kant",
-        role_name="Opening Statement",
-        color="#141414",
-        framework="Deontology",
-        system_prompt=(
-            "You are an AI reasoning agent role-playing Immanuel Kant inside a formal philosophical "
-            "debate chamber called Agon. Argue from deontology, universal law, duty, autonomy, and "
-            "the treatment of persons as ends. Do not claim to be the historical person."
-        ),
-    ),
-    DebateAgent(
-        id="mill",
-        name="John Stuart Mill",
-        role_name="Opening Statement",
-        color="#dc2626",
-        framework="Utilitarianism",
-        system_prompt=(
-            "You are an AI reasoning agent role-playing John Stuart Mill inside a formal philosophical "
-            "debate chamber called Agon. Argue from utility, liberty, welfare, consequences, and higher "
-            "pleasures. Do not claim to be the historical person."
-        ),
-    ),
-    DebateAgent(
-        id="nietzsche",
-        name="Friedrich Nietzsche",
-        role_name="Opening Statement",
-        color="#7c5cfc",
-        framework="Genealogical critique",
-        system_prompt=(
-            "You are an AI reasoning agent role-playing Friedrich Nietzsche inside a formal philosophical "
-            "debate chamber called Agon. Argue forcefully, expose hidden values, resist herd morality, "
-            "and challenge weak assumptions. Do not claim to be the historical person."
-        ),
-    ),
-    DebateAgent(
-        id="camus",
-        name="Albert Camus",
-        role_name="Opening Statement",
-        color="#a9784f",
-        framework="Absurdism",
-        system_prompt=(
-            "You are an AI reasoning agent role-playing Albert Camus inside a formal philosophical "
-            "debate chamber called Agon. Argue from lucidity, revolt, limits, human solidarity, and "
-            "the refusal of false consolation. Do not claim to be the historical person."
-        ),
-    ),
-]
-
-JUDGE = DebateAgent(
-    id="socrates",
-    name="Socrates",
-    role_name="Verdict",
-    color="#9c2c53",
-    framework="Elenctic judgment",
-    system_prompt=(
-        "You are an AI reasoning agent role-playing Socrates as neutral arbiter in a formal "
-        "philosophical debate chamber called Agon. Question premises, identify contradictions, "
-        "weigh the arguments, and render a concise judgment. Do not claim to be the historical person."
-    ),
-)
+def _agent_meta(agent_id: str) -> dict[str, str]:
+    return AGENT_META.get(agent_id, {"name": agent_id, "color": "#7c5cfc"})
 
 
-def _client() -> OpenAI:
-    if not OPENAI_API_KEY:
-        raise RuntimeError("OPENAI_API_KEY is not set. Add it to .env before opening proceedings.")
-    return OpenAI(api_key=OPENAI_API_KEY)
+def _problem_from_question(question: str) -> dict[str, str]:
+    return {
+        "id": "frontend_case",
+        "category": "frontend",
+        "difficulty": "unspecified",
+        "question": question,
+        "expected_answer": "",
+        "grading_notes": "",
+    }
 
 
-def _response_text(response: Any) -> str:
-    text = getattr(response, "output_text", None)
-    if text:
-        return str(text).strip()
+def _assignment_text(run: dict[str, Any]) -> str:
+    roles = run["assigned_roles"]
+    judge = _agent_meta(roles["judge"])["name"]
+    solver_names = [
+        f"{role}: {_agent_meta(agent_id)['name']}"
+        for role, agent_id in roles["solver_roles"].items()
+    ]
+    selector_note = f" Reasoning: {roles['selector_reasoning']}" if roles.get("selector_reasoning") else ""
+    return (
+        f"Mode: {roles['selection_mode']}. Judge: {judge}. "
+        f"Solvers: {'; '.join(solver_names)}. Rule: {roles['assignment_rule']}."
+        f"{selector_note}"
+    )
 
-    chunks: list[str] = []
-    for item in getattr(response, "output", []) or []:
-        for content in getattr(item, "content", []) or []:
-            value = getattr(content, "text", None)
-            if value:
-                chunks.append(str(value))
-    return "\n".join(chunks).strip()
+
+def _review_summary(review: dict[str, Any]) -> str:
+    weaknesses = "; ".join(review.get("weaknesses", [])[:2]) or "No major weakness recorded."
+    changes = "; ".join(review.get("suggested_changes", [])[:2]) or "No specific change requested."
+    return (
+        f"Assessment: {review.get('overall_assessment', 'unknown')}. "
+        f"Weaknesses: {weaknesses}. Suggested changes: {changes}"
+    )
 
 
-def _complete(client: OpenAI, system_prompt: str, user_prompt: str) -> str:
+def _brief_text(value: Any, max_chars: int = 900) -> str:
+    lines = [" ".join(line.split()) for line in str(value or "").splitlines()]
+    text = "\n".join(line for line in lines if line)
+    if not text:
+        return ""
+    text = re.sub(r"\s+(\d+\.)", r"\n\1", text)
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 1].rsplit(" ", 1)[0] + "."
+
+
+def _confidence(value: Any) -> str:
     try:
-        response = client.responses.create(
-            model=OPENAI_MODEL,
-            input=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-        )
-        text = _response_text(response)
-        if text:
-            return text
-    except AttributeError:
-        pass
+        return f"{float(value):.2f}"
+    except (TypeError, ValueError):
+        return "n/a"
 
-    response = client.chat.completions.create(
-        model=OPENAI_MODEL,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
+
+def load_history() -> list[dict[str, Any]]:
+    if not HISTORY_PATH.exists():
+        return []
+    with HISTORY_PATH.open("r", encoding="utf-8") as file:
+        history = json.load(file)
+    if not isinstance(history, list):
+        raise ValueError("history.json must contain a list.")
+    return history
+
+
+def save_history(history: list[dict[str, Any]]) -> None:
+    HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with HISTORY_PATH.open("w", encoding="utf-8") as file:
+        json.dump(history, file, indent=2, ensure_ascii=False)
+
+
+def save_history_entry(question: str, verdict: str) -> dict[str, Any]:
+    history = load_history()
+    case_no = max((int(entry.get("case_no", 0)) for entry in history), default=0) + 1
+    entry = {
+        "case_no": case_no,
+        "question": question,
+        "verdict": verdict,
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    history.append(entry)
+    save_history(history)
+    return entry
+
+
+def run_debate(
+    question: str,
+    selection_mode: str = "auto",
+    selected_judge: str | None = None,
+    selected_solvers: list[str] | None = None,
+) -> dict[str, Any]:
+    run = run_single_problem(
+        _problem_from_question(question),
+        selection_mode=selection_mode,
+        selected_judge=selected_judge,
+        selected_solvers=selected_solvers,
     )
-    return (response.choices[0].message.content or "").strip()
+    turns: list[dict[str, str]] = [
+        {
+            "speaker": "Agon",
+            "role": "Role Assignment",
+            "color": "#7c5cfc",
+            "text": _assignment_text(run),
+        }
+    ]
 
-
-def _compile_transcript(turns: list[dict[str, str]]) -> str:
-    return "\n\n".join(f"{turn['speaker']} ({turn['role']}): {turn['text']}" for turn in turns)
-
-
-def _agent_prompt(agent: DebateAgent, role_name: str, question: str, transcript: str, phase: str) -> str:
-    if phase == "rebuttal":
-        instruction = (
-            "Directly engage specific claims already made. Name the weak point before restating "
-            "your own position."
-        )
-    else:
-        instruction = "State your position clearly and argue from your framework's first principles."
-
-    return "\n".join(
-        [
-            f"Question before the tribunal: {question}",
-            "",
-            "Transcript so far:",
-            transcript or "(You are the first to speak.)",
-            "",
-            f"Deliver {agent.name}'s {role_name}. {instruction}",
-            "Write 80-120 words, first person, as spoken argument only.",
-            "No markdown, no stage directions, no name label, no surrounding quotation marks.",
-        ]
-    )
-
-
-def _judge_prompt(question: str, transcript: str) -> str:
-    return "\n".join(
-        [
-            f"Question before the tribunal: {question}",
-            "",
-            "Full transcript:",
-            transcript,
-            "",
-            "Examine the strongest and weakest points in 100-150 words, first person as Socrates.",
-            "Use brief questioning before ruling. No markdown, no stage directions.",
-            'End with one final line starting exactly with "VERDICT:" followed by one sentence under 18 words.',
-        ]
-    )
-
-
-def run_debate(question: str) -> list[dict[str, str]]:
-    client = _client()
-    turns: list[dict[str, str]] = []
-
-    for agent in AGENTS:
-        text = _complete(
-            client,
-            agent.system_prompt,
-            _agent_prompt(agent, agent.role_name, question, _compile_transcript(turns), "opening"),
-        )
+    for solver_role, solution in run["initial_solutions"].items():
+        meta = _agent_meta(solution["agent_id"])
         turns.append(
             {
-                "speaker": agent.name,
-                "role": agent.role_name,
-                "color": agent.color,
-                "text": text or "[Silence.]",
+                "speaker": meta["name"],
+                "role": f"{solver_role} Initial Solution",
+                "color": meta["color"],
+                "text": (
+                    f"Reasoning:\n{_brief_text(solution['solution'])}\n\n"
+                    f"Answer:\n{_brief_text(solution['answer'], 300)}\n\n"
+                    f"Confidence: {_confidence(solution.get('confidence'))}"
+                ),
             }
         )
 
-    for agent in AGENTS:
-        text = _complete(
-            client,
-            agent.system_prompt,
-            _agent_prompt(agent, "Rebuttal", question, _compile_transcript(turns), "rebuttal"),
-        )
+    for target_role, reviews in run["peer_reviews"].items():
+        for reviewer_role, review in reviews.items():
+            reviewer_agent_id = run["assigned_roles"]["solver_roles"][reviewer_role]
+            meta = _agent_meta(reviewer_agent_id)
+            turns.append(
+                {
+                    "speaker": meta["name"],
+                    "role": f"Review of {target_role}",
+                    "color": meta["color"],
+                    "text": _review_summary(review),
+                }
+            )
+
+    for solver_role, refinement in run["refinements"].items():
+        meta = _agent_meta(refinement["agent_id"])
         turns.append(
             {
-                "speaker": agent.name,
-                "role": "Rebuttal",
-                "color": agent.color,
-                "text": text or "[Silence.]",
+                "speaker": meta["name"],
+                "role": f"{solver_role} Refinement",
+                "color": meta["color"],
+                "text": (
+                    f"Revision:\n{_brief_text(refinement['refined_solution'])}\n\n"
+                    f"Refined answer:\n{_brief_text(refinement['refined_answer'], 300)}\n\n"
+                    f"Confidence: {_confidence(refinement.get('confidence'))}"
+                ),
             }
         )
 
-    text = _complete(client, JUDGE.system_prompt, _judge_prompt(question, _compile_transcript(turns)))
+    judge = run["judge_decision"]
+    judge_meta = _agent_meta(judge["judge_agent_id"])
     turns.append(
         {
-            "speaker": JUDGE.name,
-            "role": JUDGE.role_name,
-            "color": JUDGE.color,
-            "text": text or "[Silence.]",
+            "speaker": judge_meta["name"],
+            "role": "Verdict",
+            "color": judge_meta["color"],
+            "text": (
+                f"Reasoning:\n{_brief_text(judge['reasoning'], 600)}\n\n"
+                f"Winner: {judge['winner']}\n\n"
+                f"Verdict:\n{_brief_text(judge['final_answer'], 400)}"
+            ),
         }
     )
-    return turns
+    return {"turns": turns, "run": run}
 
 
 class AgonHandler(SimpleHTTPRequestHandler):
@@ -236,12 +206,32 @@ class AgonHandler(SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self) -> None:
-        if self.path in {"/", ""}:
+        path = self.path.split("?", 1)[0]
+        if path == "/api/history":
+            self._send_json({"history": load_history()})
+            return
+        if path in {"/", ""}:
             self.path = "/index.html"
         super().do_GET()
 
     def do_POST(self) -> None:
-        if self.path != "/api/debate":
+        path = self.path.split("?", 1)[0]
+        if path == "/api/history":
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+                payload = json.loads(self.rfile.read(length) or b"{}")
+                question = str(payload.get("question", "")).strip()
+                verdict = str(payload.get("verdict", "")).strip()
+                if not question:
+                    raise ValueError("Question is required.")
+                if not verdict:
+                    raise ValueError("Verdict is required.")
+                self._send_json({"entry": save_history_entry(question, verdict)})
+            except Exception as exc:
+                self._send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if path != "/api/debate":
             self._send_json({"error": "Not found"}, HTTPStatus.NOT_FOUND)
             return
 
@@ -249,10 +239,26 @@ class AgonHandler(SimpleHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", "0"))
             payload = json.loads(self.rfile.read(length) or b"{}")
             question = str(payload.get("question", "")).strip()
+            selection_mode = str(payload.get("selection_mode", "auto")).strip() or "auto"
+            selected_judge = payload.get("selected_judge")
+            selected_solvers = payload.get("selected_solvers")
             if not question:
                 raise ValueError("Question is required.")
-            turns = run_debate(question)
-            self._send_json({"turns": turns})
+            if selection_mode not in {"auto", "selector"}:
+                raise ValueError("selection_mode must be 'auto' or 'selector'.")
+            if selected_judge is not None:
+                selected_judge = str(selected_judge)
+            if selected_solvers is not None:
+                if not isinstance(selected_solvers, list):
+                    raise ValueError("selected_solvers must be a list.")
+                selected_solvers = [str(agent_id) for agent_id in selected_solvers]
+            result = run_debate(
+                question,
+                selection_mode=selection_mode,
+                selected_judge=selected_judge,
+                selected_solvers=selected_solvers,
+            )
+            self._send_json(result)
         except Exception as exc:
             self._send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
 
