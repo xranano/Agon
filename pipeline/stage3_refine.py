@@ -32,11 +32,11 @@ Return only valid JSON with exactly this structure:
   "changes_made": [
     {{
       "critique": "summary of critique",
-      "response": "how you handled it",
+      "response": "concise response to the critique",
       "accepted": true
     }}
   ],
-  "refined_solution": "improved step-by-step solution",
+  "refined_solution": "improved step-by-step solution in at most 8 sentences",
   "refined_answer": "final concise answer",
   "confidence": 0.0
 }}
