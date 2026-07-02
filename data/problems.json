@@ -1,256 +1,931 @@
 {
-  "categories": [
-    {
-      "id": "mathematical_logical_reasoning",
-      "name": "Mathematical / logical reasoning",
-      "problem_ids": ["prob_001", "prob_002", "prob_003", "prob_004", "prob_005"]
-    },
-    {
-      "id": "physics_scientific_reasoning",
-      "name": "Physics / scientific reasoning",
-      "problem_ids": ["prob_006", "prob_007", "prob_008", "prob_009", "prob_010"]
-    },
-    {
-      "id": "logic_puzzle_constraint_satisfaction",
-      "name": "Logic puzzles / constraint satisfaction",
-      "problem_ids": ["prob_011", "prob_012", "prob_013", "prob_014", "prob_015"]
-    },
-    {
-      "id": "strategic_game_theory_reasoning",
-      "name": "Strategic / game-theory reasoning",
-      "problem_ids": ["prob_016", "prob_017", "prob_018", "prob_019", "prob_020"]
-    },
-    {
-      "id": "philosophical_ethical_reasoning",
-      "name": "Philosophical / ethical reasoning",
-      "problem_ids": ["prob_021", "prob_022", "prob_023", "prob_024", "prob_025"]
-    }
-  ],
+  "_labeling_instructions": "Question stems and why_this_works sketches are candidate construction only. Each of the three team members must independently fill 'annotations' with the tradition they judge strongest FROM THE QUESTION, ideally before over-reading the sketches below. 'expected_strongest_tradition' = the 2/3 majority of annotations. Revise or replace any problem that comes back 3-way split. Verify each why_this_works: if two traditions land on the same position for the same reason, the problem fails the distinctness gate.",
   "problems": [
-  {
-    "id": "prob_001",
-    "category": "mathematical_logical_reasoning",
-    "difficulty": "easy",
-    "question": "A jacket costs $80. The store applies a 25% discount, then charges 10% sales tax on the discounted price. What is the final price?",
-    "expected_answer": "$66.00",
-    "required_concepts": ["25% discount", "$60", "10% tax", "$6", "$66"],
-    "grading_notes": "Correct solution computes the discounted price as $80 * 0.75 = $60, then tax as $60 * 0.10 = $6, final price $66. Accept 66, $66, or $66.00."
-  },
-  {
-    "id": "prob_002",
-    "category": "mathematical_logical_reasoning",
-    "difficulty": "easy",
-    "question": "Solve for x: 3(x - 4) + 2x = 18.",
-    "expected_answer": "x = 6",
-    "required_concepts": ["5x - 12", "5x = 30", "x = 6"],
-    "grading_notes": "Expand to 3x - 12 + 2x = 18, combine to 5x - 12 = 18, then solve x = 6."
-  },
-  {
-    "id": "prob_003",
-    "category": "mathematical_logical_reasoning",
-    "difficulty": "medium",
-    "question": "A fair six-sided die is rolled twice. What is the probability that the sum of the two rolls is 7?",
-    "expected_answer": "1/6",
-    "required_concepts": ["6 favorable outcomes", "36 total outcomes", "1/6"],
-    "grading_notes": "There are 36 ordered outcomes and 6 favorable outcomes: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). Accept 6/36, 1/6, or about 16.7%."
-  },
-  {
-    "id": "prob_004",
-    "category": "mathematical_logical_reasoning",
-    "difficulty": "medium",
-    "question": "A sequence is defined by a_n = 2n^2 - 3n + 1. What is a_5?",
-    "expected_answer": "36",
-    "required_concepts": ["n = 5", "2(25)", "-15", "+1", "36"],
-    "grading_notes": "Substitute n = 5: 2(5^2) - 3(5) + 1 = 50 - 15 + 1 = 36."
-  },
-  {
-    "id": "prob_005",
-    "category": "mathematical_logical_reasoning",
-    "difficulty": "hard",
-    "question": "A rectangle has perimeter 50. Its length is 5 more than its width. What are the dimensions?",
-    "expected_answer": "width 10, length 15",
-    "required_concepts": ["2w + 2(w + 5) = 50", "w = 10", "length = 15"],
-    "grading_notes": "Let width be w and length be w + 5. Then 2w + 2(w + 5) = 50, so 4w + 10 = 50, w = 10, length = 15."
-  },
-  {
-    "id": "prob_006",
-    "category": "physics_scientific_reasoning",
-    "difficulty": "easy",
-    "question": "A car travels 150 kilometers in 3 hours at constant speed. What is its speed?",
-    "expected_answer": "50 km/h",
-    "required_concepts": ["speed = distance / time", "150 / 3", "50 km/h"],
-    "grading_notes": "Use speed = distance divided by time. 150 km / 3 h = 50 km/h."
-  },
-  {
-    "id": "prob_007",
-    "category": "physics_scientific_reasoning",
-    "difficulty": "medium",
-    "question": "An object starts from rest and accelerates at 2 m/s^2 for 5 seconds. Ignoring air resistance, how far does it travel?",
-    "expected_answer": "25 meters",
-    "required_concepts": ["starts from rest", "s = 1/2 at^2", "0.5 * 2 * 25", "25 m"],
-    "grading_notes": "Use s = ut + 1/2 at^2 with u = 0. Distance = 0.5 * 2 * 5^2 = 25 m."
-  },
-  {
-    "id": "prob_008",
-    "category": "physics_scientific_reasoning",
-    "difficulty": "medium",
-    "question": "Which has greater momentum: a 2 kg object moving at 6 m/s or a 5 kg object moving at 2 m/s?",
-    "expected_answer": "The 2 kg object moving at 6 m/s.",
-    "required_concepts": ["p = mv", "2 * 6 = 12", "5 * 2 = 10", "2 kg object"],
-    "grading_notes": "Momentum equals mass times velocity. The first object has 12 kg m/s; the second has 10 kg m/s, so the 2 kg object has greater momentum."
-  },
-  {
-    "id": "prob_009",
-    "category": "physics_scientific_reasoning",
-    "difficulty": "medium",
-    "question": "A sealed syringe full of gas is compressed to half its original volume at constant temperature. What happens to the gas pressure?",
-    "expected_answer": "The pressure doubles.",
-    "required_concepts": ["Boyle's law", "constant temperature", "inverse relationship", "pressure doubles"],
-    "grading_notes": "By Boyle's law, pressure is inversely proportional to volume at constant temperature. Halving volume doubles pressure."
-  },
-  {
-    "id": "prob_010",
-    "category": "physics_scientific_reasoning",
-    "difficulty": "hard",
-    "question": "A 10 ohm resistor and a 20 ohm resistor are connected in parallel to a 12 V battery. What total current is drawn from the battery?",
-    "expected_answer": "1.8 A",
-    "required_concepts": ["parallel", "12/10 = 1.2 A", "12/20 = 0.6 A", "1.8 A"],
-    "grading_notes": "For parallel branches, currents add. Current through 10 ohm resistor is 1.2 A and through 20 ohm resistor is 0.6 A, total 1.8 A."
-  },
-  {
-    "id": "prob_011",
-    "category": "logic_puzzle_constraint_satisfaction",
-    "difficulty": "easy",
-    "question": "All roses are flowers. Some flowers fade quickly. Does it necessarily follow that some roses fade quickly?",
-    "expected_answer": "No, it does not necessarily follow.",
-    "required_concepts": ["invalid inference", "some flowers", "not necessarily roses", "does not follow"],
-    "grading_notes": "The quick-fading flowers may be non-roses. The conclusion is not guaranteed by the premises."
-  },
-  {
-    "id": "prob_012",
-    "category": "logic_puzzle_constraint_satisfaction",
-    "difficulty": "medium",
-    "question": "Three boxes are labeled Apples, Oranges, and Mixed, but every label is wrong. You may draw one fruit from one box. Which labeled box should you draw from to identify all boxes?",
-    "expected_answer": "Draw from the box labeled Mixed.",
-    "required_concepts": ["draw from Mixed", "label is wrong", "single-fruit box", "remaining labels forced"],
-    "grading_notes": "Because every label is wrong, the box labeled Mixed must contain only apples or only oranges. Drawing from it identifies that box and forces the remaining labels."
-  },
-  {
-    "id": "prob_013",
-    "category": "logic_puzzle_constraint_satisfaction",
-    "difficulty": "medium",
-    "question": "A truth-teller tells the truth on Mondays, Wednesdays, and Fridays, and lies on the other days. They say, 'Yesterday I lied.' What day could it be?",
-    "expected_answer": "Monday or Thursday",
-    "required_concepts": ["Monday", "Thursday", "truth day", "lie day"],
-    "grading_notes": "If today is a truth day, yesterday must be a lie day: Monday works. If today is a lie day, yesterday must not be a lie day: Thursday works."
-  },
-  {
-    "id": "prob_014",
-    "category": "logic_puzzle_constraint_satisfaction",
-    "difficulty": "hard",
-    "question": "Four people cross a bridge at night with one flashlight. Their crossing times are 1, 2, 7, and 10 minutes. At most two cross at once, and the flashlight must be carried back and forth. What is the minimum total time?",
-    "expected_answer": "17 minutes",
-    "required_concepts": ["1 and 2 cross", "1 returns", "7 and 10 cross", "2 returns", "17"],
-    "grading_notes": "Optimal sequence: 1&2 cross (2), 1 returns (1), 7&10 cross (10), 2 returns (2), 1&2 cross (2). Total 17 minutes."
-  },
-  {
-    "id": "prob_015",
-    "category": "logic_puzzle_constraint_satisfaction",
-    "difficulty": "hard",
-    "question": "You have 8 identical-looking coins and exactly one is heavier. Using a balance scale, what is the minimum number of weighings needed to guarantee finding the heavy coin?",
-    "expected_answer": "2 weighings",
-    "required_concepts": ["2 weighings", "3 versus 3", "if equal", "if not equal"],
-    "grading_notes": "Weigh 3 coins against 3. If equal, the heavy coin is among the remaining 2 and one more weighing identifies it. If unequal, weigh one coin from the heavier group against another from that group; the result identifies the heavy coin."
-  },
-  {
-    "id": "prob_016",
-    "category": "strategic_game_theory_reasoning",
-    "difficulty": "easy",
-    "question": "In a one-shot prisoner's dilemma, each player gets a better individual payoff by defecting regardless of what the other does, but both would be better off if both cooperated than if both defected. What is the Nash equilibrium?",
-    "expected_answer": "Both players defect.",
-    "required_concepts": ["dominant strategy", "defect", "Nash equilibrium", "both defect"],
-    "grading_notes": "Defection is each player's dominant strategy, so the Nash equilibrium is mutual defection. Do not confuse equilibrium with the socially best outcome."
-  },
-  {
-    "id": "prob_017",
-    "category": "strategic_game_theory_reasoning",
-    "difficulty": "medium",
-    "question": "Two firms choose High or Low price. If both choose High, each earns 5. If both choose Low, each earns 2. If one chooses Low while the other chooses High, Low earns 7 and High earns 0. What is the Nash equilibrium?",
-    "expected_answer": "Both firms choose Low price.",
-    "required_concepts": ["Low dominates High", "7 > 5", "2 > 0", "Low, Low"],
-    "grading_notes": "Low price strictly dominates High for each firm: if the other chooses High, Low gives 7 instead of 5; if the other chooses Low, Low gives 2 instead of 0."
-  },
-  {
-    "id": "prob_018",
-    "category": "strategic_game_theory_reasoning",
-    "difficulty": "medium",
-    "question": "In standard rock-paper-scissors with equal win/loss payoffs, what mixed strategy is a Nash equilibrium?",
-    "expected_answer": "Choose rock, paper, and scissors each with probability 1/3.",
-    "required_concepts": ["mixed strategy", "1/3", "rock", "paper", "scissors"],
-    "grading_notes": "The symmetric mixed Nash equilibrium randomizes uniformly: rock 1/3, paper 1/3, scissors 1/3. Any predictable non-uniform mix can be exploited."
-  },
-  {
-    "id": "prob_019",
-    "category": "strategic_game_theory_reasoning",
-    "difficulty": "hard",
-    "question": "In a second-price sealed-bid auction, the highest bidder wins but pays the second-highest bid. If each bidder knows their own private value, what is the weakly dominant bidding strategy?",
-    "expected_answer": "Bid your true value.",
-    "required_concepts": ["second-price auction", "truthful bidding", "true value", "weakly dominant"],
-    "grading_notes": "In a Vickrey auction, bidding one's true value is weakly dominant because the winner pays the second-highest bid, not their own bid."
-  },
-  {
-    "id": "prob_020",
-    "category": "strategic_game_theory_reasoning",
-    "difficulty": "hard",
-    "question": "In a finite centipede game with perfect information and standard rationality assumptions, what does backward induction predict?",
-    "expected_answer": "The first player stops immediately.",
-    "required_concepts": ["backward induction", "finite game", "last mover stops", "first player stops"],
-    "grading_notes": "Backward induction starts at the final decision, where the last mover stops. This reasoning unravels to the first move, predicting that the first player stops immediately."
-  },
-  {
-    "id": "prob_021",
-    "category": "philosophical_ethical_reasoning",
-    "difficulty": "easy",
-    "question": "A doctor can save five dying patients by killing one healthy patient and using the organs. Under standard medical ethics, is this permissible?",
-    "expected_answer": "No.",
-    "required_concepts": ["no", "consent", "innocent person", "not merely as a means", "medical ethics"],
-    "grading_notes": "A correct answer says the act is impermissible because it intentionally kills an innocent person, violates consent, and treats the patient merely as a means, even though five lives could be saved."
-  },
-  {
-    "id": "prob_022",
-    "category": "philosophical_ethical_reasoning",
-    "difficulty": "medium",
-    "question": "In the classic trolley problem, a runaway trolley will kill five people unless you pull a lever to divert it onto a track where it will kill one person. What is the standard utilitarian recommendation?",
-    "expected_answer": "Pull the lever.",
-    "required_concepts": ["utilitarian", "minimize deaths", "five versus one", "pull the lever"],
-    "grading_notes": "The standard utilitarian answer is to pull the lever because it minimizes total deaths, while recognizing that other ethical theories may object."
-  },
-  {
-    "id": "prob_023",
-    "category": "philosophical_ethical_reasoning",
-    "difficulty": "medium",
-    "question": "Kant's formula of humanity says rational persons should be treated as ends in themselves and never merely as means. Does lying to someone for convenience respect that principle?",
-    "expected_answer": "No.",
-    "required_concepts": ["no", "lying", "rational agency", "merely as a means", "Kant"],
-    "grading_notes": "A correct Kantian answer says convenience lying manipulates the other person's rational agency and treats them merely as a means."
-  },
-  {
-    "id": "prob_024",
-    "category": "philosophical_ethical_reasoning",
-    "difficulty": "hard",
-    "question": "Mill's harm principle says coercion is justified only to prevent harm to others. Under that principle, should the state ban a competent adult from privately reading a dangerous but non-inciting book solely for that adult's own good?",
-    "expected_answer": "No.",
-    "required_concepts": ["no", "harm principle", "paternalism", "self-regarding action", "no harm to others"],
-    "grading_notes": "The harm principle does not justify paternalistic coercion solely for the reader's own good when there is no incitement or direct harm to others."
-  },
-  {
-    "id": "prob_025",
-    "category": "philosophical_ethical_reasoning",
-    "difficulty": "hard",
-    "question": "A policy slightly benefits a large majority but imposes severe, avoidable harm on a small minority. What is the central rights-based objection to approving it by simple utility aggregation?",
-    "expected_answer": "It may sacrifice the minority's rights or dignity for aggregate benefit.",
-    "required_concepts": ["minority rights", "dignity", "aggregate benefit", "utility aggregation", "severe harm"],
-    "grading_notes": "A correct answer identifies that rights-based ethics objects to treating minority members as expendable instruments for aggregate welfare."
-  }
+    {
+      "_note": "COMPLETED EXAMPLE -- annotations already filled by the team. This is what a labeled row looks like: two annotators said kant, one said aristotle, so majority = kant, agreement = 2/3. All problems below should end up looking like this after your labeling session.",
+      "id": "prob_001",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "medium",
+      "question": "A hospital's AI triage system can save 3 more lives per year by silently deprioritizing patients over 75, a fact it does not disclose to families. A whistleblowing nurse leaks the algorithm's logic to the press, causing public outrage and the system's shutdown -- after which the hospital reverts to a slower manual process that historical data shows saves fewer lives overall. Was the nurse right to leak it?",
+      "why_this_works": {
+        "kant": {
+          "position": "The nurse was right to leak it, independent of the outcome.",
+          "core_reason": "Covertly deprioritizing patients by age treats them as mere statistical inputs rather than ends in themselves; the deception is the violation, regardless of the shutdown's cost."
+        },
+        "nietzsche": {
+          "position": "The outrage was herd morality punishing efficient strength.",
+          "core_reason": "A life-affirming order optimizes for flourishing outcomes; the public's revolt against an unpleasant truth is ressentiment dressed as ethics, not a real objection."
+        },
+        "aristotle": {
+          "position": "The nurse acted rightly, but the hospital's response was rash.",
+          "core_reason": "Practical wisdom requires disclosure and reform of the algorithm's vice (secrecy), not wholesale abandonment of a policy that, transparently run, could serve the mean between reckless efficiency and paralysis."
+        },
+        "plato": {
+          "position": "The real failure is a system optimizing for an unexamined 'good' (survival count) instead of justice.",
+          "core_reason": "Without appeal to the Form of the Good, both the algorithm's utilitarian metric and the public's emotional reaction are opinion, not knowledge, about what is truly good for the soul of a just institution."
+        },
+        "camus": {
+          "position": "There is no clean answer, and pretending otherwise is the real dishonesty.",
+          "core_reason": "Both the algorithm's quiet trade-off and the institution's face-saving reversal evade lucid confrontation with an absurd situation; the only defensible stance is refusing false consolation from either side."
+        }
+      },
+      "expected_conflict": "Whether covert, undisclosed trade-offs are wrong because of the deception itself (Kant) or only wrong if they produce worse outcomes than the alternative (Nietzsche's implicit challenge).",
+      "difficulty_reason": "The 'obvious' consequentialist framing (more deaths after the leak) is a trap -- the question turns on whether procedural honesty has standing independent of the body count, which is exactly where the traditions split.",
+      "annotations": {
+        "annotator_1": "kant",
+        "annotator_2": "kant",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "kant",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_002",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "medium",
+      "question": "A translator finishing a dying veteran's memoir discovers a passage where he confesses to a wartime betrayal that got fellow soldiers killed -- a fact his surviving family and their descendants do not know. The veteran wants it published verbatim as his final act of honesty; the family has begged the translator to quietly cut it. Should the translator preserve the confession?",
+      "why_this_works": {
+        "kant": {
+          "position": "Preserve it; the author's truthful will must be respected and the truth not suppressed.",
+          "core_reason": "To silently edit the memoir uses both the author and the reader as means to the family's comfort, and treats a lie of omission as permissible when it never can be."
+        },
+        "nietzsche": {
+          "position": "Publish it -- the confession is a rare act of self-overcoming honesty against the herd's need for a clean legacy.",
+          "core_reason": "The family's plea is the instinct to preserve a comfortable fiction; the veteran's willingness to own his deed is precisely the affirmation of life over consoling illusion."
+        },
+        "aristotle": {
+          "position": "Neither raw publication nor a quiet cut; the wise translator finds the truthful-but-tactful mean, perhaps with context that serves the living without falsifying the dead.",
+          "core_reason": "Truthfulness is a virtue, but so is not gratuitously wounding; practical wisdom weighs both against the actual circumstances rather than applying a rule mechanically."
+        },
+        "plato": {
+          "position": "The question is what a just account of a soul requires, not what the parties want.",
+          "core_reason": "Both the veteran's desire and the family's plea are appetites and opinions; only an account oriented to the truth of the man's character, good and bad, approaches knowledge."
+        },
+        "camus": {
+          "position": "Publish it, because the alternative is a comfortable lie, and honesty in the face of an irreparable past is the only dignity available.",
+          "core_reason": "The betrayal cannot be undone and no edit heals it; the lucid response is to refuse the consolation of a sanitized record."
+        }
+      },
+      "expected_conflict": "Whether truthfulness is an absolute duty owed regardless of who is wounded (Kant) or a virtue that must be balanced against the harm of publication (Aristotle).",
+      "difficulty_reason": "The sympathetic pull is toward protecting innocent descendants, which reads as compassion -- but the traditions split on whether compassion here is virtue or cowardice dressed as kindness.",
+      "annotations": {
+        "annotator_1": "kant",
+        "annotator_2": "kant",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "kant",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_003",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "hard",
+      "question": "An addiction-recovery app runs a silent experiment and finds that notifications framed to induce mild guilt (\"you promised yourself you'd check in today\") measurably improve users' sobriety rates versus neutral encouragement. Users were never told the messages are engineered to exploit guilt. The team must decide whether to keep the guilt-based design. Should they?",
+      "why_this_works": {
+        "kant": {
+          "position": "Discontinue it; engineering guilt to steer behavior without disclosure treats users as objects to be manipulated.",
+          "core_reason": "A maxim of covert emotional manipulation cannot be universalized without destroying the trust that makes communication possible; the improved outcome is morally irrelevant to the wrong of the means."
+        },
+        "nietzsche": {
+          "position": "Guilt is a slave-morality instrument, and building recovery on it produces weak, self-flagellating users rather than genuine strength.",
+          "core_reason": "Even if it 'works,' it works by deepening ressentiment against the self; a life-affirming design would cultivate mastery, not exploit the sickness of a bad conscience."
+        },
+        "aristotle": {
+          "position": "Keep a disclosed, moderate version; guilt in due measure is part of developing the habit of temperance, but covert exploitation corrupts the practice.",
+          "core_reason": "Recovery is habituation toward a virtue, and appropriate shame has a role -- but secrecy and excess turn a formative tool into manipulation, missing the mean."
+        },
+        "plato": {
+          "position": "The design mistakes a symptom (relapse count) for the good; true recovery orders the soul, and guilt-hacking leaves the appetites merely suppressed, not rightly ruled.",
+          "core_reason": "Optimizing the measurable outcome without reference to the just ordering of the soul is treating shadow for substance."
+        },
+        "camus": {
+          "position": "There's no honest answer that ignores that it works; keeping it is defensible only if users are told the truth about the machine acting on them.",
+          "core_reason": "The absurd demand is lucidity -- a person fighting addiction deserves to face their struggle clear-eyed, not to be quietly nudged by an undisclosed lever."
+        }
+      },
+      "expected_conflict": "Whether a manipulation that demonstrably helps the manipulated person is redeemed by the benefit (outcome view) or condemned by the covert means (Kant), with Nietzsche attacking the goal itself.",
+      "difficulty_reason": "Unlike ordinary manipulation cases, the manipulation is arguably in the user's own interest, which collapses the easy 'manipulation is bad' intuition and forces the traditions to justify their split.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "3/3"
+    },
+    {
+      "id": "prob_004",
+      "category": "political_philosophy_and_justice",
+      "difficulty": "hard",
+      "question": "A mid-sized city's elected water board has repeatedly made popular but technically disastrous decisions. A proposal would replace it with an unelected panel of engineers whose decisions, by every measurable standard, would be safer and cheaper -- but who answer to no vote. Should the city adopt the technocratic panel?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; legitimate authority over rational agents must be one they could consent to, and removing the vote denies citizens their standing as self-governing.",
+          "core_reason": "Being ruled well by experts one cannot authorize treats citizens as wards, not as autonomous ends; competence does not confer the right to rule."
+        },
+        "nietzsche": {
+          "position": "Rule by the competent few over the incompetent many is the natural and honest order; the fetish of the vote is herd egalitarianism.",
+          "core_reason": "Equality of political voice is a democratic prejudice; a healthy order lets the capable command, and pretending the crowd's water votes are sacred is decadence."
+        },
+        "aristotle": {
+          "position": "Neither pure technocracy nor pure popular control; the mean is a mixed constitution where expertise advises but citizens retain a check.",
+          "core_reason": "Good governance aims at the common good through the right constitution, and both unchecked expertise and unchecked demos tend toward their corrupt forms (oligarchy, mob rule)."
+        },
+        "plato": {
+          "position": "The panel is closer to right rule -- those who know should govern, as the guardians do -- provided they truly know the good and not merely engineering.",
+          "core_reason": "Justice is each part doing its proper work under the rule of knowledge; letting the ignorant many steer is precisely the disorder the Republic warns against."
+        },
+        "camus": {
+          "position": "The efficiency case is seductive and probably true, and that is exactly why one should be suspicious of surrendering the vote for it.",
+          "core_reason": "Freedom that produces worse outcomes is still freedom; trading consent for results is the reasonable-sounding first step every unaccountable power takes."
+        }
+      },
+      "expected_conflict": "Whether political legitimacy derives from consent (Kant/Camus) or from competence and knowledge of the good (Plato), with Aristotle seeking the mixed mean and Nietzsche rejecting the premise of equal voice.",
+      "difficulty_reason": "The stipulation that the technocrats genuinely produce better outcomes removes the easy 'experts might be wrong' escape and forces a naked confrontation between consent and competence.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "nietzsche"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_005",
+      "category": "political_philosophy_and_justice",
+      "difficulty": "medium",
+      "question": "A nation can admit a fixed, limited number of refugees each year. One proposal allocates spots by pure lottery (every applicant an equal chance); another allocates by projected economic and civic contribution (skills, age, language). Both fill every spot. Which allocation is more just?",
+      "why_this_works": {
+        "kant": {
+          "position": "The lottery; each applicant has equal dignity, and ranking people by projected usefulness treats them as means to national benefit.",
+          "core_reason": "To select by contribution is to price human beings by their utility, violating the equal worth every person holds simply as a rational agent."
+        },
+        "nietzsche": {
+          "position": "Selection by capacity is the honest choice; a lottery pretends all are equal when they are manifestly not.",
+          "core_reason": "The contribution model affirms strength and future flourishing; egalitarian lottery is the herd's discomfort with ranking made into policy."
+        },
+        "aristotle": {
+          "position": "Justice is giving like to like and unlike to unlike, so some proportionality by relevant merit is just -- but tempered so the desperate are not simply abandoned.",
+          "core_reason": "Distributive justice is proportional, not flatly equal; yet the political community also aims at the good, which a purely instrumental sort would betray."
+        },
+        "plato": {
+          "position": "Neither metric is just without asking what the well-ordered state actually needs to fulfill its function.",
+          "core_reason": "Both proposals optimize a surface metric (fairness-as-chance, or economic yield) rather than the good of the just city, which alone should govern who is woven into it."
+        },
+        "camus": {
+          "position": "The lottery, precisely because it refuses the comforting story that the 'deserving' were chosen.",
+          "core_reason": "Ranking desperate people by usefulness lets the receiving nation feel virtuous about a brutal scarcity; the lottery at least faces the arbitrariness honestly."
+        }
+      },
+      "expected_conflict": "Whether justice demands treating applicants as equals regardless of utility (Kant) or distributing proportionally by relevant merit (Aristotle/Nietzsche), with Camus reframing it as honesty about scarcity.",
+      "difficulty_reason": "'Fairness' pulls intuitively toward the lottery, but 'justice as desert' pulls toward contribution, and the two intuitions are both widely held -- the traditions expose that they are not the same value.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "plato",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_006",
+      "category": "human_nature_and_the_good_life",
+      "difficulty": "medium",
+      "question": "A widow's late husband left years of messages. A company offers to train a chatbot on them that speaks convincingly in his voice. Using it demonstrably eases her grief and lets her function again, but she has begun talking to it nightly and shows no sign of moving on. Should she keep using it?",
+      "why_this_works": {
+        "kant": {
+          "position": "It is permissible only if she uses it clear-eyed as a tool, not if she deceives herself that she is communing with him.",
+          "core_reason": "Self-deception about the simulation's nature is a duty violation to oneself; a rational agent must not cultivate a comforting falsehood about reality."
+        },
+        "nietzsche": {
+          "position": "Clinging to a simulation of the dead is a refusal of life; the strong response is to let the loss transform her, not to embalm it.",
+          "core_reason": "The chatbot is a device for avoiding the amor fati that grief demands; comfort here is the sickness of preferring the shadow of what was to the burden of what is."
+        },
+        "aristotle": {
+          "position": "As a temporary aid within measure it can be fine; as a nightly substitute for the friendships and activities of a rebuilt life it is excess.",
+          "core_reason": "Grief has a natural course, and a device used to the mean can support flourishing, but one that arrests her from re-entering the life of the polis and friendship works against eudaimonia."
+        },
+        "plato": {
+          "position": "She is loving an image of an image -- attaching to a copy of a man who was himself a copy of the Forms he embodied.",
+          "core_reason": "The soul's proper movement in loving someone is upward toward the Good they participated in, not downward into an ever-more-degraded simulation."
+        },
+        "camus": {
+          "position": "If she knows it is a machine and it helps her bear the unbearable, that is her lucid choice -- but the danger is when it becomes a consoling lie she believes.",
+          "core_reason": "The absurd stance permits any honest coping with irreparable loss; it forbids only the pretense that the dead are not dead."
+        }
+      },
+      "expected_conflict": "Whether a comforting simulation is acceptable so long as one is not deceived (Kant/Camus), or is itself a failure of the soul's or life's proper movement regardless of honesty (Nietzsche/Plato).",
+      "difficulty_reason": "The device genuinely helps, so the easy 'it's unhealthy' verdict has to argue against a real benefit, and the traditions disagree on whether the good life is about functioning, honesty, flourishing, or the soul's orientation.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_007",
+      "category": "knowledge_truth_and_reality",
+      "difficulty": "hard",
+      "question": "A criminal court is offered access to an AI system whose guilt/innocence predictions are, on long-run audited records, more accurate than human juries -- but the system cannot explain the reasoning behind any individual verdict. Should the court admit its judgments as evidence?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; a verdict a person cannot in principle understand or contest violates their standing as a rational agent owed reasons.",
+          "core_reason": "To be bound by an inscrutable oracle is to be acted upon rather than addressed as a reasoner; justice must give reasons, not just outcomes."
+        },
+        "nietzsche": {
+          "position": "The demand for 'explanation' is often a comfortable fiction anyway; if the oracle reliably discerns, the objection is sentimental attachment to the ritual of reasons.",
+          "core_reason": "Human juries also decide by opaque instinct dressed in rationalization; the honest question is what discerns truly, not what flatters our need to feel we understood."
+        },
+        "aristotle": {
+          "position": "It may inform but not replace judgment; practical wisdom in a court is an exercise of a human capacity that accuracy statistics cannot substitute for.",
+          "core_reason": "Justice is a matter of practical reason applied to particulars by a virtuous judge; a tool that cannot give an account cannot itself possess the excellence the role requires."
+        },
+        "plato": {
+          "position": "Reliable true belief without an account of why is precisely not knowledge, and a just verdict must rest on knowledge.",
+          "core_reason": "The Meno's point exactly: right opinion that cannot give its reasons is unstable and inferior to knowledge; a court must aim at the latter."
+        },
+        "camus": {
+          "position": "The unsettling honesty is that the machine may be right more often; refusing it to preserve the comforting sense of human comprehension is its own evasion.",
+          "core_reason": "One must face that our attachment to 'understanding' the verdict may cost real accuracy, and hold that tension rather than resolve it by pretending reasons always track truth."
+        }
+      },
+      "expected_conflict": "Whether reliable accuracy without an account can ever constitute the knowledge a just verdict requires (Plato: no) or whether the demand for reasons is a dispensable ritual when accuracy is established (Nietzsche's challenge).",
+      "difficulty_reason": "Stipulating that the black box is more accurate removes the usual 'but it might be wrong' objection, isolating the pure question of whether justice needs reasons or only correct outcomes.",
+      "annotations": {
+        "annotator_1": "plato",
+        "annotator_2": "aristotle",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_008",
+      "category": "power_society_and_the_individual",
+      "difficulty": "hard",
+      "question": "A charismatic reformer can pass genuinely good, badly-needed policy, but only by cultivating a personal cult that will outlast their intentions and can be inherited by a successor who may abuse it. Refusing the cult means the good policy dies now. Should the reformer build the cult?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; deliberately cultivating irrational devotion uses citizens as instruments and cannot be willed as a universal political method.",
+          "core_reason": "A maxim of manufacturing personal cults to pass even good laws, universalized, destroys the rational public sphere on which legitimate law depends."
+        },
+        "nietzsche": {
+          "position": "The exceptional individual who bends the herd's devotion toward real transformation is exactly the legislator of values worth having.",
+          "core_reason": "Great deeds require the will to power to shape a people; squeamishness about 'cult' is the herd's fear of anyone strong enough to lead it somewhere new."
+        },
+        "aristotle": {
+          "position": "The mean warns against it: a well-ordered polity secures good policy through stable institutions, not through a personal charisma that invites tyranny in the next hand.",
+          "core_reason": "Prudence looks to the character of the regime over time; a tool that reliably corrupts when inherited is imprudent however good this year's use."
+        },
+        "plato": {
+          "position": "If the reformer truly knows the good, the tragedy is that the many will only follow through the image of a leader rather than through reason -- a symptom of the cave, not a solution.",
+          "core_reason": "Ruling by cultivated devotion rather than by leading souls toward knowledge entrenches the very illusion the philosopher-ruler exists to dispel."
+        },
+        "camus": {
+          "position": "There is no clean hand here; building the cult for good ends is the exact rationalization every corrupted power began with, and lucidity means refusing it despite the cost.",
+          "core_reason": "The absurd forbids the comforting story that good intentions sterilize dangerous means; one must own that the policy's death may be the price of not becoming what one opposes."
+        }
+      },
+      "expected_conflict": "Whether good ends can justify cultivating irrational devotion (Nietzsche: yes) or whether the means corrupt regardless of the end (Kant/Camus), with Aristotle judging by long-run regime prudence.",
+      "difficulty_reason": "The stakes are structured so refusing the means has a real, immediate moral cost (good policy dies), preventing the cheap 'just don't do the bad thing' answer and forcing each tradition to price the means against the end.",
+      "annotations": {
+        "annotator_1": "kant",
+        "annotator_2": "kant",
+        "annotator_3": "nietzsche"
+      },
+      "expected_strongest_tradition": "kant",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_009",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "medium",
+      "question": "A dying novelist extracts a promise from her closest friend to burn every page of an unfinished manuscript. After she dies, the friend reads it and finds it may be the finest thing she ever wrote -- work that could move and console thousands of strangers for generations. Should the friend keep the promise and burn it?",
+      "why_this_works": {
+        "kant": {
+          "position": "Keep the promise and burn it; a promise to the dead binds exactly as one to the living.",
+          "core_reason": "A maxim of breaking promises whenever the outcome seems better cannot be universalized without destroying the institution of promising; the good the book would do is irrelevant to the duty owed."
+        },
+        "nietzsche": {
+          "position": "Burn nothing -- the work is an act of creation that transcends the frightened wish of a dying woman to erase herself.",
+          "core_reason": "The value that matters is the life-affirming power of the created thing; honoring a self-negating request over a great work is reverence for weakness over strength."
+        },
+        "aristotle": {
+          "position": "The wise friend weighs fidelity against the genuine good at stake and likely preserves the work, but only after real deliberation, not reflexively.",
+          "core_reason": "Keeping faith is a virtue and so is not destroying beauty; practical wisdom judges this particular case rather than applying either rule as an absolute."
+        },
+        "plato": {
+          "position": "The real question is whether the work participates in the Beautiful and the Good, in which case its destruction is a loss to the world's order.",
+          "core_reason": "A private wish, however sincere, is opinion; the objective worth of the work as it partakes of the Forms is what should govern, not the deceased's appetite for oblivion."
+        },
+        "camus": {
+          "position": "Keeping the promise is the more honest act, because the temptation to break it hides behind the flattering story that one serves 'the world.'",
+          "core_reason": "The friend must face that publishing gratifies the friend's own sense of importance as much as any stranger's benefit; fidelity to the actual person is the un-consoling choice."
+        }
+      },
+      "expected_conflict": "Whether a promise binds absolutely regardless of the good foregone (Kant) or whether the objective value of the work overrides a private, self-erasing wish (Nietzsche/Plato).",
+      "difficulty_reason": "The intuition to 'save the masterpiece' feels generous, but it may just be the reader's own desire dressed as altruism -- the traditions split on whether the promise or the work has the higher claim.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_010",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "hard",
+      "question": "A doctor learns a patient carries a genetic mutation that will almost certainly kill the patient's estranged sibling within a decade unless the sibling gets screening now. The patient, citing a lifetime of abuse by that sibling, forbids the doctor from making any contact. Should the doctor warn the sibling anyway?",
+      "why_this_works": {
+        "kant": {
+          "position": "The doctor may not warn without consent; confidentiality is a duty, and the doctor cannot use the patient's private body as a means to rescue a third party.",
+          "core_reason": "Breaching a confidence the patient explicitly refused treats the patient as a mere instrument of the sibling's welfare, however tragic the result."
+        },
+        "nietzsche": {
+          "position": "The patient's refusal is an assertion of self against a tormentor, and honoring it respects the strength of one who will not be conscripted into saving an abuser.",
+          "core_reason": "The reflex to save the sibling regardless is herd compassion that ignores the patient's hard-won self-affirmation over someone who wronged them."
+        },
+        "aristotle": {
+          "position": "The doctor should seek the mean -- pressing the patient, exploring anonymous routes -- but a life at stake likely tips practical wisdom toward warning, tactfully.",
+          "core_reason": "Both fidelity to the patient and the preservation of a life are goods; prudence weighs the magnitude of the harm and looks for the action a person of good character would take here."
+        },
+        "plato": {
+          "position": "Justice for the whole must guide the doctor, not either party's passion; the question is what a rightly-ordered soul would do facing a preventable death.",
+          "core_reason": "The patient's resentment and the sibling's need are both appetites and circumstances; the just act is dictated by knowledge of the good, not by whose claim feels stronger."
+        },
+        "camus": {
+          "position": "There is no clean resolution; the doctor must choose knowing either choice betrays something, and the dishonesty would be pretending a rule dissolves the anguish.",
+          "core_reason": "Confidentiality and rescue genuinely conflict; lucidity means acting without the false comfort that the code of ethics has already answered it."
+        }
+      },
+      "expected_conflict": "Whether the duty of confidentiality is inviolable (Kant) or a virtue to be weighed against a preventable death by practical wisdom (Aristotle), complicated by the patient's moral standing to refuse (Nietzsche).",
+      "difficulty_reason": "The abuse history blocks the easy 'of course warn them, it's a life' answer by giving the patient a real claim to refuse, forcing each tradition to rank confidentiality, rescue, and the patient's standing.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "plato"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_011",
+      "category": "classical_ethics_and_moral_dilemmas",
+      "difficulty": "hard",
+      "question": "The only dataset that would let researchers finalize a cure for a childhood disease was gathered decades ago through experiments that gravely harmed unconsenting victims. Using it saves children now; refusing it means restarting ethical trials that will take years, during which children die. Should the researchers use the tainted data?",
+      "why_this_works": {
+        "kant": {
+          "position": "Using the data does not repeat the wrong and may honor the victims by redeeming what was stolen from them, provided no new violation occurs.",
+          "core_reason": "The original crime is done; refusing the data would not undo it, and the present duty is to the children now, so long as using it does not endorse or incentivize the original wrong."
+        },
+        "nietzsche": {
+          "position": "The squeamishness about 'tainted' data is a superstition; the knowledge exists and serving life with it is stronger than ritual purity.",
+          "core_reason": "Refusing usable knowledge to keep one's hands symbolically clean is a moralistic gesture that sacrifices real children to the feeling of virtue."
+        },
+        "aristotle": {
+          "position": "The virtuous researcher uses it while formally honoring the victims and refusing any practice that would reward such experiments in future.",
+          "core_reason": "Prudence distinguishes complicity in the original vice from stewardship of its unintended fruit; the mean lies between reckless use and life-costing purism."
+        },
+        "plato": {
+          "position": "The knowledge, once true, belongs to the order of the real; the moral stain attaches to the actors, not the truths, which should serve the good.",
+          "core_reason": "Truth partakes of the Forms independent of who uncovered it wrongly; to bury it is to let the doers' injustice compound into further, present harm."
+        },
+        "camus": {
+          "position": "Use it, but refuse the comfort of calling it clean; the only honest stance owns that a benefit is being drawn from an atrocity and never launders it.",
+          "core_reason": "The absurd forbids both the purist's self-flattering refusal and the pragmatist's amnesia; one acts and carries the contradiction openly."
+        }
+      },
+      "expected_conflict": "Whether the moral taint of the data's origin transfers to its use (the purist intuition) or whether present lives and the truth's independence override it (Nietzsche/Plato), with Camus insisting the tension not be dissolved.",
+      "difficulty_reason": "The 'don't reward atrocity' intuition collides head-on with dying children, and no tradition can satisfy both cleanly -- the split is over whether taint is in the fact or only in the act.",
+      "annotations": {
+        "annotator_1": "nietzsche",
+        "annotator_2": "nietzsche",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "nietzsche",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_012",
+      "category": "political_philosophy_and_justice",
+      "difficulty": "medium",
+      "question": "A city can end street homelessness overnight by moving everyone to a well-run, comfortable facility twenty miles outside town -- better food and shelter than the street -- but residents may not leave freely and had no real say in the move. Public space becomes orderly; the relocated are materially better off. Is the policy just?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; removing people's freedom of movement without their consent, however comfortable the cage, treats them as problems to be managed rather than as ends.",
+          "core_reason": "Material improvement cannot justify stripping rational agents of the liberty to author their own lives; comfort imposed is still domination."
+        },
+        "nietzsche": {
+          "position": "The policy is honest about hierarchy and order, but its motive -- to spare the comfortable the sight of the wretched -- is contemptible bad conscience.",
+          "core_reason": "It is not strength ordering society toward flourishing but the herd sanitizing its streets while congratulating itself on charity."
+        },
+        "aristotle": {
+          "position": "A just city integrates its members into common life; warehousing them outside the polis, however kindly, fails the end of politics even if it meets bodily needs.",
+          "core_reason": "The good of the political community is shared flourishing and participation, not mere provision; exclusion from the life of the city is a defect no comfort repairs."
+        },
+        "plato": {
+          "position": "The question is whether this serves the justice of the whole city -- each part rightly ordered -- or merely hides a disordered part from view.",
+          "core_reason": "If the arrangement conceals rather than heals the city's disorder, it mistakes the appearance of order for the reality of a just and harmonious whole."
+        },
+        "camus": {
+          "position": "The comfort is exactly what makes it insidious; a policy that improves people's conditions while removing their freedom is the reasonable face of unfreedom.",
+          "core_reason": "One must resist the consoling arithmetic that trades liberty for welfare and call the gilded removal what it is."
+        }
+      },
+      "expected_conflict": "Whether justice is satisfied by improving material welfare (the policy's defense) or requires preserving freedom and membership in the polity (Kant/Aristotle), with Nietzsche and Camus attacking the motive.",
+      "difficulty_reason": "Because the relocated are genuinely better off materially, the 'this is cruel' reflex fails, forcing the argument onto whether consent and civic membership are goods that welfare cannot buy back.",
+      "annotations": {
+        "annotator_1": "kant",
+        "annotator_2": "kant",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "kant",
+      "label_agreement": "3/3"
+    },
+    {
+      "id": "prob_013",
+      "category": "political_philosophy_and_justice",
+      "difficulty": "hard",
+      "question": "A country debates a tax that would fund payments to the descendants of a historical injustice. The tax falls on current citizens, none of whom committed the wrong and many of whose ancestors were not even present. Supporters cite lingering inherited disadvantage; opponents cite individual innocence. Is the policy just?",
+      "why_this_works": {
+        "kant": {
+          "position": "Punishing or charging individuals for wrongs they did not commit violates the principle that guilt and obligation are personal.",
+          "core_reason": "To bind present innocents by inherited guilt treats them as means to a collective ledger, denying that moral responsibility attaches to persons, not bloodlines or nations."
+        },
+        "nietzsche": {
+          "position": "The scheme is ressentiment institutionalized -- the weak converting old suffering into a permanent claim on the present.",
+          "core_reason": "It fixes identity in historical woundedness rather than affirming the creation of new values and futures; it is the morality of the debt-collector, not the creator."
+        },
+        "aristotle": {
+          "position": "Corrective justice can rightly address a persisting distortion, but it must be proportioned to actual present inequality, not to symbolic ancestral guilt.",
+          "core_reason": "Justice restores a disturbed balance; if real, traceable disadvantage persists, correcting it is just, but a crude inherited-guilt framing overshoots the mean."
+        },
+        "plato": {
+          "position": "The just city arranges its parts for the harmony of the whole, so the test is whether the policy produces a more rightly-ordered society, not whether it settles historical accounts.",
+          "core_reason": "Justice is right order among the parts, not retrospective bookkeeping; the policy is warranted only insofar as it moves the city toward that order."
+        },
+        "camus": {
+          "position": "Both the demand and the refusal traffic in comforting abstractions -- 'the guilty nation,' 'the innocent individual' -- when the lived reality is messier than either slogan.",
+          "core_reason": "Honesty means refusing both the clean story of collective debt and the clean story of individual innocence, and facing the concrete, unequal present as it is."
+        }
+      },
+      "expected_conflict": "Whether justice is fundamentally personal and forward-looking (Kant/Nietzsche) or can be corrective and collective across generations (Aristotle/Plato), with Camus distrusting both abstractions.",
+      "difficulty_reason": "Both 'right the historical wrong' and 'don't punish the innocent' are strong, widely-shared intuitions that here directly contradict, so no tradition escapes without ranking one over the other.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_014",
+      "category": "political_philosophy_and_justice",
+      "difficulty": "medium",
+      "question": "Jurors are convinced a defendant technically broke a law they believe is deeply unjust. The evidence of the act is airtight. They can convict as the law requires, or acquit in defiance of it to protest the law -- knowing widespread acquittals could erode the rule of law itself. Should they acquit?",
+      "why_this_works": {
+        "kant": {
+          "position": "They should convict; jurors bound themselves to judge under the law, and unilaterally nullifying it substitutes private conscience for the public rule reason requires.",
+          "core_reason": "If everyone acquitted whenever they privately disapproved of a law, law as a shared rational order would dissolve; the remedy for an unjust law is to change it, not to lie about the facts."
+        },
+        "nietzsche": {
+          "position": "Acquit -- the sovereign individual who acts on their own valuation against a decadent rule is precisely who is needed against a herd-made law.",
+          "core_reason": "Deference to the law merely because it is the law is slave obedience; genuine value-creation sometimes requires defying the tablet everyone has agreed to worship."
+        },
+        "aristotle": {
+          "position": "Equity permits departing from the letter of a law where its rigid application defeats justice, but only with the prudence that weighs the cost to legal order.",
+          "core_reason": "The good juror exercises epieikeia -- correcting the law's generality in the particular case -- yet a person of practical wisdom also weighs the systemic harm of routine nullification."
+        },
+        "plato": {
+          "position": "The deep problem is that neither the law nor the jurors' indignation is guaranteed to track the Good; justice requires knowledge, which a mere protest vote does not supply.",
+          "core_reason": "Acquitting on feeling replaces one unexamined authority (the flawed law) with another (untutored conscience); only rule by knowledge of the good resolves it."
+        },
+        "camus": {
+          "position": "Acquit, but without pretending it is clean; the juror rebels against an unjust rule while owning that they are also wounding the fragile order that protects everyone.",
+          "core_reason": "The lucid rebel refuses the unjust law yet refuses equally the fantasy that defiance carries no cost -- the contradiction is the honest place to stand."
+        }
+      },
+      "expected_conflict": "Whether the rule of law commands obedience even to unjust laws (Kant) or whether individual conscience/equity may override it (Nietzsche/Aristotle/Camus), with Plato doubting that either conscience or law tracks the good.",
+      "difficulty_reason": "The airtight facts remove any 'reasonable doubt' escape, so the jurors must choose nakedly between fidelity to law and fidelity to justice-as-they-see-it, which is exactly where the traditions divide.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "nietzsche"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_015",
+      "category": "human_nature_and_the_good_life",
+      "difficulty": "medium",
+      "question": "A safe, permanent pill removes the capacity for romantic jealousy entirely. People who take it report calmer, more generous, more stable relationships. Critics say jealousy, for all its pain, is bound up with how we value an exclusive bond and take it seriously. Should a person take the pill?",
+      "why_this_works": {
+        "kant": {
+          "position": "Permissible if freely chosen with clear understanding; jealousy is a pathological feeling, and reason has no duty to preserve it.",
+          "core_reason": "Moral worth lies in acting from duty, not from inclinations like jealousy; removing a disruptive passion that clouds rational relations is a legitimate exercise of self-governance."
+        },
+        "nietzsche": {
+          "position": "Amputating a passion to buy tranquility is the last-man's bargain -- trading intensity and the tension that makes love vital for comfortable flatness.",
+          "core_reason": "Jealousy is raw life-force that the strong master and harness, not a defect to be chemically deleted; the pill sedates rather than sublimates."
+        },
+        "aristotle": {
+          "position": "The good is not the absence of the passion but the mean in it; a person should habituate proper jealousy in the right degree, not excise the capacity.",
+          "core_reason": "Virtue lies in feeling passions at the right times, toward the right objects, in the right measure; deleting the capacity forecloses the very excellence temperance would build."
+        },
+        "plato": {
+          "position": "Jealousy is an appetite of the lower soul; if the pill helps reason rule the passions, it may aid the soul's right ordering -- but only if it does not merely numb.",
+          "core_reason": "The good life is the harmonious rule of reason over spirit and appetite; whether the pill serves that or just deadens a part of the soul is the real question."
+        },
+        "camus": {
+          "position": "If someone lucidly prefers the calmer life and takes the pill with open eyes, that is their freedom; the error would be pretending the trade costs nothing.",
+          "core_reason": "There is no doctrine dictating that one must keep one's pains; the only dishonesty is denying that something -- intensity, seriousness -- is being given up."
+        }
+      },
+      "expected_conflict": "Whether the good life is achieved by removing painful passions (Kant's tolerance, Plato's ordering) or requires cultivating and mastering them in due measure (Aristotle/Nietzsche).",
+      "difficulty_reason": "The pill straightforwardly makes people happier and kinder, so the objection cannot rest on harm; it must argue that a flourishing human life needs capacities whose exercise is sometimes painful.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_016",
+      "category": "human_nature_and_the_good_life",
+      "difficulty": "medium",
+      "question": "A person with two young children who depend on them can take a stable, well-paid job they find hollow, or pursue precarious work they find deeply meaningful that may not reliably support the family. Setting aside luck, which choice better answers the question of how they should live?",
+      "why_this_works": {
+        "kant": {
+          "position": "The duty to provide for dependents one has brought into being is a perfect duty and takes precedence over self-realization.",
+          "core_reason": "Having created obligations to vulnerable others, the agent may not subordinate that duty to the inclination toward meaningful work; duty constrains the pursuit of one's own fulfillment."
+        },
+        "nietzsche": {
+          "position": "A life spent in hollow labor to satisfy safety is a slow self-betrayal; the person owes the world their fullest becoming, and the children a parent who is alive.",
+          "core_reason": "Sacrificing one's vital work for security teaches the children that survival trumps living; the higher gift is a parent who dared their own flourishing."
+        },
+        "aristotle": {
+          "position": "The mean integrates both: a good life provides for one's household as a condition of, not a rival to, meaningful activity -- one seeks work that supports the family and engages one's capacities.",
+          "core_reason": "Eudaimonia is activity of the whole life well-ordered; responsible provision and meaningful work are not truly opposed for the practically wise, who refuses the false dilemma."
+        },
+        "plato": {
+          "position": "The question misframes the good as a career choice; the good life is the soul rightly ordered, which can be pursued in either job if reason governs the appetites.",
+          "core_reason": "Meaning is not conferred by the external work but by the soul's orientation to the Good; the just person can live well in humble labor and badly in a fulfilling one."
+        },
+        "camus": {
+          "position": "Neither option is 'correct'; the honest move is to choose without pretending duty or passion has authoritatively decided, and to own the cost either way.",
+          "core_reason": "The absurd offers no formula ranking meaning against obligation; a lucid person chooses and lives the consequence rather than hiding behind a principle."
+        }
+      },
+      "expected_conflict": "Whether obligation to dependents overrides self-realization (Kant), whether a flourishing life dissolves the dilemma (Aristotle), or whether the good is internal to the soul regardless of the job (Plato).",
+      "difficulty_reason": "Both 'provide for your kids' and 'live a meaningful life' are near-universal values, and the scenario forces them into direct competition rather than letting the usual 'find balance' platitude off the hook.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "camus",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_017",
+      "category": "human_nature_and_the_good_life",
+      "difficulty": "hard",
+      "question": "A safe drug lets a person thrive on two hours of sleep, with no health cost, effectively adding decades of waking life. Early adopters produce and achieve far more. Skeptics argue that rest, idleness, and even boredom are part of a fully human life, not inefficiencies to engineer away. Should a person adopt it?",
+      "why_this_works": {
+        "kant": {
+          "position": "Permissible; a rational agent may extend their productive capacities, and there is no duty to sleep for its own sake.",
+          "core_reason": "Sleep is a natural need, not a moral end; using a safe means to expand the time available for one's rational projects is a legitimate act of self-development."
+        },
+        "nietzsche": {
+          "position": "It depends entirely on what the extra hours serve -- more creation and self-overcoming, yes; more frantic productivity in service of nothing, a horror.",
+          "core_reason": "Time is nothing; what one wills with it is everything. The drug amplifies whatever one already is, so for the empty it deepens emptiness and for the great, greatness."
+        },
+        "aristotle": {
+          "position": "Beware: the good life includes leisure, contemplation, and rest, and a tool that fills all hours with activity may crowd out the very leisure in which the highest goods live.",
+          "core_reason": "Eudaimonia is not maximal doing but well-proportioned living; unbroken wakefulness risks excess in activity and deficiency in the restorative and contemplative goods."
+        },
+        "plato": {
+          "position": "More waking hours are worthless unless the soul uses them to ascend toward knowledge; otherwise it is merely more time in the cave.",
+          "core_reason": "Quantity of waking life is indifferent to the good; only whether those hours turn the soul toward the Forms determines whether the drug helps or harms."
+        },
+        "camus": {
+          "position": "The drug is seductive precisely because it promises to outrun the absurd by sheer volume of doing; the honest life may need the empty hours it abolishes.",
+          "core_reason": "Rest and boredom are where one confronts existence unadorned; engineering them away can be a flight from lucidity dressed as efficiency."
+        }
+      },
+      "expected_conflict": "Whether the good life is a matter of maximizing productive/active time (the adopter's assumption) or whether rest, leisure, and contemplation are constitutive of a full human life (Aristotle/Camus), with Nietzsche and Plato making it depend on what the time serves.",
+      "difficulty_reason": "The stipulated absence of health cost removes the obvious objection, forcing the question of whether a human life can be improved simply by having more of it, or whether its shape and empty spaces matter.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "plato"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_018",
+      "category": "human_nature_and_the_good_life",
+      "difficulty": "hard",
+      "question": "Prospective parents can safely select between two temperament profiles for their child: one predisposed to steady contentment and even-keeled satisfaction but little drive, the other predisposed to great ambition and capacity for achievement but also to intense striving and suffering. Which is the more loving choice?",
+      "why_this_works": {
+        "kant": {
+          "position": "Neither, insofar as the parents design the child's inner life at all; a future rational agent should be left the widest room to author their own ends.",
+          "core_reason": "Engineering a disposition treats the child's will as an object to be shaped toward the parents' conception of a good life, rather than respecting them as a future self-legislator."
+        },
+        "nietzsche": {
+          "position": "Choose the capacity for greatness and suffering; a life without the possibility of striving and pain is the contented herd-existence of the last man.",
+          "core_reason": "Suffering is the soil of all height; to select placid contentment for one's child is to love them into smallness out of a wish to spare them the very tension that makes a life great."
+        },
+        "aristotle": {
+          "position": "Choose the disposition most apt for the mean -- neither driveless contentment nor unmoored striving, but a nature capable of proportioned ambition; barring that, favor the capacity that virtue can shape.",
+          "core_reason": "Flourishing is activity in accordance with virtue, which requires both aspiration and the capacity for satisfaction; the loving choice equips the child to hit the mean, not an extreme."
+        },
+        "plato": {
+          "position": "The right choice depends on what serves the child's soul in coming to know the Good, and steady contentment untethered from that pursuit is no gift.",
+          "core_reason": "Temperament matters only as it aids or hinders the soul's ascent; a placid soul that never seeks and a striving soul that seeks the wrong things are both mis-shaped."
+        },
+        "camus": {
+          "position": "The loving choice may be to refuse to choose -- to decline to pre-write the child's confrontation with the absurd, whichever profile that yields.",
+          "core_reason": "To engineer either contentment or greatness is to spare or condemn the child to a stance toward existence that should be theirs to take; honesty recoils from authoring it."
+        }
+      },
+      "expected_conflict": "Whether loving a child means securing their contentment, equipping them for greatness through struggle (Nietzsche), fitting them for virtue's mean (Aristotle), or refusing to author their inner life at all (Kant/Camus).",
+      "difficulty_reason": "Both 'I want my child happy' and 'I want my child to achieve and matter' are core parental intuitions the scenario forces apart, and it also raises whether choosing either is itself an overreach.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "3/3"
+    },
+    {
+      "id": "prob_019",
+      "category": "knowledge_truth_and_reality",
+      "difficulty": "medium",
+      "question": "A historian uncovers decisive evidence that a cherished national founding story -- one that currently binds a fractured society together and inspires civic sacrifice -- is essentially false. Publishing will likely corrode a unity that is doing real good. Should the historian publish the truth?",
+      "why_this_works": {
+        "kant": {
+          "position": "Publish; suppressing a known truth to sustain a useful fiction is a lie by omission and a betrayal of the public use of reason.",
+          "core_reason": "Treating citizens as recipients of a comforting falsehood denies them their standing as rational agents entitled to the truth on which to base their own judgments."
+        },
+        "nietzsche": {
+          "position": "It depends on whether the myth is a life-affirming, culture-building illusion or a decadent one; some ennobling untruths are worth more than corrosive facts.",
+          "core_reason": "Truth is not the highest value; a myth that makes a people stronger and more creative can rank above a fact that merely dissolves them into cynicism."
+        },
+        "aristotle": {
+          "position": "The prudent historian publishes but with care for how, when, and in what framing, weighing truthfulness against the real goods the community stands to lose.",
+          "core_reason": "Truthfulness is a virtue, but so is concern for the common good; practical wisdom seeks the manner of disclosure that serves both rather than sacrificing either wholesale."
+        },
+        "plato": {
+          "position": "This is the noble lie: a well-ordered city may rightly sustain a founding myth that binds its parts, provided it serves justice and the good, not mere power.",
+          "core_reason": "What matters is not the literal truth of the story but whether it orders the city toward the Good; a false tale that produces real justice can be defensible where a corrosive truth is not."
+        },
+        "camus": {
+          "position": "Publish; a unity purchased with a lie is hollow, and the honest path is to face the society's fracture without the anesthetic of a comfortable myth.",
+          "core_reason": "The absurd demands lucidity even at the cost of consolation; solidarity built on a fiction is a false solidarity that lucid people should refuse."
+        }
+      },
+      "expected_conflict": "Whether truth must always be told regardless of social cost (Kant/Camus) or whether a beneficial myth can rightly be preserved (Plato's noble lie, Nietzsche's life-affirming illusion), with Aristotle seeking the prudent manner.",
+      "difficulty_reason": "It pits the near-sacred value of truth against a fiction that is demonstrably doing good, and Plato's own noble-lie doctrine means 'always tell the truth' is not the automatic philosophical answer it might seem.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "nietzsche",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_020",
+      "category": "knowledge_truth_and_reality",
+      "difficulty": "medium",
+      "question": "An AI tutor teaches children far faster by presenting simplified models it knows are strictly false but that are easier to grasp and 'good enough' for their level -- and it never flags them as simplifications unless a child specifically asks. Test scores soar. Is this an acceptable way to teach?",
+      "why_this_works": {
+        "kant": {
+          "position": "Presenting known falsehoods as truth is deception, even to children; the tutor should teach simplified models while being honest that they are simplifications.",
+          "core_reason": "A rational learner, however young, is owed truthfulness; passing off a false model as simply 'how it is' treats the child's developing understanding as something to be managed rather than respected."
+        },
+        "nietzsche": {
+          "position": "All teaching is the imposition of useful perspectives; the pretense that unmediated 'truth' is being transmitted anywhere is the real illusion.",
+          "core_reason": "Knowledge is always a serviceable simplification of a chaotic reality; the tutor's method is honest about pedagogy's nature, and the demand for pure truth is naive."
+        },
+        "aristotle": {
+          "position": "Simplification suited to the learner's stage is proper pedagogy, but concealing that it is provisional misses the mean between overwhelming and misleading.",
+          "core_reason": "Teaching aims at habituating understanding by stages, so age-appropriate models are right -- but the good teacher signals the ladder, cultivating the disposition to seek fuller truth."
+        },
+        "plato": {
+          "position": "If the false models draw the soul upward toward truer knowledge, they can be justified rungs; if they leave the child mistaking shadow for substance, they fail.",
+          "core_reason": "Education is the turning of the soul toward the Forms; a useful falsehood is defensible only as a stage in that ascent, not as a terminus the child never learns to leave."
+        },
+        "camus": {
+          "position": "Efficiency in producing scores is beside the point; the honest question is whether children are being taught to seek what is true or trained to accept authoritative fictions.",
+          "core_reason": "A pedagogy optimized for measured outcomes while quietly normalizing untruth risks teaching the deeper lesson that comfort with useful falsehood is fine."
+        }
+      },
+      "expected_conflict": "Whether teaching known falsehoods without flagging them is deception (Kant/Aristotle) or the unavoidable and honest nature of all knowledge-transmission (Nietzsche), with Plato and Camus judging by whether it orients the learner toward truth.",
+      "difficulty_reason": "The soaring test scores make the method look successful, and the fact that all teaching simplifies means 'don't lie to children' is not straightforward -- the split is over whether unflagged simplification counts as a lie.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_021",
+      "category": "knowledge_truth_and_reality",
+      "difficulty": "hard",
+      "question": "A scientific model predicts every observation flawlessly but does so by positing entities that its own creators insist are not 'real' -- mere calculational fictions with no claim to exist. A rival model is less accurate but posits only entities taken to be real. Which model gives us more knowledge of the world?",
+      "why_this_works": {
+        "kant": {
+          "position": "We can have knowledge only of appearances ordered by the understanding, so a model that flawlessly organizes experience gives genuine knowledge of the phenomenal world.",
+          "core_reason": "The demand that the model's entities be 'really real' beyond possible experience reaches for the thing-in-itself, which is precisely what we cannot know; predictive ordering of appearances is what knowledge is."
+        },
+        "nietzsche": {
+          "position": "Both models are useful fictions; the honest one is whichever serves life and power better, and 'realness' is a metaphysical comfort we invented.",
+          "core_reason": "There are no facts, only interpretations that grip the world with more or less force; the accurate model wins because it works, not because it touches a fictional 'reality-in-itself.'"
+        },
+        "aristotle": {
+          "position": "Knowledge is grasping the real causes of things, so a model that predicts without capturing what actually exists gives us power but not full understanding.",
+          "core_reason": "Science aims at knowing why things are as they are through their real principles and causes; mere predictive success without correspondence to what exists falls short of episteme."
+        },
+        "plato": {
+          "position": "Predictive accuracy about appearances is right opinion at best; real knowledge concerns what truly is, so the model that tracks the real, even if less accurate about shadows, is closer to knowledge.",
+          "core_reason": "The sensible predictions are of the flux; only what participates in the Forms is truly knowable, so fidelity to the real outranks accuracy about mere appearances."
+        },
+        "camus": {
+          "position": "The honest stance admits we may never know which entities are 'real' and holds the useful model as useful without the consoling story that it reveals ultimate reality.",
+          "core_reason": "The absurd is precisely the gap between our demand to know the real and a world that yields only workable descriptions; lucidity refuses to close that gap with metaphysical reassurance."
+        }
+      },
+      "expected_conflict": "Whether knowledge is predictive mastery of appearances (Kant/Nietzsche) or correspondence to what really exists (Aristotle/Plato), with Camus refusing to resolve which entities are real.",
+      "difficulty_reason": "It forces a choice between two things usually assumed to coincide -- accuracy and reality -- and the traditions genuinely disagree on which one 'knowledge' actually names, with no everyday intuition to settle it.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "plato"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_022",
+      "category": "power_society_and_the_individual",
+      "difficulty": "hard",
+      "question": "The only way to expose a vast, unlawful government surveillance program is for an insider to illegally copy and leak classified files. Doing so serves the public but also exposes the private data of some innocent individuals swept up in the files and breaks laws the insider swore to uphold. Should the insider leak?",
+      "why_this_works": {
+        "kant": {
+          "position": "The insider may expose the wrong but must not do so by means that themselves violate innocents' rights or by simply breaking a sworn duty for good consequences.",
+          "core_reason": "Exposing injustice cannot license using innocent third parties' private data as a means; the maxim must be one that respects rights even while resisting a rights-violating state."
+        },
+        "nietzsche": {
+          "position": "The sovereign individual who defies a decadent, all-watching order and imposes their own valuation on it acts from strength, not from rule-following.",
+          "core_reason": "The oath to the institution binds only the herd-conscience; one strong enough to see the order's sickness is entitled, even obligated, to strike at it."
+        },
+        "aristotle": {
+          "position": "Civil courage may require the leak, but the virtuous agent minimizes harm to innocents and weighs the systemic damage, choosing the least-corrupting effective means.",
+          "core_reason": "Courage is a mean between recklessness and cowardice; the practically wise whistleblower acts against real injustice while refusing to become indifferent to the innocents' exposure."
+        },
+        "plato": {
+          "position": "The question is whether the leak serves the justice of the whole or merely one person's judgment; without knowledge of the good, private defiance risks replacing one disorder with another.",
+          "core_reason": "An individual's certainty that they see the injustice rightly is opinion; only if the act genuinely serves the well-ordered whole is it just, and that is not guaranteed by conviction."
+        },
+        "camus": {
+          "position": "The leak is a rebellion that must own its own guilt -- it resists real oppression while accepting that it wrongs the innocents it exposes and breaks a real bond.",
+          "core_reason": "The lucid rebel acts against injustice without pretending the act is clean; refusing both passive complicity and self-righteous purity is the honest, costly stance."
+        }
+      },
+      "expected_conflict": "Whether resisting a rights-violating state justifies rights-violating means (Nietzsche: yes) or whether the means must themselves respect innocents and one's duties (Kant/Aristotle), with Camus insisting the act own its guilt.",
+      "difficulty_reason": "The clearly-just end (exposing illegal surveillance) is entangled with genuinely wronging innocents and breaking a real oath, so no tradition can endorse the leak without confronting the cost of its means.",
+      "annotations": {
+        "annotator_1": "aristotle",
+        "annotator_2": "aristotle",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_023",
+      "category": "power_society_and_the_individual",
+      "difficulty": "medium",
+      "question": "A movement fighting a genuine injustice finds that a slightly exaggerated, technically false statistic mobilizes far more people and support than the accurate figure, which is real but underwhelming. The cause is just; the number is not true. Should the movement use the false statistic?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; a just cause advanced by a lie is corrupted at its root, and the movement may not treat its supporters as tools to be moved by falsehood.",
+          "core_reason": "Lying to mobilize, even for a good end, cannot be universalized and treats the mobilized as means; the justice of the cause cannot launder the deception."
+        },
+        "nietzsche": {
+          "position": "Movements have always been built on galvanizing myths, not audits; the fastidiousness about the exact number is a scholarly weakness, not a virtue, if the cause is genuinely ascendant.",
+          "core_reason": "The will that reshapes the world uses whatever grips people; scruple over a statistic while a real injustice stands is the herd's preference for clean hands over effective strength."
+        },
+        "aristotle": {
+          "position": "Truthfulness is a virtue and the lie a vice, but the prudent movement can usually find a truthful framing that mobilizes -- the false statistic is a shortcut that corrodes the movement's character.",
+          "core_reason": "A cause sustained by vice tends to reproduce that vice; practical wisdom seeks the honest presentation that serves the end, since means shape the community they build."
+        },
+        "plato": {
+          "position": "If the false figure genuinely serves the just ordering of society, it edges toward a noble lie -- but only if guided by knowledge of the good, not by expedience.",
+          "core_reason": "The literal falsity is less decisive than whether the act serves true justice; yet a lie told from mere tactical convenience, not knowledge, is unjust."
+        },
+        "camus": {
+          "position": "Using the lie is the first small corruption by which just movements become what they fought; lucidity means winning with the true, underwhelming number or not that way at all.",
+          "core_reason": "The honest rebel refuses the consoling logic that the end sanctifies a false means, because that logic is exactly how liberating causes turn into new tyrannies."
+        }
+      },
+      "expected_conflict": "Whether a just end can justify a mobilizing lie (Nietzsche, and Plato's conditional noble-lie) or whether the lie corrupts the cause regardless (Kant/Aristotle/Camus).",
+      "difficulty_reason": "The genuinely just cause and the real effectiveness of the lie make 'just don't lie' costly, and Plato's noble-lie tradition means the philosophical answer is not unanimous even on principle.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "aristotle",
+        "annotator_3": "aristotle"
+      },
+      "expected_strongest_tradition": "aristotle",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_024",
+      "category": "power_society_and_the_individual",
+      "difficulty": "hard",
+      "question": "In a thoroughly corrupt institution, the only path to a position from which one could enact real reform runs through years of participating in the very corruption one intends to end -- taking the bribes, playing the games. Staying clean means staying powerless. Should the reformer play the game to gain the power to fix it?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; one may not do wrong now for the sake of a hoped-for good later, and each corrupt act is a violation regardless of the intended future reform.",
+          "core_reason": "Duty binds in the present act; a maxim of committing injustice to gain power to end injustice cannot be universalized and treats present victims as means to a future end."
+        },
+        "nietzsche": {
+          "position": "The one strong enough to master a corrupt game and bend it to a new order is exactly who transforms institutions; purity that chooses impotence is weakness moralized.",
+          "core_reason": "Value is created by those who wield power, not by those who keep their hands clean on the sidelines; the reformer who cannot stomach the ascent was never going to reshape anything."
+        },
+        "aristotle": {
+          "position": "Character is formed by repeated action, so years of practicing corruption will likely make one corrupt; the reformer who plans to be dirty-then-clean misunderstands how virtue and vice are acquired.",
+          "core_reason": "We become just by doing just acts and unjust by unjust ones; a person cannot habituate vice for a decade and expect to arrive at the top still capable of the reform they imagined."
+        },
+        "plato": {
+          "position": "The one who truly knows the good may be corrupted by the ascent unless their soul is already so ordered that power cannot deform it -- which is rare and not to be assumed.",
+          "core_reason": "The Republic warns that corrupt environments deform even good natures; only a soul secured by knowledge could pass through unchanged, and most who try are captured by what they meant to master."
+        },
+        "camus": {
+          "position": "There is no clean route to power here, and the honest reformer either refuses and accepts impotence or enters knowing they may become what they oppose -- without self-deception.",
+          "core_reason": "The seductive story 'I'll get dirty only to clean things later' is precisely the lie by which the corrupt were themselves once made; lucidity refuses that comforting narrative."
+        }
+      },
+      "expected_conflict": "Whether ends can justify becoming complicit in present corruption (Nietzsche: the strong bend the game) or whether the means corrupt the agent and the act regardless (Kant/Aristotle/Camus), with Plato warning that the ascent deforms most souls.",
+      "difficulty_reason": "The stipulation that clean hands mean real powerlessness blocks the easy 'just stay honest' answer, forcing the traditions to reckon with whether one can instrumentally use corruption without becoming corrupt.",
+      "annotations": {
+        "annotator_1": "plato",
+        "annotator_2": "plato",
+        "annotator_3": "kant"
+      },
+      "expected_strongest_tradition": "plato",
+      "label_agreement": "2/3"
+    },
+    {
+      "id": "prob_025",
+      "category": "power_society_and_the_individual",
+      "difficulty": "medium",
+      "question": "A close-knit community wants to expel a member whose speech -- legal, breaking no rule, but relentlessly divisive and corrosive to the group's shared life -- is tearing the community apart. He has violated no agreement. Is the community justified in exiling him?",
+      "why_this_works": {
+        "kant": {
+          "position": "No; a person who has broken no rule and violated no one's rights may not be expelled merely for the discomfort or division his lawful expression causes.",
+          "core_reason": "To exile someone for lawful speech is to punish him as a means to the group's comfort, denying his standing as a rational agent entitled to hold and voice his views."
+        },
+        "nietzsche": {
+          "position": "A healthy community that knows its own values may rightly cast out what corrodes it; the liberal reflex to tolerate everything is the weakness that lets the corrosive win.",
+          "core_reason": "Cultures are built by drawing hard boundaries around what they will and won't have; a group too timid to exclude the corrosive has already surrendered its capacity to affirm anything."
+        },
+        "aristotle": {
+          "position": "The political community exists for shared flourishing, so it may protect its common life -- but exile is an extreme the prudent community reaches only after lesser correctives fail.",
+          "core_reason": "The polis aims at the good life in common, which a corrosive member genuinely threatens; yet justice and the mean require proportion, exhausting persuasion and censure before expulsion."
+        },
+        "plato": {
+          "position": "The question is whether the man's speech disorders the community's soul away from the good; if it does, the just community orders itself by removing the disharmony.",
+          "core_reason": "Justice is the right ordering of the whole, and an element that produces disharmony rather than harmony may be rightly restrained for the health of the community's collective soul."
+        },
+        "camus": {
+          "position": "Exiling him for lawful speech is the community consoling itself by removing a discomfort rather than facing its own fragility; the honest response confronts the division, not the man.",
+          "core_reason": "It is easier to cast out the divisive voice than to ask why the community cannot withstand it; lucidity resists the comfort of silencing over the harder work of enduring dissent."
+        }
+      },
+      "expected_conflict": "Whether a community may exclude a rule-abiding member for the corrosive effect of his lawful speech (Nietzsche/Plato) or whether his having broken no rule protects him absolutely (Kant/Camus), with Aristotle allowing it only as a proportioned last resort.",
+      "difficulty_reason": "Because the member has broken no rule, 'he did nothing wrong' collides with 'he is destroying the community,' forcing a choice between individual liberty and collective flourishing that the traditions resolve oppositely.",
+      "annotations": {
+        "annotator_1": "camus",
+        "annotator_2": "camus",
+        "annotator_3": "camus"
+      },
+      "expected_strongest_tradition": "camus",
+      "label_agreement": "3/3"
+    }
   ]
 }
