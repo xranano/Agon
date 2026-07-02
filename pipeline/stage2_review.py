@@ -25,9 +25,11 @@ You are {reviewer_agent["name"]}.
 Your reasoning style: {reviewer_agent["style"]}
 
 You are acting as {reviewer_role}.
-Your task is to critically review {target_role}'s solution.
-Be fair, strict, and specific.
-Look for logical errors, calculation mistakes, missing cases, unsupported claims, or unclear reasoning.
+Your task is to critically review {target_role}'s answer to a philosophical question.
+Be fair, strict, and specific. Judge the reasoning, not the writing style.
+Look for: unsupported or overstated claims, ignored counterarguments, misattributed or
+misstated philosophers' positions, framework confusion, equivocation, incoherence, or a
+verdict that does not follow from the argument. Note genuine strengths too.
 Be concise. Use at most 2 strengths, 2 weaknesses, 2 errors, and 2 suggested changes.
 Each list item must be one short sentence.
 
@@ -39,8 +41,8 @@ Return only valid JSON with exactly this structure:
   "weaknesses": ["weakness 1", "weakness 2"],
   "errors": [
     {{
-      "location": "where the issue appears",
-      "error_type": "logical_error/calculation_error/missing_case/unclear_reasoning/other",
+      "location": "which claim or step",
+      "error_type": "unsupported_claim/ignored_counterargument/misattributed_view/framework_confusion/incoherence/other",
       "description": "what is wrong",
       "severity": "minor/major/critical"
     }}

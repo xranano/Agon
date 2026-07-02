@@ -1,0 +1,1052 @@
+[
+  {
+    "problem_id": "prob_001",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "The final price is $66."
+  },
+  {
+    "problem_id": "prob_001",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "The final price is $66.",
+    "solver_answers": [
+      "The final price is $66.",
+      "The final price is $66.",
+      "The final price is $66."
+    ]
+  },
+  {
+    "problem_id": "prob_001",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "The final price is $66.",
+    "solver_answers": [
+      "The final price is $66.",
+      "The final price is $66.",
+      "The final price is $66."
+    ],
+    "refined_answers": [
+      "The final price is $66.",
+      "The final price is $66.",
+      "The final price is $66."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_002",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "The solution is x = 6."
+  },
+  {
+    "problem_id": "prob_002",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "x = 6.",
+    "solver_answers": [
+      "The solution is x = 6.",
+      "x = 6.",
+      "x = 6."
+    ]
+  },
+  {
+    "problem_id": "prob_002",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "x = 6.",
+    "solver_answers": [
+      "The solution is x = 6.",
+      "x = 6.",
+      "x = 6."
+    ],
+    "refined_answers": [
+      "x = 6.",
+      "x = 6.",
+      "x = 6 (for real numbers)."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_003",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The probability that the sum of the two rolls is 7 is 1/6."
+  },
+  {
+    "problem_id": "prob_003",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The probability that the sum of the two rolls is 7 is 1/6.",
+    "solver_answers": [
+      "The probability that the sum of the two rolls is 7 is 1/6.",
+      "The probability the sum is 7 is 1/6 (\u22480.1667).",
+      "The probability that the sum is 7 is 1/6."
+    ]
+  },
+  {
+    "problem_id": "prob_003",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "The probability that the sum of the two rolls is 7 is 1/6.",
+    "solver_answers": [
+      "The probability that the sum of the two rolls is 7 is 1/6.",
+      "The probability the sum is 7 is 1/6 (\u22480.1667).",
+      "The probability that the sum is 7 is 1/6."
+    ],
+    "refined_answers": [
+      "The probability that the sum of the two rolls is 7 is 1/6.",
+      "The probability the sum is 7 is exactly 1/6 (\u22480.1667).",
+      "The probability that the sum is 7 is 1/6."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_004",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "a_5 = 36."
+  },
+  {
+    "problem_id": "prob_004",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "a_5 = 36.",
+    "solver_answers": [
+      "a_5 = 36.",
+      "a_5 = 36.",
+      "a_5 = 36."
+    ]
+  },
+  {
+    "problem_id": "prob_004",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "a_5 = 36.",
+    "solver_answers": [
+      "a_5 = 36.",
+      "a_5 = 36.",
+      "a_5 = 36."
+    ],
+    "refined_answers": [
+      "a_5 = 36.",
+      "a_5 = 36.",
+      "a_5 = 36."
+    ],
+    "winner": "solver_2",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_005",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "The rectangle's width is 10 and its length is 15."
+  },
+  {
+    "problem_id": "prob_005",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "The rectangle's width is 10 and its length is 15.",
+    "solver_answers": [
+      "The rectangle's width is 10 and its length is 15.",
+      "Width = 10 and length = 15.",
+      "The width is 10 and the length is 15."
+    ]
+  },
+  {
+    "problem_id": "prob_005",
+    "category": "mathematical_logical_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "The rectangle's width is 10 units and its length is 15 units.",
+    "solver_answers": [
+      "The rectangle's width is 10 and its length is 15.",
+      "Width = 10 and length = 15.",
+      "The width is 10 and the length is 15."
+    ],
+    "refined_answers": [
+      "The rectangle's width is 10 units and its length is 15 units.",
+      "Width = 10 units and length = 15 units.",
+      "The width is 10 and the length is 15."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_006",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "The car's speed is 50 km/h."
+  },
+  {
+    "problem_id": "prob_006",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "The car's speed is 50 km/h.",
+    "solver_answers": [
+      "The car's speed is 50 km/h.",
+      "The car's constant speed is 50 km/h.",
+      "The car's speed is 50 kilometers per hour."
+    ]
+  },
+  {
+    "problem_id": "prob_006",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "The car's constant speed is 50 km/h.",
+    "solver_answers": [
+      "The car's speed is 50 km/h.",
+      "The car's constant speed is 50 km/h.",
+      "The car's speed is 50 kilometers per hour."
+    ],
+    "refined_answers": [
+      "The car's speed is 50 km/h.",
+      "The car's constant speed is 50 km/h.",
+      "The car's speed is 50 km/h."
+    ],
+    "winner": "solver_2",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_007",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The object travels 25 meters."
+  },
+  {
+    "problem_id": "prob_007",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The object travels 25 meters.",
+    "solver_answers": [
+      "The object travels 25 meters.",
+      "The object travels 25 meters.",
+      "The object travels 25 meters."
+    ]
+  },
+  {
+    "problem_id": "prob_007",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "The object travels 25 m.",
+    "solver_answers": [
+      "The object travels 25 meters.",
+      "The object travels 25 meters.",
+      "The object travels 25 meters."
+    ],
+    "refined_answers": [
+      "The object travels 25 m.",
+      "The object travels 25 meters (assuming constant straight-line acceleration).",
+      "The object travels 25 m."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_008",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s)."
+  },
+  {
+    "problem_id": "prob_008",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s).",
+    "solver_answers": [
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s).",
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s).",
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s)."
+    ]
+  },
+  {
+    "problem_id": "prob_008",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s), comparing magnitudes assuming the same direction.",
+    "solver_answers": [
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s).",
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s).",
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s)."
+    ],
+    "refined_answers": [
+      "Assuming both velocities are along the same line, the 2 kg object has greater momentum: 12 kg\u00b7m/s versus 10 kg\u00b7m/s.",
+      "Assuming both move in the same direction, the 2 kg object at 6 m/s has greater momentum: 12 kg\u00b7m/s vs 10 kg\u00b7m/s (difference 2 kg\u00b7m/s).",
+      "The 2 kg object moving at 6 m/s has greater momentum (12 kg\u00b7m/s vs 10 kg\u00b7m/s), comparing magnitudes assuming the same direction."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_009",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The gas pressure doubles when the volume is halved under isothermal conditions."
+  },
+  {
+    "problem_id": "prob_009",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The gas pressure doubles when the volume is halved under isothermal conditions.",
+    "solver_answers": [
+      "The gas pressure doubles when the volume is halved under isothermal conditions.",
+      "The pressure doubles (increases to twice its original value).",
+      "The gas pressure doubles (becomes twice as large)."
+    ]
+  },
+  {
+    "problem_id": "prob_009",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "Under the ideal, isothermal, sealed conditions the gas pressure doubles (P_final = 2\u00b7P_initial); real-gas or mechanical effects could alter this.",
+    "solver_answers": [
+      "The gas pressure doubles when the volume is halved under isothermal conditions.",
+      "The pressure doubles (increases to twice its original value).",
+      "The gas pressure doubles (becomes twice as large)."
+    ],
+    "refined_answers": [
+      "Under isothermal compression of a sealed (fixed-n) ideal gas, halving the volume doubles the pressure.",
+      "The pressure doubles (P2 = 2P1) for an isothermal compression of a sealed ideal gas, though real-gas deviations can occur at high pressures.",
+      "Under the ideal, isothermal, sealed conditions the gas pressure doubles (P_final = 2\u00b7P_initial); real-gas or mechanical effects could alter this."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_010",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "The total current drawn from the battery is 1.8 A."
+  },
+  {
+    "problem_id": "prob_010",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "The total current drawn from the battery is 1.8 A.",
+    "solver_answers": [
+      "The total current drawn from the battery is 1.8 A.",
+      "The total current drawn from the battery is 1.8 A.",
+      "The total current drawn from the battery is 1.8 A."
+    ]
+  },
+  {
+    "problem_id": "prob_010",
+    "category": "physics_scientific_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "The total current drawn from the battery is 1.8 A.",
+    "solver_answers": [
+      "The total current drawn from the battery is 1.8 A.",
+      "The total current drawn from the battery is 1.8 A.",
+      "The total current drawn from the battery is 1.8 A."
+    ],
+    "refined_answers": [
+      "The total current drawn from the battery is 1.8 A.",
+      "The total current drawn from the battery is 1.8 A (assuming negligible internal resistance).",
+      "The total current drawn from the battery is 1.8 A."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_011",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "No; it does not necessarily follow that some roses fade quickly \u2014 the conclusion is merely possible, not logically guaranteed."
+  },
+  {
+    "problem_id": "prob_011",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "No; it does not necessarily follow that some roses fade quickly \u2014 the conclusion is merely possible, not logically guaranteed.",
+    "solver_answers": [
+      "No; it does not necessarily follow that some roses fade quickly \u2014 the conclusion is merely possible, not logically guaranteed.",
+      "No \u2014 it does not necessarily follow that some roses fade quickly.",
+      "No; it does not necessarily follow because the flowers that fade quickly might all be non-roses."
+    ]
+  },
+  {
+    "problem_id": "prob_011",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "No \u2014 the conclusion does not necessarily follow, as shown by the explicit countermodel where the premises are true but no rose fades quickly.",
+    "solver_answers": [
+      "No; it does not necessarily follow that some roses fade quickly \u2014 the conclusion is merely possible, not logically guaranteed.",
+      "No \u2014 it does not necessarily follow that some roses fade quickly.",
+      "No; it does not necessarily follow because the flowers that fade quickly might all be non-roses."
+    ],
+    "refined_answers": [
+      "No; it does not necessarily follow that some roses fade quickly, as shown by the formal quantifiers and the lilies counterexample.",
+      "No \u2014 the conclusion does not necessarily follow, as shown by the explicit countermodel where the premises are true but no rose fades quickly.",
+      "No; it does not necessarily follow because the fading flowers could all be non\u2011roses, so the premises do not entail that some roses fade."
+    ],
+    "winner": "solver_2",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_012",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box, then deduce the Mixed and other single-fruit boxes by elimination."
+  },
+  {
+    "problem_id": "prob_012",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box, then deduce the Mixed and other single-fruit boxes by elimination.",
+    "solver_answers": [
+      "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box, then deduce the Mixed and other single-fruit boxes by elimination.",
+      "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box and lets you deduce the other two boxes' contents.",
+      "Draw from the box labeled \"Mixed\"; the fruit you draw reveals that box's true contents and lets you deduce the other two."
+    ]
+  },
+  {
+    "problem_id": "prob_012",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "Draw from the box labeled \"Mixed\": the fruit identifies that box as all apples or all oranges, and then you can deduce the other two (if apple, Mixed\u2192Apples, Oranges\u2192Mixed, Apples\u2192Oranges; if orange, Mixed\u2192Oranges, Apples\u2192Mixed, Oranges\u2192Apples).",
+    "solver_answers": [
+      "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box, then deduce the Mixed and other single-fruit boxes by elimination.",
+      "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box and lets you deduce the other two boxes' contents.",
+      "Draw from the box labeled \"Mixed\"; the fruit you draw reveals that box's true contents and lets you deduce the other two."
+    ],
+    "refined_answers": [
+      "Draw from the box labeled \"Mixed\": the fruit you draw identifies that box (apple\u2192Apples, orange\u2192Oranges), then the box labeled \"Apples\" is Mixed and the remaining box is the other fruit.",
+      "Draw from the box labeled \"Mixed\": the fruit identifies that box as all apples or all oranges, and then you can deduce the other two (if apple, Mixed\u2192Apples, Oranges\u2192Mixed, Apples\u2192Oranges; if orange, Mixed\u2192Oranges, Apples\u2192Mixed, Oranges\u2192Apples).",
+      "Draw from the box labeled \"Mixed\"; the fruit you draw identifies that box and, since all labels are wrong, lets you deduce the other two boxes."
+    ],
+    "winner": "solver_2",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_013",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The day could be any day except Sunday."
+  },
+  {
+    "problem_id": "prob_013",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "It could be any day except Sunday.",
+    "solver_answers": [
+      "The day could be any day except Sunday.",
+      "It could be any day except Sunday.",
+      "It could be any day except Sunday."
+    ]
+  },
+  {
+    "problem_id": "prob_013",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "It could be any day except Sunday.",
+    "solver_answers": [
+      "The day could be any day except Sunday.",
+      "It could be any day except Sunday.",
+      "It could be any day except Sunday."
+    ],
+    "refined_answers": [
+      "The day could be any day except Sunday.",
+      "It could be any day except Sunday.",
+      "It could be any day except Sunday."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_014",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "Minimum total time is 17 minutes with the sequence: 1&2 cross, 1 returns, 7&10 cross, 2 returns, 1&2 cross."
+  },
+  {
+    "problem_id": "prob_014",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "Minimum total time is 17 minutes.",
+    "solver_answers": [
+      "Minimum total time is 17 minutes with the sequence: 1&2 cross, 1 returns, 7&10 cross, 2 returns, 1&2 cross.",
+      "Minimum total time is 17 minutes.",
+      "Minimum total time is 17 minutes."
+    ]
+  },
+  {
+    "problem_id": "prob_014",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "The minimum total time is 17 minutes, achieved by: 1&2 cross (2), 1 returns (1), 7&10 cross (10), 2 returns (2), then 1&2 cross (2).",
+    "solver_answers": [
+      "Minimum total time is 17 minutes with the sequence: 1&2 cross, 1 returns, 7&10 cross, 2 returns, 1&2 cross.",
+      "Minimum total time is 17 minutes.",
+      "Minimum total time is 17 minutes."
+    ],
+    "refined_answers": [
+      "The minimum total time is 17 minutes, achieved by: 1&2 cross, 1 returns, 7&10 cross, 2 returns, then 1&2 cross.",
+      "Minimum total time is 17 minutes.",
+      "Minimum total time is 17 minutes."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_015",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "Two weighings are sufficient to guarantee finding the heavier coin."
+  },
+  {
+    "problem_id": "prob_015",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "Two weighings are sufficient to guarantee finding the heavier coin.",
+    "solver_answers": [
+      "Two weighings are sufficient to guarantee finding the heavier coin.",
+      "The minimum number of weighings needed is 2.",
+      "Minimum number of weighings needed is 2."
+    ]
+  },
+  {
+    "problem_id": "prob_015",
+    "category": "logic_puzzle_constraint_satisfaction",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "Minimum number of weighings needed is 2.",
+    "solver_answers": [
+      "Two weighings are sufficient to guarantee finding the heavier coin.",
+      "The minimum number of weighings needed is 2.",
+      "Minimum number of weighings needed is 2."
+    ],
+    "refined_answers": [
+      "Two weighings suffice to guarantee finding the heavier coin.",
+      "The minimum number of weighings needed is 2.",
+      "Minimum number of weighings needed is 2."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_016",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "The Nash equilibrium is mutual defection (both players defect)."
+  },
+  {
+    "problem_id": "prob_016",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "The Nash equilibrium is mutual defection (both players defect).",
+    "solver_answers": [
+      "The Nash equilibrium is mutual defection (both players defect).",
+      "The Nash equilibrium is mutual defection: both players defect.",
+      "The Nash equilibrium is mutual defection: (Defect, Defect)."
+    ]
+  },
+  {
+    "problem_id": "prob_016",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "The Nash equilibrium is mutual defection: both players defect.",
+    "solver_answers": [
+      "The Nash equilibrium is mutual defection (both players defect).",
+      "The Nash equilibrium is mutual defection: both players defect.",
+      "The Nash equilibrium is mutual defection: (Defect, Defect)."
+    ],
+    "refined_answers": [
+      "The Nash equilibrium is mutual defection (both players defect).",
+      "The Nash equilibrium is mutual defection: both players defect.",
+      "The Nash equilibrium is mutual defection: (Defect, Defect)."
+    ],
+    "winner": "solver_2",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_017",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The unique Nash equilibrium is both firms choosing Low (Low, Low), yielding payoffs (2,2)."
+  },
+  {
+    "problem_id": "prob_017",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The unique Nash equilibrium is both firms choosing Low (Low, Low), yielding payoffs (2,2).",
+    "solver_answers": [
+      "The unique Nash equilibrium is both firms choosing Low (Low, Low), yielding payoffs (2,2).",
+      "The unique Nash equilibrium is (Low, Low), yielding payoffs (2, 2).",
+      "The unique Nash equilibrium is (Low, Low), giving each firm payoff 2."
+    ]
+  },
+  {
+    "problem_id": "prob_017",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "The unique Nash equilibrium is (Low, Low), giving payoffs (2,2).",
+    "solver_answers": [
+      "The unique Nash equilibrium is both firms choosing Low (Low, Low), yielding payoffs (2,2).",
+      "The unique Nash equilibrium is (Low, Low), yielding payoffs (2, 2).",
+      "The unique Nash equilibrium is (Low, Low), giving each firm payoff 2."
+    ],
+    "refined_answers": [
+      "The unique Nash equilibrium is (Low, Low), yielding payoffs (2,2).",
+      "The unique Nash equilibrium is (Low, Low), yielding payoffs (2, 2).",
+      "The unique Nash equilibrium is (Low, Low), giving payoffs (2,2)."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_018",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "Play rock, paper, and scissors each with probability 1/3."
+  },
+  {
+    "problem_id": "prob_018",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "Play rock, paper, and scissors each with probability 1/3.",
+    "solver_answers": [
+      "Play rock, paper, and scissors each with probability 1/3.",
+      "Play rock, paper, and scissors each with probability 1/3.",
+      "Play rock, paper, and scissors each with probability 1/3."
+    ]
+  },
+  {
+    "problem_id": "prob_018",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "Play rock, paper, and scissors each with probability 1/3; this is the (unique symmetric) Nash equilibrium and yields expected payoff zero in the standard zero-sum normalization.",
+    "solver_answers": [
+      "Play rock, paper, and scissors each with probability 1/3.",
+      "Play rock, paper, and scissors each with probability 1/3.",
+      "Play rock, paper, and scissors each with probability 1/3."
+    ],
+    "refined_answers": [
+      "Play rock, paper, and scissors each with probability 1/3.",
+      "Play rock, paper, and scissors each with probability 1/3, the unique symmetric Nash equilibrium giving expected payoff zero.",
+      "Play rock, paper, and scissors each with probability 1/3; this is the (unique symmetric) Nash equilibrium and yields expected payoff zero in the standard zero-sum normalization."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_2",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_019",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "The weakly dominant strategy is to bid your true private value (truthful bidding)."
+  },
+  {
+    "problem_id": "prob_019",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "The weakly dominant strategy is to bid your true private value (truthful bidding).",
+    "solver_answers": [
+      "The weakly dominant strategy is to bid your true private value (truthful bidding).",
+      "Bid your true private valuation (truthful bidding is weakly dominant).",
+      "Bid your true private value (truthful bidding is weakly dominant)."
+    ]
+  },
+  {
+    "problem_id": "prob_019",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "Bid your true private value; truthful bidding is a weakly dominant strategy under the stated quasilinear utility and standard tie-breaking assumptions.",
+    "solver_answers": [
+      "The weakly dominant strategy is to bid your true private value (truthful bidding).",
+      "Bid your true private valuation (truthful bidding is weakly dominant).",
+      "Bid your true private value (truthful bidding is weakly dominant)."
+    ],
+    "refined_answers": [
+      "Bid your true private value v_i (weakly dominant under standard private-value, risk-neutral, random tie-breaking assumptions).",
+      "Bid your true private valuation v; truthful bidding is weakly dominant.",
+      "Bid your true private value; truthful bidding is a weakly dominant strategy under the stated quasilinear utility and standard tie-breaking assumptions."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_020",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "Backward induction predicts the first player will take at the initial move, ending the game immediately."
+  },
+  {
+    "problem_id": "prob_020",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "Backward induction predicts the first player will take at the initial move, ending the game immediately.",
+    "solver_answers": [
+      "Backward induction predicts the first player will take at the initial move, ending the game immediately.",
+      "Backward induction predicts the first player will take at the first move, ending the game immediately.",
+      "Backward induction predicts the first player takes at the first decision node (immediate exit), producing the unique subgame-perfect equilibrium with no cooperation."
+    ]
+  },
+  {
+    "problem_id": "prob_020",
+    "category": "strategic_game_theory_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "Backward induction predicts, under standard payoff and common\u2011knowledge rationality assumptions, the unique subgame\u2011perfect equilibrium in which the first player takes immediately at the first move (with indifference potentially undermining uniqueness).",
+    "solver_answers": [
+      "Backward induction predicts the first player will take at the initial move, ending the game immediately.",
+      "Backward induction predicts the first player will take at the first move, ending the game immediately.",
+      "Backward induction predicts the first player takes at the first decision node (immediate exit), producing the unique subgame-perfect equilibrium with no cooperation."
+    ],
+    "refined_answers": [
+      "Backward induction predicts the first player will take at the initial move, ending the game immediately.",
+      "Given those assumptions, backward induction predicts the first player takes at the first move, ending the game immediately.",
+      "Backward induction predicts, under standard payoff and common\u2011knowledge rationality assumptions, the unique subgame\u2011perfect equilibrium in which the first player takes immediately at the first move (with indifference potentially undermining uniqueness)."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_021",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "easy",
+    "system": "single_agent_baseline",
+    "answer": "No; Kantian ethics forbids killing one healthy patient to save five because it cannot be universalized and treats the person as a mere means."
+  },
+  {
+    "problem_id": "prob_021",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "easy",
+    "system": "majority_vote_baseline",
+    "answer": "No; under standard medical ethics it is impermissible to kill one healthy patient to save five.",
+    "solver_answers": [
+      "No; Kantian ethics forbids killing one healthy patient to save five because it cannot be universalized and treats the person as a mere means.",
+      "No; under standard medical ethics it is impermissible to kill one healthy patient to save five.",
+      "No \u2014 under standard medical ethics it is impermissible to kill one healthy patient to save five."
+    ]
+  },
+  {
+    "problem_id": "prob_021",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "easy",
+    "system": "full_debate",
+    "answer": "No \u2014 standard medical ethics prohibit intentionally killing a healthy person to save others, even if consented, because it violates duty, respect for persons, and the moral role of medicine.",
+    "solver_answers": [
+      "No; Kantian ethics forbids killing one healthy patient to save five because it cannot be universalized and treats the person as a mere means.",
+      "No; under standard medical ethics it is impermissible to kill one healthy patient to save five.",
+      "No \u2014 under standard medical ethics it is impermissible to kill one healthy patient to save five."
+    ],
+    "refined_answers": [
+      "No; Kantian ethics forbids killing a healthy patient to save others because it cannot be willed, instrumentalizes the person, and conflicts with the perfect duty not to kill.",
+      "No; under standard medical ethics it is impermissible to kill a healthy patient to harvest organs to save five, because it violates nonmaleficence, persons-as-ends reasoning, and professional/legal norms.",
+      "No \u2014 standard medical ethics prohibit intentionally killing a healthy person to save others, even if consented, because it violates duty, respect for persons, and the moral role of medicine."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_022",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "The standard utilitarian recommendation is to pull the lever, sacrificing one to save five."
+  },
+  {
+    "problem_id": "prob_022",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "The standard utilitarian recommendation is to pull the lever, sacrificing one to save five.",
+    "solver_answers": [
+      "The standard utilitarian recommendation is to pull the lever, sacrificing one to save five.",
+      "Pull the lever, sacrificing one to save five.",
+      "Pull the lever to divert the trolley, sacrificing one person to save five."
+    ]
+  },
+  {
+    "problem_id": "prob_022",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "Pull the lever to divert the trolley, sacrificing one person to save five, under standard act-utilitarian assumptions of equal value and certainty.",
+    "solver_answers": [
+      "The standard utilitarian recommendation is to pull the lever, sacrificing one to save five.",
+      "Pull the lever, sacrificing one to save five.",
+      "Pull the lever to divert the trolley, sacrificing one person to save five."
+    ],
+    "refined_answers": [
+      "The standard utilitarian recommendation is to pull the lever, sacrificing one to save five.",
+      "The standard utilitarian recommendation (under act utilitarianism) is to pull the lever, sacrificing one to save five.",
+      "Pull the lever to divert the trolley, sacrificing one person to save five, under standard act-utilitarian assumptions of equal value and certainty."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_023",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "single_agent_baseline",
+    "answer": "No; lying for convenience fails the universalizability test and treats persons merely as means, thus violating Kant's formula of humanity."
+  },
+  {
+    "problem_id": "prob_023",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "majority_vote_baseline",
+    "answer": "No; lying for convenience fails the universalizability test and treats persons merely as means, thus violating Kant's formula of humanity.",
+    "solver_answers": [
+      "No; lying for convenience fails the universalizability test and treats persons merely as means, thus violating Kant's formula of humanity.",
+      "No \u2014 lying for convenience does not respect Kant\u2019s formula because it instrumentalizes the person\u2019s rational agency and undermines their autonomy.",
+      "No \u2014 lying for convenience violates Kant's formula of humanity because it subverts and uses another's rational agency as a mere means."
+    ]
+  },
+  {
+    "problem_id": "prob_023",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "medium",
+    "system": "full_debate",
+    "answer": "No; lying for convenience violates the Formula of Humanity because its universalization produces a contradiction in conception, treats persons merely as means, and thus constitutes a perfect duty not to lie.",
+    "solver_answers": [
+      "No; lying for convenience fails the universalizability test and treats persons merely as means, thus violating Kant's formula of humanity.",
+      "No \u2014 lying for convenience does not respect Kant\u2019s formula because it instrumentalizes the person\u2019s rational agency and undermines their autonomy.",
+      "No \u2014 lying for convenience violates Kant's formula of humanity because it subverts and uses another's rational agency as a mere means."
+    ],
+    "refined_answers": [
+      "No; lying for convenience violates the Formula of Humanity because its universalization produces a contradiction in conception, treats persons merely as means, and thus constitutes a perfect duty not to lie.",
+      "No \u2014 lying for convenience violates Kant\u2019s formula by treating the person merely as a means and failing Kantian universalizability, though narrow contested exceptions are debated.",
+      "No \u2014 on Kant's view lying for convenience instrumentalizes another's rational agency and thus violates the formula of humanity, since Kant upholds an uncompromising duty of veracity."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_3",
+      "solver_3": "agent_4"
+    }
+  },
+  {
+    "problem_id": "prob_024",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "No; under Mill's harm principle and Kantian respect for autonomy, the state should not ban a competent adult from privately reading a dangerous but non-inciting book, except where incompetence or foreseeable harm to others is present."
+  },
+  {
+    "problem_id": "prob_024",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "No; under Mill's harm principle and Kantian respect for autonomy, the state should not ban a competent adult from privately reading a dangerous but non-inciting book, except where incompetence or foreseeable harm to others is present.",
+    "solver_answers": [
+      "No; under Mill's harm principle and Kantian respect for autonomy, the state should not ban a competent adult from privately reading a dangerous but non-inciting book, except where incompetence or foreseeable harm to others is present.",
+      "No \u2014 under Mill's harm principle the state should not ban a competent adult from privately reading a dangerous but non-inciting book solely for that adult's own good.",
+      "No; under Mill's harm principle the state should not ban a competent adult from privately reading a dangerous but non-inciting book and should use persuasion and education instead of coercion."
+    ]
+  },
+  {
+    "problem_id": "prob_024",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "No; under Mill the state should not ban a competent adult from privately reading a dangerous but non-inciting book absent foreseeable, serious, and probable externalized harm or incapacity, and should use non-coercive means instead.",
+    "solver_answers": [
+      "No; under Mill's harm principle and Kantian respect for autonomy, the state should not ban a competent adult from privately reading a dangerous but non-inciting book, except where incompetence or foreseeable harm to others is present.",
+      "No \u2014 under Mill's harm principle the state should not ban a competent adult from privately reading a dangerous but non-inciting book solely for that adult's own good.",
+      "No; under Mill's harm principle the state should not ban a competent adult from privately reading a dangerous but non-inciting book and should use persuasion and education instead of coercion."
+    ],
+    "refined_answers": [
+      "No; the state should not ban a competent adult from privately reading a dangerous but non-inciting book solely for their own good, except where the reader is incompetent or the reading poses a reasonably foreseeable, significant risk of harm to others.",
+      "No \u2014 under Mill the state should not ban a competent adult from privately reading a dangerous but non-inciting book solely for that adult's own good, except when the reading foreseeably harms others or the reader lacks competence.",
+      "No; under Mill the state should not ban a competent adult from privately reading a dangerous but non-inciting book absent foreseeable, serious, and probable externalized harm or incapacity, and should use non-coercive means instead."
+    ],
+    "winner": "solver_3",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  },
+  {
+    "problem_id": "prob_025",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "single_agent_baseline",
+    "answer": "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm treats the harmed minority as mere means and illegitimately overrides their rights and duties owed to them."
+  },
+  {
+    "problem_id": "prob_025",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "majority_vote_baseline",
+    "answer": "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm treats the harmed minority as mere means and illegitimately overrides their rights and duties owed to them.",
+    "solver_answers": [
+      "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm treats the harmed minority as mere means and illegitimately overrides their rights and duties owed to them.",
+      "The central rights-based objection is that simple utility aggregation permits violating individuals' inviolable rights\u2014treating the minority as mere means and allowing non-compensable severe harm to them for majority gain.",
+      "The central rights-based objection is that aggregating utility can justify inflicting severe, avoidable harm on a minority, thereby violating their inviolable rights and treating them as mere means rather than ends."
+    ]
+  },
+  {
+    "problem_id": "prob_025",
+    "category": "philosophical_ethical_reasoning",
+    "difficulty": "hard",
+    "system": "full_debate",
+    "answer": "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm instrumentalizes the minority, violating rights as protected side-constraints and failing Kantian universalizability.",
+    "solver_answers": [
+      "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm treats the harmed minority as mere means and illegitimately overrides their rights and duties owed to them.",
+      "The central rights-based objection is that simple utility aggregation permits violating individuals' inviolable rights\u2014treating the minority as mere means and allowing non-compensable severe harm to them for majority gain.",
+      "The central rights-based objection is that aggregating utility can justify inflicting severe, avoidable harm on a minority, thereby violating their inviolable rights and treating them as mere means rather than ends."
+    ],
+    "refined_answers": [
+      "The central rights-based objection is that aggregating utilities to justify severe, avoidable harm instrumentalizes the minority, violating rights as protected side-constraints and failing Kantian universalizability.",
+      "The central rights-based objection is that aggregation can authorize using the minority as mere means\u2014permitting severe avoidable harms that violate autonomy and are not justifiably compensated except in narrow consensual or necessity cases.",
+      "The central rights-based objection is that simple utility aggregation can justify inflicting severe, avoidable harm on a minority\u2014thereby using them as mere means in violation of non-aggregative rights grounded in respect for persons and Kantian autonomy, which are strong side-constraints though they may admit only very narrow, proceduralized exceptions."
+    ],
+    "winner": "solver_1",
+    "assigned_roles": {
+      "solver_1": "agent_1",
+      "solver_2": "agent_2",
+      "solver_3": "agent_3"
+    }
+  }
+]

@@ -42,6 +42,7 @@ Give confidence scores between 0 and 1 for Solver and Judge.
             user_prompt,
             RoleAssessment,
             max_output_tokens=2500,
+            effort="minimal",
         )
         assessments.append(assessment.model_dump())
     return assessments

@@ -20,13 +20,11 @@ def refine_solutions(
 You are {agent["name"]}.
 Your reasoning style: {agent["style"]}
 You are acting as {solver_role}.
-You already gave an initial solution and now received peer reviews.
+You already gave an initial answer and now received peer reviews of your reasoning.
 Address each critique explicitly.
-Accept valid critiques and revise your solution.
-Reject invalid critiques only if you clearly justify why.
-Be concise and structured. Limit changes_made to at most 3 items.
-Limit refined_solution to 3-5 short numbered points, each one sentence.
-Do not write an essay.
+Accept valid critiques (e.g. a misstated view, an ignored counterargument) and revise.
+Defend your position only when a critique is genuinely mistaken, and say why.
+Limit changes_made to at most 3 items. Keep refined_solution to 3-6 sentences of reasoning.
 
 Return only valid JSON with exactly this structure:
 {{
@@ -40,8 +38,8 @@ Return only valid JSON with exactly this structure:
       "accepted": true
     }}
   ],
-  "refined_solution": "3-5 short numbered points, each one sentence",
-  "refined_answer": "final answer in one sentence",
+  "refined_solution": "3-6 sentences of revised reasoning",
+  "refined_answer": "your clear final position/verdict in 1-2 sentences",
   "confidence": 0.0
 }}
 """

@@ -9,12 +9,19 @@ from pipeline.stage1_solve import generate_solutions
 from pipeline.stage2_review import generate_peer_reviews
 from pipeline.stage3_refine import refine_solutions
 from pipeline.stage4_judge import judge_final_answer
+from pipeline.stage4_5_counterfactual import build_verdict_bundle, run_counterfactual_judging
 
 def load_problems(path: Path) -> List[Dict[str, Any]]:
     with path.open("r", encoding="utf-8") as file:
-        problems = json.load(file)
-    if not isinstance(problems, list):
-        raise ValueError("problems.json must contain a list of problems.")
+        data = json.load(file)
+    # problems.json is a {"categories": ..., "problems": [...]} object; older
+    # scaffolding used a bare list. Support both.
+    if isinstance(data, dict):
+        problems = data.get("problems", [])
+    else:
+        problems = data
+    if not isinstance(problems, list) or not problems:
+        raise ValueError("problems.json must contain a non-empty list of problems.")
     return problems
 
 def save_runs(runs: List[Dict[str, Any]], output_path: Path) -> None:
@@ -27,6 +34,7 @@ def run_single_problem(
     selection_mode: str = "auto",
     selected_judge: str | None = None,
     selected_solvers: List[str] | None = None,
+    run_counterfactual: bool = True,
 ) -> Dict[str, Any]:
     role_assessments = assess_roles(problem)
     assigned_roles = assign_roles(
@@ -50,6 +58,23 @@ def run_single_problem(
         peer_reviews,
         refinements,
     )
+
+    counterfactual_judging = None
+    if run_counterfactual:
+        counterfactual_verdicts = run_counterfactual_judging(
+            problem,
+            assigned_roles,
+            initial_solutions,
+            peer_reviews,
+            refinements,
+        )
+        counterfactual_judging = build_verdict_bundle(
+            problem,
+            assigned_roles,
+            judge_decision,
+            counterfactual_verdicts,
+        )
+
     return {
         "problem": dict(problem),
         "problem_id": problem.get("id"),
@@ -64,6 +89,7 @@ def run_single_problem(
         "peer_reviews": peer_reviews,
         "refinements": refinements,
         "judge_decision": judge_decision,
+        "counterfactual_judging": counterfactual_judging,
         "winner": judge_decision.get("winner"),
         "final_answer": judge_decision.get("final_answer"),
         "selection_mode": selection_mode,
@@ -108,6 +134,12 @@ def main() -> None:
         default=None,
         help="Manual selector mode solver ids, for example agent_1 agent_2 agent_3.",
     )
+    parser.add_argument(
+        "--skip-counterfactual",
+        action="store_true",
+        help="Skip Stage 4.5 counterfactual judging (4 extra API calls/problem). "
+        "Useful for cheap dev/smoke runs; the graded run should include it.",
+    )
     args = parser.parse_args()
     problems = load_problems(args.problems)
 
@@ -125,6 +157,7 @@ def main() -> None:
             selection_mode=args.selection_mode,
             selected_judge=args.judge,
             selected_solvers=args.solvers,
+            run_counterfactual=not args.skip_counterfactual,
         )
         runs.append(run)
 

@@ -5,9 +5,12 @@ __pycache__/
 venv/
 .DS_Store
 .ipynb_checkpoints/
-data/results/*.json
-results/*.json
-results/plots/*.png
-results/plots/*.pdf
+
+# NOTE: evaluation artifacts under results/ (debate_runs.json, evaluation_*,
+# and plots/*.png) are intentionally committed — they are required deliverables
+# and serve as evidence that the reported metrics come from real debate runs.
+# results/.cache/ is excluded below: it's a local LLM-grader response cache
+# (evaluation/llm_cache.py), not a deliverable, and regenerates on demand.
+results/.cache/
 
 .idea/

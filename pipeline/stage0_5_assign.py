@@ -1,7 +1,7 @@
 import json
 from typing import Any, Dict, List, Optional
 
-from pipeline.agent_registry import AGENT_ORDER, AGENTS
+from pipeline.agent_registry import AGENT_ORDER, AGENTS, get_agent
 from pipeline.llm_client import call_llm_model
 from pipeline.schemas import AssignedRoles, SelectorDecision
 
@@ -22,29 +22,54 @@ def assign_roles(
 
 
 def assign_roles_auto(assessments: List[Dict[str, Any]]) -> Dict[str, Any]:
-    order_index = {agent_id: index for index, agent_id in enumerate(AGENT_ORDER)}
-    def judge_score(item: Dict[str, Any]):
-        solver_conf = float(item["confidence"].get("Solver", 0.0))
+    """Deterministic Stage 0.5 assignment (project-agon spec):
+
+    - Judge: highest Judge confidence wins; ties broken by the smallest
+      Solver-Judge confidence gap, then alphabetically by agent name.
+    - Sits out: among the four remaining philosophers, whoever has the lowest
+      Solver confidence sits out (ties broken alphabetically).
+    - Solvers: the other three remaining philosophers, in fixed agent order.
+    """
+
+    def agent_name(agent_id: str) -> str:
+        return get_agent(agent_id)["name"]
+
+    def judge_sort_key(item: Dict[str, Any]):
         judge_conf = float(item["confidence"].get("Judge", 0.0))
-        #logic is: 1st-judge advantage, 2nd-judge confidence, 3rd-tie breaker
-        return (
-            judge_conf - solver_conf,
-            judge_conf,
-            -order_index[item["agent"]],
-        )
-    judge_item = max(assessments, key=judge_score)
+        solver_conf = float(item["confidence"].get("Solver", 0.0))
+        gap = abs(solver_conf - judge_conf)
+        return (-judge_conf, gap, agent_name(item["agent"]))
+
+    def solver_confidence_sort_key(item: Dict[str, Any]):
+        solver_conf = float(item["confidence"].get("Solver", 0.0))
+        return (solver_conf, agent_name(item["agent"]))
+
+    judge_item = sorted(assessments, key=judge_sort_key)[0]
     judge_id = judge_item["agent"]
-    solver_ids = [
-        item["agent"]
-        for item in sorted(assessments, key=lambda x: order_index[x["agent"]])
-        if item["agent"] != judge_id
-    ][:3]
+
+    remaining = [item for item in assessments if item["agent"] != judge_id]
+    sits_out_item = sorted(remaining, key=solver_confidence_sort_key)[0]
+    sits_out_id = sits_out_item["agent"]
+
+    order_index = {agent_id: index for index, agent_id in enumerate(AGENT_ORDER)}
+    solver_ids = sorted(
+        (item["agent"] for item in remaining if item["agent"] != sits_out_id),
+        key=lambda agent_id: order_index[agent_id],
+    )
+    if len(solver_ids) != 3:
+        raise ValueError(f"auto assignment must produce exactly 3 solvers, got {len(solver_ids)}")
+
     solver_roles = _solver_roles_from_ids(solver_ids)
     roles = AssignedRoles(
         judge=judge_id,
         solvers=solver_ids,
         solver_roles=solver_roles,
-        assignment_rule="judge selected by judge-solver confidence advantage; ties broken deterministically by fixed agent order",
+        sits_out=sits_out_id,
+        assignment_rule=(
+            "judge selected by highest Judge confidence (ties by smallest "
+            "Solver-Judge confidence gap, then alphabetically); remaining "
+            "philosopher with lowest Solver confidence sits out"
+        ),
         selection_mode="auto",
     )
     return roles.model_dump()

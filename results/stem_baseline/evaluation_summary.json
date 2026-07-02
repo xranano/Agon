@@ -1,0 +1,98 @@
+{
+  "systems": {
+    "full_debate": {
+      "n": 25,
+      "accuracy": 1.0,
+      "mean_score": 1.0,
+      "correct": 25
+    },
+    "majority_vote_baseline": {
+      "n": 25,
+      "accuracy": 1.0,
+      "mean_score": 1.0,
+      "correct": 25
+    },
+    "single_agent_baseline": {
+      "n": 25,
+      "accuracy": 1.0,
+      "mean_score": 1.0,
+      "correct": 25
+    }
+  },
+  "categories": {
+    "logic_puzzle_constraint_satisfaction": {
+      "full_debate": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "majority_vote_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "single_agent_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    "mathematical_logical_reasoning": {
+      "full_debate": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "majority_vote_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "single_agent_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    "philosophical_ethical_reasoning": {
+      "full_debate": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "majority_vote_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "single_agent_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    "physics_scientific_reasoning": {
+      "full_debate": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "majority_vote_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "single_agent_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    "strategic_game_theory_reasoning": {
+      "full_debate": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "majority_vote_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "single_agent_baseline": {
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  },
+  "improvement_rate": 0.0,
+  "consensus_rate": 0.6,
+  "judge_accuracy": 1.0,
+  "judge_decision_count": 11
+}

@@ -17,7 +17,8 @@ from main import run_single_problem
 WEBSITE_DIR = ROOT_DIR / "website"
 HISTORY_PATH = DATA_DIR / "history.json"
 DEFAULT_HOST = "127.0.0.1"
-DEFAULT_PORT = int(os.getenv("AGON_PORT", "8000"))
+# Honour PORT (as documented in .env) first, then legacy AGON_PORT, else 8000.
+DEFAULT_PORT = int(os.getenv("PORT") or os.getenv("AGON_PORT") or "8000")
 
 
 AGENT_META = {
@@ -127,6 +128,7 @@ def run_debate(
         selection_mode=selection_mode,
         selected_judge=selected_judge,
         selected_solvers=selected_solvers,
+        run_counterfactual=False,
     )
     turns: list[dict[str, str]] = [
         {

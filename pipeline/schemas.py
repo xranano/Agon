@@ -28,6 +28,7 @@ class AssignedRoles(BaseModel):
     judge: AgentId
     solvers: List[AgentId] = Field(min_length=2, max_length=4)
     solver_roles: Dict[SolverRole, AgentId]
+    sits_out: Optional[AgentId] = None
     assignment_rule: str
     selection_mode: SelectionMode = "auto"
     selector_reasoning: Optional[str] = None
@@ -88,6 +89,7 @@ class JudgeDecision(BaseModel):
     judge_agent_id: AgentId
     judge_agent_name: str
     winner: SolverRole
+    rankings: List[SolverRole] = Field(min_length=2, max_length=4)
     final_answer: str
     confidence: float = Field(ge=0.0, le=1.0)
     reasoning: str

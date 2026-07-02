@@ -1,66 +1,42 @@
-"""Evaluation metrics and lightweight answer grading."""
+"""Evaluation metrics for the project-agon philosophy debate system, computed
+from real debate runs (``results/debate_runs.json``).
+
+The new dataset schema carries ``expected_strongest_tradition`` per problem
+(not a free-text ``expected_answer``), so Verdict Accuracy is now a
+deterministic tradition match -- no LLM grading needed, and much more
+defensible than comparing free text. The metrics that still need a
+persona-free LLM grader are Improvement Rate (order-bias controlled Stage 1
+vs Stage 3 comparison, scoped to the judge's winning solver) and Persona
+Distinctness (semantic convergence check). Fidelity rubric scoring lives in
+``evaluation.fidelity_rubrics``; the Judge-Bias Analysis lives in
+``evaluation.judge_bias``; baseline scoring lives in ``evaluation.baseline``.
+"""
 
 from __future__ import annotations
 
+import difflib
 import json
+import random
 import re
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from statistics import mean
-from typing import Any
+from typing import Any, Literal
+
+from pydantic import BaseModel
 
 from config import DATA_DIR, RESULTS_DIR
-
+from evaluation import llm_cache
+from pipeline.agent_registry import get_agent
 
 WORD_RE = re.compile(r"[a-z0-9]+")
 
 
-ROLE_KEYWORDS: dict[str, tuple[str, ...]] = {
-    "kant": (
-        "kant",
-        "deontology",
-        "duty",
-        "universal",
-        "autonomy",
-        "dignity",
-        "consent",
-        "merely as a means",
-    ),
-    "mill": (
-        "mill",
-        "utilitarian",
-        "utility",
-        "welfare",
-        "harm",
-        "consequences",
-        "liberty",
-        "happiness",
-    ),
-    "nietzsche": (
-        "nietzsche",
-        "values",
-        "herd",
-        "power",
-        "resentment",
-        "authenticity",
-        "self-overcoming",
-        "critique",
-    ),
-    "camus": (
-        "camus",
-        "limits",
-        "lucid",
-        "lucidity",
-        "revolt",
-        "solidarity",
-        "concrete",
-        "absurd",
-    ),
-}
-
-
+# --------------------------------------------------------------------------- #
+# Loading + text helpers (schema-independent, shared with evaluation.baseline)
+# --------------------------------------------------------------------------- #
 def load_problems(path: Path | None = None) -> list[dict[str, Any]]:
-    """Load the evaluation problem set."""
+    """Load the evaluation problem set (supports {"problems": [...]} or a bare list)."""
 
     problems_path = path or DATA_DIR / "problems.json"
     with problems_path.open(encoding="utf-8") as handle:
@@ -71,205 +47,601 @@ def load_problems(path: Path | None = None) -> list[dict[str, Any]]:
 
 
 def normalize_text(value: Any) -> str:
-    """Normalize free-form text for rubric checks."""
+    """Normalize free-form text to a canonical token string."""
 
     return " ".join(WORD_RE.findall(str(value).lower()))
 
 
-def _token_set(value: str) -> set[str]:
-    return set(WORD_RE.findall(value.lower()))
+def load_debate_runs(path: Path | None = None) -> dict[str, dict[str, Any]]:
+    """Load real debate runs from ``results/debate_runs.json``, indexed by problem id."""
+
+    runs_path = path or RESULTS_DIR / "debate_runs.json"
+    if not runs_path.exists():
+        raise SystemExit(
+            f"{runs_path} not found. Run `python main.py` to generate real debate "
+            "runs before evaluating."
+        )
+    runs = json.loads(runs_path.read_text(encoding="utf-8"))
+    if isinstance(runs, dict):
+        runs = runs.get("runs", [])
+    indexed: dict[str, dict[str, Any]] = {}
+    for run in runs:
+        if isinstance(run, dict):
+            problem_id = str(run.get("problem_id") or run.get("id") or "")
+            if problem_id:
+                indexed[problem_id] = run
+    return indexed
 
 
-def _concept_hit(concept: str, normalized_answer: str, answer_tokens: set[str]) -> bool:
-    normalized_concept = normalize_text(concept)
-    if normalized_concept in normalized_answer:
-        return True
-    concept_tokens = _token_set(concept)
-    if not concept_tokens:
-        return False
-    hits = len(concept_tokens & answer_tokens)
-    return hits == len(concept_tokens) or hits / len(concept_tokens) >= 0.67
+def ordered_solver_roles(run: dict[str, Any]) -> list[str]:
+    return sorted(run.get("assigned_roles", {}).get("solver_roles", {}).keys())
 
 
-def role_coverage(answer: Any) -> dict[str, bool]:
-    """Detect whether an answer engages each philosopher role."""
-
-    normalized = normalize_text(answer)
-    tokens = _token_set(str(answer))
-    coverage: dict[str, bool] = {}
-    for role, keywords in ROLE_KEYWORDS.items():
-        coverage[role] = any(_concept_hit(keyword, normalized, tokens) for keyword in keywords)
-    return coverage
+def initial_answers(run: dict[str, Any]) -> list[str]:
+    solutions = run.get("initial_solutions", {})
+    return [str(solutions.get(role, {}).get("answer", "")) for role in ordered_solver_roles(run)]
 
 
-def grade_answer(problem: dict[str, Any], answer: Any) -> dict[str, Any]:
-    """Grade one philosopher-debate answer.
-
-    The score combines expected verdict, required rubric concepts, and broader
-    overlap with the expected answer and grading notes. This stays simple and
-    auditable while matching the philosopher-inspired debate format.
-    """
-
-    answer_text = str(answer or "")
-    normalized = normalize_text(answer_text)
-    problem_id = str(problem["id"])
-    answer_tokens = _token_set(answer_text)
-    required_concepts = [str(item) for item in problem.get("required_concepts", [])]
-    concept_hits = [
-        concept
-        for concept in required_concepts
-        if _concept_hit(concept, normalized, answer_tokens)
+def refined_answers(run: dict[str, Any]) -> list[str]:
+    refinements = run.get("refinements", {})
+    return [
+        str(refinements.get(role, {}).get("refined_answer", ""))
+        for role in ordered_solver_roles(run)
     ]
-    expected_verdict = normalize_text(problem.get("expected_verdict", ""))
-    verdict_hit = not expected_verdict or expected_verdict in normalized
 
-    expected_tokens = _token_set(problem["expected_answer"])
-    notes_tokens = _token_set(problem["grading_notes"])
-    rubric_tokens = expected_tokens | {t for t in notes_tokens if len(t) > 4}
-    overlap = len(answer_tokens & rubric_tokens) / max(1, len(rubric_tokens))
-    concept_score = len(concept_hits) / max(1, len(required_concepts))
-    verdict_score = 1.0 if verdict_hit else 0.0
-    score = round((concept_score * 0.7) + (verdict_score * 0.2) + (overlap * 0.1), 3)
-    score = min(1.0, score)
 
+def final_debate_answer(run: dict[str, Any]) -> str:
+    return str(run.get("judge_decision", {}).get("final_answer", run.get("final_answer", "")))
+
+
+def majority_answer(answers: list[str]) -> str:
+    if not answers:
+        return ""
+    counts = Counter(normalize_text(answer) for answer in answers)
+    winner_norm, _ = counts.most_common(1)[0]
+    for answer in answers:
+        if normalize_text(answer) == winner_norm:
+            return answer
+    return answers[0]
+
+
+def text_similarity(a: str, b: str) -> float:
+    return difflib.SequenceMatcher(None, normalize_text(a), normalize_text(b)).ratio()
+
+
+# --------------------------------------------------------------------------- #
+# Identity helpers: agent_id -> tradition, the join key to problems.json's
+# `expected_strongest_tradition` / `annotations` (both lowercase short_name).
+# --------------------------------------------------------------------------- #
+def solver_tradition(run: dict[str, Any], solver_role: str) -> str:
+    agent_id = run["assigned_roles"]["solver_roles"][solver_role]
+    return get_agent(agent_id)["short_name"].lower()
+
+
+def judge_tradition(run: dict[str, Any]) -> str:
+    agent_id = run["assigned_roles"]["judge"]
+    return get_agent(agent_id)["short_name"].lower()
+
+
+def winner_tradition(run: dict[str, Any]) -> str:
+    winner_role = run.get("judge_decision", {}).get("winner")
+    if not winner_role:
+        return ""
+    return solver_tradition(run, winner_role)
+
+
+def traditions_by_solver_role(run: dict[str, Any]) -> dict[str, str]:
+    return {role: solver_tradition(run, role) for role in ordered_solver_roles(run)}
+
+
+# --------------------------------------------------------------------------- #
+# Verdict Accuracy + inter-annotator agreement
+# --------------------------------------------------------------------------- #
+def label_agreement_fraction(problem: dict[str, Any]) -> float:
+    """Parse a `label_agreement` string like "2/3" into 0.667."""
+
+    raw = str(problem.get("label_agreement", "")).strip()
+    if "/" in raw:
+        num, _, den = raw.partition("/")
+        try:
+            return float(num) / float(den)
+        except (ValueError, ZeroDivisionError):
+            return 0.0
+    try:
+        return float(raw)
+    except ValueError:
+        return 0.0
+
+
+def inter_annotator_agreement_summary(problems: list[dict[str, Any]]) -> dict[str, Any]:
+    fractions = [label_agreement_fraction(problem) for problem in problems]
+    distribution = Counter(str(problem.get("label_agreement", "")).strip() for problem in problems)
     return {
-        "problem_id": problem_id,
-        "correct": score >= 0.7,
-        "score": score,
-        "concept_hits": concept_hits,
-        "verdict_hit": verdict_hit,
-        "role_coverage": role_coverage(answer_text),
+        "mean_agreement": sum(fractions) / len(fractions) if fractions else 0.0,
+        "distribution": dict(distribution),
     }
 
 
-def evaluate_answer_rows(rows: list[dict[str, Any]], problems: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Attach grading data to rows containing problem_id, system, and answer."""
-
-    by_id = {problem["id"]: problem for problem in problems}
-    graded: list[dict[str, Any]] = []
-    for row in rows:
-        problem = by_id[row["problem_id"]]
-        grade = grade_answer(problem, row.get("answer", ""))
-        graded.append(
+def verdict_accuracy_rows(problems: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    rows = []
+    for problem in problems:
+        run = runs.get(problem["id"])
+        if run is None:
+            continue
+        expected = str(problem.get("expected_strongest_tradition", "")).strip().lower()
+        actual = winner_tradition(run)
+        rows.append(
             {
-                **row,
-                "expected_verdict": problem.get("expected_verdict", ""),
-                "required_concepts": problem.get("required_concepts", []),
-                **grade,
+                "problem_id": problem["id"],
+                "category": problem.get("category", "unknown"),
+                "difficulty": problem.get("difficulty", "unknown"),
+                "expected_strongest_tradition": expected,
+                "winner_tradition": actual,
+                "correct": bool(expected) and expected == actual,
+                "label_agreement": label_agreement_fraction(problem),
             }
         )
-    return graded
+    return rows
 
 
-def summarize_results(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """Compute overall, category, and comparative metrics."""
+def _group_accuracy(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    correct = sum(1 for row in rows if row["correct"])
+    return {
+        "accuracy": correct / len(rows) if rows else 0.0,
+        "n": len(rows),
+        "correct": correct,
+        "mean_label_agreement": sum(row["label_agreement"] for row in rows) / len(rows) if rows else 0.0,
+    }
 
-    by_system: dict[str, list[dict[str, Any]]] = defaultdict(list)
+
+def verdict_accuracy_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
-        by_system[row["system"]].append(row)
+        grouped[row["category"]].append(row)
+    return {
+        "overall": _group_accuracy(rows),
+        "by_category": {category: _group_accuracy(items) for category, items in sorted(grouped.items())},
+    }
 
-    systems: dict[str, dict[str, Any]] = {}
-    for system, items in sorted(by_system.items()):
-        correct_count = sum(1 for item in items if item["correct"])
-        systems[system] = {
-            "n": len(items),
-            "accuracy": correct_count / max(1, len(items)),
-            "mean_score": mean(item["score"] for item in items) if items else 0.0,
-            "correct": correct_count,
+
+# --------------------------------------------------------------------------- #
+# Persona Distinctness (LOW convergence is the success condition: personas
+# should stay distinct, not collapse into generic agreement)
+# --------------------------------------------------------------------------- #
+class PersonaConvergence(BaseModel):
+    converged: bool
+    reasoning: str
+
+
+def classify_persona_distinctness(question: str, answers: list[str]) -> PersonaConvergence:
+    cache_k = llm_cache.cache_key("persona_distinctness", question, *answers)
+    cached = llm_cache.get(cache_k)
+    if cached is not None:
+        return PersonaConvergence.model_validate(cached)
+
+    from pipeline.llm_client import call_llm_model  # deferred: no API key needed to import this module
+
+    system_prompt = """
+You are a neutral evaluator, not any philosopher. You are given three
+independently-written answers to the same philosophical question, each
+written from a different philosophical tradition. Decide whether the three
+answers have substantively CONVERGED on the same practical verdict despite
+being written from different traditions (regardless of surface wording), or
+whether they remain substantively DISTINCT positions.
+
+converged = true only if all three answers would be read as agreeing on the
+same practical verdict. If even one answer takes a meaningfully different
+stance, converged = false.
+
+Return only valid JSON with exactly this structure:
+{"converged": true, "reasoning": "short explanation"}
+"""
+    answers_block = "\n\n".join(f"Answer {i + 1}:\n{answer}" for i, answer in enumerate(answers))
+    user_prompt = f"Question:\n{question}\n\n{answers_block}"
+    result = call_llm_model(
+        system_prompt, user_prompt, PersonaConvergence, max_output_tokens=800, effort="low"
+    )
+    llm_cache.put(cache_k, result.model_dump())
+    return result
+
+
+def persona_distinctness_rows(
+    problems: list[dict[str, Any]], runs: dict[str, dict[str, Any]], max_workers: int = 8
+) -> list[dict[str, Any]]:
+    tasks = []
+    for problem in problems:
+        run = runs.get(problem["id"])
+        if run is None:
+            continue
+        answers = initial_answers(run)
+        if len(answers) >= 2:
+            tasks.append((problem, answers))
+
+    def _classify(task: tuple[dict[str, Any], list[str]]) -> tuple[dict[str, Any], PersonaConvergence]:
+        problem, answers = task
+        return problem, classify_persona_distinctness(problem["question"], answers)
+
+    rows = []
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        for problem, result in pool.map(_classify, tasks):
+            rows.append(
+                {
+                    "problem_id": problem["id"],
+                    "category": problem.get("category", "unknown"),
+                    "difficulty": problem.get("difficulty", "unknown"),
+                    "converged": result.converged,
+                    "reasoning": result.reasoning,
+                }
+            )
+    return rows
+
+
+def persona_distinctness_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    def _rate_by(key: str) -> dict[str, Any]:
+        grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for row in rows:
+            grouped[row[key]].append(row)
+        return {
+            group: {
+                "distinct_rate": sum(1 for r in items if not r["converged"]) / len(items),
+                "n": len(items),
+            }
+            for group, items in sorted(grouped.items())
         }
 
-    categories: dict[str, dict[str, dict[str, float]]] = defaultdict(dict)
-    for system, items in sorted(by_system.items()):
-        grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        for item in items:
-            grouped[item.get("category", "unknown")].append(item)
-        for category, cat_items in sorted(grouped.items()):
-            categories[category][system] = {
-                "accuracy": sum(1 for item in cat_items if item["correct"]) / len(cat_items),
-                "mean_score": mean(item["score"] for item in cat_items),
-            }
-
-    by_problem: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in rows:
-        by_problem[row["problem_id"]].append(row)
-
-    consensus_flags = []
-    improvement_flags = []
-    judge_flags = []
-    role_totals: dict[str, list[bool]] = defaultdict(list)
-    for items in by_problem.values():
-        answer_counts = Counter(normalize_text(item.get("answer", "")) for item in items)
-        consensus_flags.append(answer_counts.most_common(1)[0][1] >= 2)
-
-        single = next((item for item in items if item["system"] == "single_agent_baseline"), None)
-        debate = next((item for item in items if item["system"] == "full_debate"), None)
-        if single and debate:
-            improvement_flags.append((not single["correct"]) and debate["correct"])
-            judge_flags.append(debate["correct"])
-
-    for row in rows:
-        if (
-            row["system"] == "full_debate"
-            and row.get("category") == "philosophical_ethical_reasoning"
-        ):
-            for role, covered in row.get("role_coverage", {}).items():
-                role_totals[role].append(bool(covered))
-
+    n = len(rows)
+    n_converged = sum(1 for row in rows if row["converged"])
     return {
-        "systems": systems,
-        "categories": categories,
-        "improvement_rate": sum(improvement_flags) / max(1, len(improvement_flags)),
-        "consensus_rate": sum(consensus_flags) / max(1, len(consensus_flags)),
-        "judge_accuracy": sum(judge_flags) / max(1, len(judge_flags)),
-        "ethical_full_debate_role_coverage": {
-            role: sum(values) / max(1, len(values))
-            for role, values in sorted(role_totals.items())
-        },
-        "ethical_role_mapping": {
-            "solver_1": "Kant - deontological reasoning",
-            "solver_2": "Mill - utilitarian reasoning",
-            "solver_3": "Nietzsche - critique of values and assumptions",
-            "judge": "Camus - clarity, limits, and human consequences",
-        },
+        "distinct_rate": (n - n_converged) / n if n else 0.0,
+        "n": n,
+        "n_converged": n_converged,
+        "by_difficulty": _rate_by("difficulty"),
+        "by_category": _rate_by("category"),
     }
 
 
-def save_evaluation(rows: list[dict[str, Any]], summary: dict[str, Any]) -> None:
-    """Write evaluation JSON and CSV artifacts."""
+# --------------------------------------------------------------------------- #
+# Judge Reliability
+# --------------------------------------------------------------------------- #
+def rankings_consistency_rate(runs: dict[str, dict[str, Any]]) -> float:
+    """Fraction of runs where `winner == rankings[0]` -- NOT schema-enforced,
+    only instructed in the Stage 4 prompt, so this must be measured."""
 
+    total = consistent = 0
+    for run in runs.values():
+        decision = run.get("judge_decision", {})
+        rankings = decision.get("rankings")
+        if not rankings:
+            continue
+        total += 1
+        if rankings[0] == decision.get("winner"):
+            consistent += 1
+    return consistent / total if total else 0.0
+
+
+def judge_reliability_summary(
+    problems: list[dict[str, Any]], runs: dict[str, dict[str, Any]], persona_rows: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Restricted to problems where the solvers are 'clearly opposed' (not
+    converged, per the persona-distinctness pass)."""
+
+    opposed_ids = {row["problem_id"] for row in persona_rows if not row["converged"]}
+    correct = n_opposed = 0
+    for problem in problems:
+        if problem["id"] not in opposed_ids:
+            continue
+        run = runs.get(problem["id"])
+        if run is None:
+            continue
+        n_opposed += 1
+        expected = str(problem.get("expected_strongest_tradition", "")).strip().lower()
+        if winner_tradition(run) == expected:
+            correct += 1
+    return {
+        "accuracy_on_opposed": correct / n_opposed if n_opposed else 0.0,
+        "n_opposed_problems": n_opposed,
+        "rankings_consistency_rate": rankings_consistency_rate(runs),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Improvement Rate (order-bias controlled, scoped to the judge's winner)
+# --------------------------------------------------------------------------- #
+class PairwiseComparison(BaseModel):
+    winner: Literal["A", "B", "tie"]
+    justification: str
+
+
+def compare_pair(question: str, text_a: str, text_b: str) -> PairwiseComparison:
+    cache_k = llm_cache.cache_key("pairwise_compare", question, text_a, text_b)
+    cached = llm_cache.get(cache_k)
+    if cached is not None:
+        return PairwiseComparison.model_validate(cached)
+
+    from pipeline.llm_client import call_llm_model  # deferred: no API key needed to import this module
+
+    system_prompt = """
+You are a neutral philosophy evaluator, not any philosopher. You are given two
+answers (A and B) to the same question and must decide which is the stronger
+piece of philosophical reasoning -- more internally consistent, better
+engages counterarguments, more rigorously argued -- independent of which
+position you personally find more persuasive. If they are genuinely
+comparable in quality, say "tie". Do not favor length.
+
+Return only valid JSON with exactly this structure:
+{"winner": "A", "justification": "short reason"}
+"""
+    user_prompt = f"Question:\n{question}\n\nAnswer A:\n{text_a}\n\nAnswer B:\n{text_b}"
+    result = call_llm_model(
+        system_prompt, user_prompt, PairwiseComparison, max_output_tokens=600, effort="low"
+    )
+    llm_cache.put(cache_k, result.model_dump())
+    return result
+
+
+def pairwise_improvement_for_winner(problem: dict[str, Any], run: dict[str, Any]) -> dict[str, Any] | None:
+    """Order-bias controlled: compare_pair runs twice with swapped positions;
+    a side only "wins" if it wins both orderings, else it's recorded as a tie."""
+
+    winner_role = run.get("judge_decision", {}).get("winner")
+    if not winner_role:
+        return None
+    initial_text = run.get("initial_solutions", {}).get(winner_role, {}).get("solution", "")
+    refined_text = run.get("refinements", {}).get(winner_role, {}).get("refined_solution", "")
+    if not initial_text or not refined_text:
+        return None
+
+    forward = compare_pair(problem["question"], initial_text, refined_text)  # A=initial, B=refined
+    backward = compare_pair(problem["question"], refined_text, initial_text)  # A=refined, B=initial
+
+    def _side(comparison: PairwiseComparison, refined_is_a: bool) -> str:
+        if comparison.winner == "tie":
+            return "tie"
+        return "refined" if (comparison.winner == "A") == refined_is_a else "initial"
+
+    forward_side = _side(forward, refined_is_a=False)
+    backward_side = _side(backward, refined_is_a=True)
+    position_consistent = forward_side == backward_side
+
+    if position_consistent and forward_side == "refined":
+        outcome = "improved"
+    elif position_consistent and forward_side == "initial":
+        outcome = "regressed"
+    else:
+        outcome = "tie"
+
+    return {"outcome": outcome, "position_consistent": position_consistent}
+
+
+def improvement_rate_rows(
+    problems: list[dict[str, Any]], runs: dict[str, dict[str, Any]], max_workers: int = 8
+) -> list[dict[str, Any]]:
+    tasks = [(problem, runs[problem["id"]]) for problem in problems if problem["id"] in runs]
+
+    def _run(task: tuple[dict[str, Any], dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any] | None]:
+        problem, run = task
+        return problem, pairwise_improvement_for_winner(problem, run)
+
+    rows = []
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        for problem, result in pool.map(_run, tasks):
+            if result is None:
+                continue
+            rows.append(
+                {
+                    "problem_id": problem["id"],
+                    "category": problem.get("category", "unknown"),
+                    "difficulty": problem.get("difficulty", "unknown"),
+                    **result,
+                }
+            )
+    return rows
+
+
+def improvement_rate_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    n = len(rows)
+    outcome_counts = Counter(row["outcome"] for row in rows)
+    consistent = sum(1 for row in rows if row["position_consistent"])
+    return {
+        "rate": outcome_counts.get("improved", 0) / n if n else 0.0,
+        "regressed_rate": outcome_counts.get("regressed", 0) / n if n else 0.0,
+        "tie_rate": outcome_counts.get("tie", 0) / n if n else 0.0,
+        "position_consistency_rate": consistent / n if n else 0.0,
+        "n": n,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Position Change (pure, from Stage 3 `accepted` flags)
+# --------------------------------------------------------------------------- #
+def position_change_by_tradition(runs: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    tally: dict[str, dict[str, int]] = defaultdict(lambda: {"accepted": 0, "rejected": 0})
+    for run in runs.values():
+        for solver_role, refinement in run.get("refinements", {}).items():
+            tradition = solver_tradition(run, solver_role)
+            for change in refinement.get("changes_made", []):
+                tally[tradition]["accepted" if change.get("accepted") else "rejected"] += 1
+    return {
+        tradition: {
+            **counts,
+            "acceptance_rate": (
+                counts["accepted"] / (counts["accepted"] + counts["rejected"])
+                if (counts["accepted"] + counts["rejected"])
+                else 0.0
+            ),
+        }
+        for tradition, counts in tally.items()
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Critique Quality
+# --------------------------------------------------------------------------- #
+def concat_review_text(review: dict[str, Any]) -> str:
+    parts = list(review.get("weaknesses", [])) + list(review.get("suggested_changes", []))
+    parts += [error.get("description", "") for error in review.get("errors", [])]
+    return " ".join(parts)
+
+
+def attribute_changes_to_reviewers(
+    run: dict[str, Any], target_role: str, threshold: float = 0.35
+) -> list[dict[str, Any]]:
+    """Fuzzy-match each refinement's critique string against its two
+    reviewers' text, to approximate which reviewer's critique was accepted."""
+
+    refinement = run.get("refinements", {}).get(target_role, {})
+    reviews = run.get("peer_reviews", {}).get(target_role, {})  # reviewer_role -> review
+    attributions = []
+    for change in refinement.get("changes_made", []):
+        critique_text = change.get("critique", "")
+        best_reviewer, best_score = None, 0.0
+        for reviewer_role, review in reviews.items():
+            score = text_similarity(critique_text, concat_review_text(review))
+            if score > best_score:
+                best_reviewer, best_score = reviewer_role, score
+        if best_reviewer is not None and best_score >= threshold:
+            attributions.append(
+                {"reviewer_role": best_reviewer, "accepted": bool(change.get("accepted")), "match_score": best_score}
+            )
+    return attributions
+
+
+def critique_acceptance_by_reviewer_tradition(runs: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    tally: dict[str, dict[str, int]] = defaultdict(lambda: {"accepted": 0, "rejected": 0})
+    for run in runs.values():
+        for target_role in run.get("refinements", {}):
+            for attribution in attribute_changes_to_reviewers(run, target_role):
+                reviewer_tradition = solver_tradition(run, attribution["reviewer_role"])
+                tally[reviewer_tradition]["accepted" if attribution["accepted"] else "rejected"] += 1
+    return {
+        tradition: {
+            **counts,
+            "acceptance_rate": (
+                counts["accepted"] / (counts["accepted"] + counts["rejected"])
+                if (counts["accepted"] + counts["rejected"])
+                else 0.0
+            ),
+        }
+        for tradition, counts in tally.items()
+    }
+
+
+def _all_reviews(runs: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    all_reviews = []
+    for problem_id, run in runs.items():
+        for target_role, reviewers in run.get("peer_reviews", {}).items():
+            for reviewer_role, review in reviewers.items():
+                all_reviews.append(
+                    {
+                        "problem_id": problem_id,
+                        "target_role": target_role,
+                        "reviewer_role": reviewer_role,
+                        "review": review,
+                    }
+                )
+    return all_reviews
+
+
+def boilerplate_flags(all_reviews: list[dict[str, Any]], threshold: float = 0.8) -> list[dict[str, Any]]:
+    """Near-duplicate review text across the whole run set -- a proxy for
+    copy-paste boilerplate rather than genuine, problem-specific critique."""
+
+    texts = [concat_review_text(item["review"]) for item in all_reviews]
+    flags = []
+    for i in range(len(all_reviews)):
+        if not texts[i]:
+            continue
+        for j in range(i + 1, len(all_reviews)):
+            if not texts[j]:
+                continue
+            score = text_similarity(texts[i], texts[j])
+            if score >= threshold:
+                flags.append(
+                    {
+                        "a": {k: all_reviews[i][k] for k in ("problem_id", "reviewer_role", "target_role")},
+                        "b": {k: all_reviews[j][k] for k in ("problem_id", "reviewer_role", "target_role")},
+                        "similarity": score,
+                    }
+                )
+    return flags
+
+
+def boilerplate_summary(all_reviews: list[dict[str, Any]], threshold: float = 0.8) -> dict[str, Any]:
+    flags = boilerplate_flags(all_reviews, threshold)
+    flagged = set()
+    for flag in flags:
+        flagged.add((flag["a"]["problem_id"], flag["a"]["reviewer_role"], flag["a"]["target_role"]))
+        flagged.add((flag["b"]["problem_id"], flag["b"]["reviewer_role"], flag["b"]["target_role"]))
+    return {
+        "n_reviews": len(all_reviews),
+        "n_near_duplicate_pairs": len(flags),
+        "n_flagged_reviews": len(flagged),
+        "flagged_rate": len(flagged) / len(all_reviews) if all_reviews else 0.0,
+    }
+
+
+def sample_reviews_for_spot_check(all_reviews: list[dict[str, Any]], n: int = 15, seed: int = 42) -> list[dict[str, Any]]:
+    """Not automatable -- exports a sample for the team's manual spot-check."""
+
+    rng = random.Random(seed)
+    return rng.sample(all_reviews, min(n, len(all_reviews)))
+
+
+def critique_quality_summary(runs: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "acceptance_by_reviewer_tradition": critique_acceptance_by_reviewer_tradition(runs),
+        "boilerplate": boilerplate_summary(_all_reviews(runs)),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Orchestration
+# --------------------------------------------------------------------------- #
+def evaluate(problems: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
+    from evaluation import baseline, fidelity_rubrics, judge_bias
+
+    persona_rows = persona_distinctness_rows(problems, runs)
+    verdict_rows = verdict_accuracy_rows(problems, runs)
+    improvement_rows = improvement_rate_rows(problems, runs)
+    baseline_rows = baseline.build_baseline_rows(problems, runs)
+
+    summary = {
+        "label_agreement": inter_annotator_agreement_summary(problems),
+        "verdict_accuracy": verdict_accuracy_summary(verdict_rows),
+        "improvement_rate": improvement_rate_summary(improvement_rows),
+        "persona_distinctness": persona_distinctness_summary(persona_rows),
+        "judge_reliability": judge_reliability_summary(problems, runs, persona_rows),
+        "fidelity": fidelity_rubrics.fidelity_summary(problems, runs),
+        "position_change": position_change_by_tradition(runs),
+        "critique_quality": critique_quality_summary(runs),
+        "judge_bias": judge_bias.compute_all(problems, runs),
+        "baselines": baseline.baseline_summary(baseline_rows),
+    }
+    rows_by_name = {
+        "verdict_accuracy_rows": verdict_rows,
+        "persona_distinctness_rows": persona_rows,
+        "improvement_rate_rows": improvement_rows,
+        "baseline_rows": baseline_rows,
+    }
+    return summary, rows_by_name
+
+
+def save_evaluation(summary: dict[str, Any], rows_by_name: dict[str, list[dict[str, Any]]]) -> None:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    (RESULTS_DIR / "evaluation_rows.json").write_text(
-        json.dumps(rows, indent=2), encoding="utf-8"
-    )
     (RESULTS_DIR / "evaluation_summary.json").write_text(
-        json.dumps(summary, indent=2), encoding="utf-8"
+        json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
     )
-
-    csv_lines = [
-        "problem_id,category,difficulty,system,expected_verdict,correct,score,"
-        "kant_covered,mill_covered,nietzsche_covered,camus_covered,answer"
-    ]
-    for row in rows:
-        answer = str(row.get("answer", "")).replace('"', '""')
-        coverage = row.get("role_coverage", {})
-        csv_lines.append(
-            f'{row["problem_id"]},{row.get("category","")},{row.get("difficulty","")},'
-            f'{row["system"]},{row.get("expected_verdict","")},{row["correct"]},{row["score"]},'
-            f'{coverage.get("kant", False)},{coverage.get("mill", False)},'
-            f'{coverage.get("nietzsche", False)},{coverage.get("camus", False)},"{answer}"'
+    for name, rows in rows_by_name.items():
+        (RESULTS_DIR / f"{name}.json").write_text(
+            json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8"
         )
-    (RESULTS_DIR / "evaluation_rows.csv").write_text("\n".join(csv_lines), encoding="utf-8")
 
 
 def main() -> None:
-    rows_path = RESULTS_DIR / "baseline_comparison.json"
-    if not rows_path.exists():
-        raise SystemExit("Run `python -m evaluation.baseline` before metrics.")
     problems = load_problems()
-    rows = json.loads(rows_path.read_text(encoding="utf-8"))
-    graded = evaluate_answer_rows(rows, problems)
-    summary = summarize_results(graded)
-    save_evaluation(graded, summary)
+    runs = load_debate_runs()
+    summary, rows_by_name = evaluate(problems, runs)
+    save_evaluation(summary, rows_by_name)
     print(json.dumps(summary, indent=2))
 
 
