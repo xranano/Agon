@@ -71,11 +71,11 @@ From the full 25-problem run (`results/evaluation_summary.json`):
 |---|---|
 | Single-agent baseline | 8% (2/25) |
 | Majority-vote baseline | 20% (5/25) |
-| **Full debate** | **40% (10/25)** |
+| **Full debate** | **24% (6/25)** |
 
-- **Improvement rate**: 88% of refinements improved on the initial solution
+- **Improvement rate**: 72% of refinements improved on the initial solution
   (order-bias controlled — every comparison run twice with positions swapped;
-  92% position-consistency rate).
+  72% position-consistency rate).
 - **Persona distinctness**: only 32% of problems stayed distinct across all
   three solvers (68% converged on the same practical verdict despite arguing
   from incompatible traditions) — a real finding about persona strength under
@@ -84,15 +84,55 @@ From the full 25-problem run (`results/evaluation_summary.json`):
   Judge dynamically and Stage 4.5 has every philosopher counterfactually judge
   the identical solution bundle, judge identity is causally isolated from
   argument quality. Result: **Aristotle-as-judge picks Aristotle as the
-  winner 87% of the time** (20/23 eligible problems, binomial p≈1.6×10⁻⁷
+  winner 91% of the time** (21/23 eligible problems, binomial p≈1.1×10⁻⁸
   against the 1/3 chance baseline) — strong, statistically significant
-  self-preference. Kant shows the same pattern more mildly (71%, p=0.045).
-  Nietzsche (4%), Plato (32%), and Camus (33%) show no significant
-  self-preference. Fleiss' κ across the 5 judges = 0.57 (moderate agreement) —
-  low enough to confirm that judge identity, not argument quality alone,
-  measurably shapes outcomes. See `results/plots/judge_bias_heatmap.png`,
-  `htwr_per_judge.png`, `judge_agreement_matrix.png`, and
-  `camus_deviation.png`.
+  self-preference. Kant shows the same pattern even more strongly (100%,
+  p≈4.6×10⁻⁴, 7/7 eligible). Nietzsche (9%), Plato (42%), and Camus (33%)
+  show no significant self-preference. Fleiss' κ across the 5 judges = 0.52
+  (moderate agreement) — low enough to confirm that judge identity, not
+  argument quality alone, measurably shapes outcomes. See
+  `results/plots/judge_bias_heatmap.png`, `htwr_per_judge.png`,
+  `judge_agreement_matrix.png`, and `camus_deviation.png`.
+
+### Data-integrity fix: Stage 3 acceptance-rate bug
+
+An audit of `position_change_by_tradition` found that all 217 critique
+responses in the original run had `accepted: true` — every philosopher
+accepted every single critique it received in Stage 3, with zero genuine
+disagreement. Root cause: the Stage 3 prompt's embedded JSON example
+(`pipeline/stage3_refine.py`) showed `"accepted": true` as the only literal
+example value, with no `false` example and no instruction that rejection is
+a normal, expected outcome — an anchoring effect, not a downstream scoring
+bug (verified against the raw pre-fix `debate_runs.json` and unit-tested
+counting logic in `evaluation/metrics.py`).
+
+The prompt was fixed to make rejection an explicit, equally legitimate
+outcome, and Stage 3 onward (refinement, judging, and counterfactual
+judging — the stages that depend on refined solutions) was re-run for all 25
+problems, reusing the original Stage 1/2 output. The fix produced real,
+substantive rejections (59/178, spread 62–83% acceptance per philosopher)
+instead of rubber-stamping. The results above already reflect the fixed run;
+the pre-fix run is archived under `results/pre_stage3_fix/` (same layout:
+`debate_runs.json`, `evaluation_summary.json`, `*_rows.json`, `plots/`) for
+comparison. Two headline numbers moved as a result of the fix:
+
+| Metric | Before fix (100% acceptance) | After fix (real accept/reject, now canonical) |
+|---|---|---|
+| Position-change acceptance | 100% for every philosopher | 62–83% per philosopher, real spread |
+| Full-debate verdict accuracy | 40% (10/25) | 24% (6/25) |
+| vs. majority-vote baseline (20%) | +20 pts | +4 pts |
+| Improvement rate (Stage 1→3) | 88%, 92% position-consistency | 72%, 72% position-consistency |
+| Aristotle judge self-preference (HTWR) | 87%, p≈1.6×10⁻⁷ | 91%, p≈1.1×10⁻⁸ |
+| Kant judge self-preference (HTWR) | 71%, p=0.045 | 100%, p≈4.6×10⁻⁴ |
+| Fleiss' κ (judge agreement) | 0.57 | 0.52 |
+
+Takeaway: the judge-bias headline finding survives — and gets stronger, not
+weaker — once refinement reflects genuine disagreement. The "debate improves
+accuracy" story gets more honest but less flattering: with real pushback,
+solvers no longer converge on the judge's-eye-view-optimal answer every
+time, so full-debate's edge over majority-vote shrinks from +20 to +4 points.
+This is reported rather than hidden because it changes what the results
+actually support.
 
 ## Project Structure
 
@@ -128,6 +168,7 @@ existentiAIsm/
     debate_runs.json
     evaluation_summary.json
     plots/
+    pre_stage3_fix/         # archived pre-fix run (100%-acceptance bug); see Results below
   tests/
   main.py
   config.py
@@ -200,7 +241,7 @@ python -m evaluation.metrics
 python -m evaluation.plots
 ```
 
-Then open `notebooks/analysis.ipynb` for the metric tables, plots, and baseline
+Then open `notebooks/analysis_final.ipynb` for the metric tables, plots, and baseline
 comparison.
 
 Generated artifacts:
@@ -231,3 +272,13 @@ http://127.0.0.1:8000
 
 The debate UI calls `/api/debate` on the local Python server. Keep `OPENAI_API_KEY`
 in `.env`; do not put API keys in `website/index.html`.
+
+## Possible Enhancements
+
+- [ ] Grow the dataset beyond 25 problems — several category-level accuracy
+      figures (n=4-6) flip on 1-2 problems
+- [ ] Control for a judge-bias confound: check whether Aristotle/Kant
+      self-preference reflects persona identity or just the base model's
+      default reasoning style
+- [ ] Improve judge reliability on genuinely-opposed problems (currently 50%,
+      i.e. chance)

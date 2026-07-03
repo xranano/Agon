@@ -5,6 +5,7 @@ __pycache__/
 venv/
 .DS_Store
 .ipynb_checkpoints/
+..claude
 
 # NOTE: evaluation artifacts under results/ (debate_runs.json, evaluation_*,
 # and plots/*.png) are intentionally committed — they are required deliverables

@@ -1,0 +1,177 @@
+[
+  {
+    "problem_id": "prob_001",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "medium",
+    "converged": false,
+    "reasoning": "Two answers conclude the nurse was wrong (arguing net lives lost and failure to use proportionate channels), while the third defends the leak as justified for justice and accountability; they reach opposite practical verdicts."
+  },
+  {
+    "problem_id": "prob_002",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three endorse preserving and publishing the confession (honoring the veteran's wish); Answers 2 and 3 add contextual handling but do not oppose publication, so the practical verdict is the same."
+  },
+  {
+    "problem_id": "prob_003",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three answers agree the covert guilt-based messaging should not be kept: they call for discontinuation or continued use only with disclosure/consent or replacement by transparent, autonomy-respecting alternatives."
+  },
+  {
+    "problem_id": "prob_004",
+    "category": "political_philosophy_and_justice",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three answers endorse replacing the elected board with a technocratic panel only conditionally—each requires robust democratic safeguards (transparency, oversight, review/recall, limits or mixed composition) and rejects the panel absent those protections—so they converge on the same practical verdict."
+  },
+  {
+    "problem_id": "prob_005",
+    "category": "political_philosophy_and_justice",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three answers endorse the contribution/merit-based allocation as more just, each qualifying it with transparency, safeguards against bias, and protections for vulnerable/humanitarian entitlements—so they reach the same practical verdict."
+  },
+  {
+    "problem_id": "prob_006",
+    "category": "human_nature_and_the_good_life",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three answers endorse limited, therapeutic use as a temporary aid but reject ongoing nightly use as a permanent substitute that prevents moving on; they agree on conditional, time‑bounded use with goals of reintegration and flourishing."
+  },
+  {
+    "problem_id": "prob_007",
+    "category": "knowledge_truth_and_reality",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three answers endorse admitting the AI only as non-decisive/corroborative probabilistic evidence, insist it not be sole basis for conviction, and require transparency/auditability and rights to challenge—substantively the same practical verdict."
+  },
+  {
+    "problem_id": "prob_008",
+    "category": "power_society_and_the_individual",
+    "difficulty": "hard",
+    "converged": false,
+    "reasoning": "Answer 1 endorses building a cult (with safeguards); Answers 2 and 3 oppose building a lasting cult and favor institutional solutions. At least one answer takes a materially different stance, so they do not converge."
+  },
+  {
+    "problem_id": "prob_009",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "medium",
+    "converged": false,
+    "reasoning": "Answers 2 and 3 agree on keeping the promise and burning the manuscript, while Answer 1 explicitly opposes them and urges publishing for greater good; thus they do not substantively converge."
+  },
+  {
+    "problem_id": "prob_010",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three answers endorse warning the sibling, after attempting to obtain the patient’s consent, and limiting disclosure to minimal/essential information using appropriate institutional or legal oversight."
+  },
+  {
+    "problem_id": "prob_011",
+    "category": "classical_ethics_and_moral_dilemmas",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three endorse using the tainted data to save children now, subject to the same conditional requirements—public condemnation/acknowledgement, reparations/restution, independent oversight, and binding reforms—so they converge on the same practical verdict."
+  },
+  {
+    "problem_id": "prob_012",
+    "category": "political_philosophy_and_justice",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three judgments conclude the policy is unjust as described and require voluntary consent, respect for autonomy/dignity, and participatory or reversible arrangements for it to be permissible—substantively the same practical verdict."
+  },
+  {
+    "problem_id": "prob_013",
+    "category": "political_philosophy_and_justice",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three impose the same practical conditions: remedies must be forward‑looking/targeted to ongoing harms, proportionate, and enacted via legitimate/democratic procedures with safeguards; otherwise unjust."
+  },
+  {
+    "problem_id": "prob_014",
+    "category": "political_philosophy_and_justice",
+    "difficulty": "medium",
+    "converged": false,
+    "reasoning": "Answer 1 endorses jury nullification (acquit) as legitimate protest; Answers 2 and 3 endorse convicting and pursuing lawful reform. At least one answer takes a meaningfully different stance, so they do not converge."
+  },
+  {
+    "problem_id": "prob_015",
+    "category": "human_nature_and_the_good_life",
+    "difficulty": "medium",
+    "converged": false,
+    "reasoning": "Answers 1 and 3 advise against taking the pill as evasion of an important moral/psychological challenge, while Answer 2 allows taking it permissibly in some circumstances; thus they do not share a single practical verdict."
+  },
+  {
+    "problem_id": "prob_016",
+    "category": "human_nature_and_the_good_life",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three endorse taking the stable, well‑paid job to fulfill obligations to dependent children while simultaneously pursuing meaningful work alongside and planning a responsible transition; they agree on the same practical verdict."
+  },
+  {
+    "problem_id": "prob_017",
+    "category": "human_nature_and_the_good_life",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three answers endorse conditional adoption: use the drug only if one autonomously commits to directing extra time toward morally or self-transcendent ends and preserves leisure/virtue; otherwise one should refuse. They differ in language but give the same practical verdict."
+  },
+  {
+    "problem_id": "prob_018",
+    "category": "human_nature_and_the_good_life",
+    "difficulty": "hard",
+    "converged": false,
+    "reasoning": "Answers disagree: A1 endorses the ambitious temperament outright; A2 endorses the steady, content temperament; A3 offers a conditional verdict (ambitious only with reliable parental guidance, otherwise steady). These positions are not the same practical verdict."
+  },
+  {
+    "problem_id": "prob_019",
+    "category": "knowledge_truth_and_reality",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three endorse publishing the truth but insist on prudence: gradual/staged disclosure, preparing civic supports, and delaying if disclosure would cause catastrophic harm—same practical verdict."
+  },
+  {
+    "problem_id": "prob_020",
+    "category": "knowledge_truth_and_reality",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three endorse conditional acceptability: simplified false models may be used as provisional scaffolding only if explicitly flagged and later corrected/transcended; all deem concealed or permanent falsehoods unacceptable (one adds power/dependence concerns but not a conflicting verdict)."
+  },
+  {
+    "problem_id": "prob_021",
+    "category": "knowledge_truth_and_reality",
+    "difficulty": "hard",
+    "converged": false,
+    "reasoning": "Answer 1 endorses the flawless predictive (fictionalist) model as giving more knowledge, whereas Answers 2 and 3 endorse the rival realist model; they therefore reach opposite practical verdicts."
+  },
+  {
+    "problem_id": "prob_022",
+    "category": "power_society_and_the_individual",
+    "difficulty": "hard",
+    "converged": true,
+    "reasoning": "All three endorse leaking only as a last resort when legal remedies are exhausted/unavailable and require taking reasonable steps to minimize harm to innocents; they differ only in wording, not practical verdict."
+  },
+  {
+    "problem_id": "prob_023",
+    "category": "power_society_and_the_individual",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three answers explicitly reject using the false statistic, each citing honesty, integrity, and long-term practical or moral costs—thus they agree on the same practical verdict."
+  },
+  {
+    "problem_id": "prob_024",
+    "category": "power_society_and_the_individual",
+    "difficulty": "hard",
+    "converged": false,
+    "reasoning": "Answers 1 and 2 endorse conditional participation (play the game) if strict safeguards and prospects for reform exist; Answer 3 rejects participation categorically and urges refusal and alternative routes. Thus they do not agree on the same practical verdict."
+  },
+  {
+    "problem_id": "prob_025",
+    "category": "power_society_and_the_individual",
+    "difficulty": "medium",
+    "converged": true,
+    "reasoning": "All three answers endorse exile only as a last-resort, proportionate measure after noncoercive remedies and fair process/safeguards have been exhausted to protect communal flourishing; otherwise it is unjustified."
+  }
+]

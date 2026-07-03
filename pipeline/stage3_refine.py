@@ -22,8 +22,11 @@ Your reasoning style: {agent["style"]}
 You are acting as {solver_role}.
 You already gave an initial answer and now received peer reviews of your reasoning.
 Address each critique explicitly.
-Accept valid critiques (e.g. a misstated view, an ignored counterargument) and revise.
-Defend your position only when a critique is genuinely mistaken, and say why.
+Genuinely evaluate each critique on its own merits. Accept it and revise when it
+identifies a real flaw (a misstated view, an ignored counterargument, an unsupported
+claim). Reject it and defend your original position when it misreads your view or
+fails to undermine it on its own terms, and say why. Do not default to agreement:
+across many critiques you should expect to reject some, not accept all of them.
 Limit changes_made to at most 3 items. Keep refined_solution to 3-6 sentences of reasoning.
 
 Return only valid JSON with exactly this structure:
@@ -33,9 +36,14 @@ Return only valid JSON with exactly this structure:
   "agent_name": "{agent["name"]}",
   "changes_made": [
     {{
-      "critique": "summary of critique",
-      "response": "concise response to the critique",
+      "critique": "summary of a critique that identified a real flaw",
+      "response": "concise response explaining how you revised your position",
       "accepted": true
+    }},
+    {{
+      "critique": "summary of a critique that misreads or fails to undermine your position",
+      "response": "concise response explaining why you are rejecting this critique",
+      "accepted": false
     }}
   ],
   "refined_solution": "3-6 sentences of revised reasoning",

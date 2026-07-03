@@ -3,8 +3,8 @@
     "problem_id": "prob_001",
     "category": "classical_ethics_and_moral_dilemmas",
     "difficulty": "medium",
-    "outcome": "tie",
-    "position_consistent": false
+    "outcome": "improved",
+    "position_consistent": true
   },
   {
     "problem_id": "prob_002",
@@ -94,15 +94,15 @@
     "problem_id": "prob_014",
     "category": "political_philosophy_and_justice",
     "difficulty": "medium",
-    "outcome": "tie",
-    "position_consistent": false
+    "outcome": "improved",
+    "position_consistent": true
   },
   {
     "problem_id": "prob_015",
     "category": "human_nature_and_the_good_life",
     "difficulty": "medium",
-    "outcome": "tie",
-    "position_consistent": false
+    "outcome": "regressed",
+    "position_consistent": true
   },
   {
     "problem_id": "prob_016",
@@ -115,8 +115,8 @@
     "problem_id": "prob_017",
     "category": "human_nature_and_the_good_life",
     "difficulty": "hard",
-    "outcome": "tie",
-    "position_consistent": false
+    "outcome": "improved",
+    "position_consistent": true
   },
   {
     "problem_id": "prob_018",
@@ -150,8 +150,8 @@
     "problem_id": "prob_022",
     "category": "power_society_and_the_individual",
     "difficulty": "hard",
-    "outcome": "tie",
-    "position_consistent": false
+    "outcome": "improved",
+    "position_consistent": true
   },
   {
     "problem_id": "prob_023",

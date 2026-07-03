@@ -8,9 +8,9 @@
   },
   "verdict_accuracy": {
     "overall": {
-      "accuracy": 0.24,
+      "accuracy": 0.4,
       "n": 25,
-      "correct": 6,
+      "correct": 10,
       "mean_label_agreement": 0.72
     },
     "by_category": {
@@ -27,15 +27,15 @@
         "mean_label_agreement": 0.7333333333333333
       },
       "knowledge_truth_and_reality": {
-        "accuracy": 0.0,
+        "accuracy": 0.5,
         "n": 4,
-        "correct": 0,
+        "correct": 2,
         "mean_label_agreement": 0.6666666666666666
       },
       "political_philosophy_and_justice": {
-        "accuracy": 0.6,
+        "accuracy": 1.0,
         "n": 5,
-        "correct": 3,
+        "correct": 5,
         "mean_label_agreement": 0.7333333333333333
       },
       "power_society_and_the_individual": {
@@ -47,10 +47,10 @@
     }
   },
   "improvement_rate": {
-    "rate": 0.72,
-    "regressed_rate": 0.0,
-    "tie_rate": 0.28,
-    "position_consistency_rate": 0.72,
+    "rate": 0.88,
+    "regressed_rate": 0.04,
+    "tie_rate": 0.08,
+    "position_consistency_rate": 0.92,
     "n": 25
   },
   "persona_distinctness": {
@@ -98,60 +98,60 @@
   "fidelity": {
     "nietzsche": {
       "stage1": 0.9239130434782609,
-      "stage3": 0.5760869565217391,
-      "delta": -0.34782608695652173,
+      "stage3": 0.6195652173913043,
+      "delta": -0.30434782608695654,
       "n": 23
     },
     "aristotle": {
       "stage1": 0.6956521739130435,
-      "stage3": 0.391304347826087,
-      "delta": -0.3043478260869565,
+      "stage3": 0.42028985507246375,
+      "delta": -0.2753623188405797,
       "n": 23
     },
     "plato": {
       "stage1": 0.6140350877192983,
-      "stage3": 0.2982456140350877,
-      "delta": -0.31578947368421056,
+      "stage3": 0.2631578947368421,
+      "delta": -0.3508771929824562,
       "n": 19
     },
     "kant": {
       "stage1": 0.7857142857142857,
-      "stage3": 0.8928571428571429,
-      "delta": 0.1071428571428572,
+      "stage3": 0.8571428571428571,
+      "delta": 0.0714285714285714,
       "n": 7
     },
     "camus": {
       "stage1": 0.6666666666666666,
-      "stage3": 0.5555555555555555,
-      "delta": -0.11111111111111116,
+      "stage3": 0.6666666666666666,
+      "delta": 0.0,
       "n": 3
     }
   },
   "position_change": {
     "nietzsche": {
-      "accepted": 34,
-      "rejected": 19,
-      "acceptance_rate": 0.6415094339622641
+      "accepted": 65,
+      "rejected": 0,
+      "acceptance_rate": 1.0
     },
     "aristotle": {
-      "accepted": 36,
-      "rejected": 18,
-      "acceptance_rate": 0.6666666666666666
+      "accepted": 66,
+      "rejected": 0,
+      "acceptance_rate": 1.0
     },
     "plato": {
-      "accepted": 29,
-      "rejected": 16,
-      "acceptance_rate": 0.6444444444444445
+      "accepted": 56,
+      "rejected": 0,
+      "acceptance_rate": 1.0
     },
     "kant": {
-      "accepted": 15,
-      "rejected": 3,
-      "acceptance_rate": 0.8333333333333334
+      "accepted": 21,
+      "rejected": 0,
+      "acceptance_rate": 1.0
     },
     "camus": {
-      "accepted": 5,
-      "rejected": 3,
-      "acceptance_rate": 0.625
+      "accepted": 9,
+      "rejected": 0,
+      "acceptance_rate": 1.0
     }
   },
   "critique_quality": {
@@ -166,31 +166,31 @@
   "judge_bias": {
     "htwr": {
       "kant": {
-        "htwr": 1.0,
-        "home_wins": 7,
+        "htwr": 0.7142857142857143,
+        "home_wins": 5,
         "n_eligible": 7,
-        "p_value": 0.00045724737082761756,
+        "p_value": 0.045267489711934145,
         "significant_at_05": true
       },
       "nietzsche": {
-        "htwr": 0.08695652173913043,
-        "home_wins": 2,
+        "htwr": 0.043478260869565216,
+        "home_wins": 1,
         "n_eligible": 23,
-        "p_value": 0.9988861901488084,
+        "p_value": 0.9999108952119047,
         "significant_at_05": false
       },
       "aristotle": {
-        "htwr": 0.9130434782608695,
-        "home_wins": 21,
+        "htwr": 0.8695652173913043,
+        "home_wins": 20,
         "n_eligible": 23,
-        "p_value": 1.124882347499701e-08,
+        "p_value": 1.6174299816220915e-07,
         "significant_at_05": true
       },
       "plato": {
-        "htwr": 0.42105263157894735,
-        "home_wins": 8,
+        "htwr": 0.3157894736842105,
+        "home_wins": 6,
         "n_eligible": 19,
-        "p_value": 0.2793366589344221,
+        "p_value": 0.64814746800859,
         "significant_at_05": false
       },
       "camus": {
@@ -203,37 +203,37 @@
     },
     "hta": {
       "kant": {
-        "p_self": 1.0,
-        "p_others": 0.35714285714285715,
-        "hta": 0.6428571428571428,
+        "p_self": 0.7142857142857143,
+        "p_others": 0.21428571428571427,
+        "hta": 0.5,
         "n_self": 7,
         "n_others": 28
       },
       "nietzsche": {
-        "p_self": 0.08695652173913043,
-        "p_others": 0.010869565217391304,
-        "hta": 0.07608695652173914,
+        "p_self": 0.043478260869565216,
+        "p_others": 0.0,
+        "hta": 0.043478260869565216,
         "n_self": 23,
         "n_others": 92
       },
       "aristotle": {
-        "p_self": 0.9130434782608695,
-        "p_others": 0.5978260869565217,
-        "hta": 0.3152173913043478,
+        "p_self": 0.8695652173913043,
+        "p_others": 0.6739130434782609,
+        "hta": 0.19565217391304346,
         "n_self": 23,
         "n_others": 92
       },
       "plato": {
-        "p_self": 0.42105263157894735,
-        "p_others": 0.2236842105263158,
-        "hta": 0.19736842105263155,
+        "p_self": 0.3157894736842105,
+        "p_others": 0.2631578947368421,
+        "hta": 0.05263157894736842,
         "n_self": 19,
         "n_others": 76
       },
       "camus": {
         "p_self": 0.3333333333333333,
-        "p_others": 0.25,
-        "hta": 0.08333333333333331,
+        "p_others": 0.3333333333333333,
+        "hta": 0.0,
         "n_self": 3,
         "n_others": 12
       }
@@ -249,54 +249,54 @@
       "matrix": [
         [
           1.0,
-          0.72,
-          0.56,
-          0.68,
+          0.64,
+          0.76,
+          0.76,
+          0.72
+        ],
+        [
+          0.64,
+          1.0,
+          0.84,
+          0.88,
           0.76
         ],
         [
-          0.72,
+          0.76,
+          0.84,
           1.0,
-          0.72,
-          0.8,
-          0.88
-        ],
-        [
-          0.56,
-          0.72,
-          1.0,
-          0.68,
-          0.64
-        ],
-        [
-          0.68,
-          0.8,
-          0.68,
-          1.0,
+          0.84,
           0.8
         ],
         [
           0.76,
           0.88,
-          0.64,
+          0.84,
+          1.0,
+          0.8
+        ],
+        [
+          0.72,
+          0.76,
+          0.8,
           0.8,
           1.0
         ]
       ],
       "n_problems": 25
     },
-    "fleiss_kappa": 0.5159932659932661,
+    "fleiss_kappa": 0.5744615003713791,
     "camus_deviation": {
       "kant": {
-        "mean_distance": 0.72,
+        "mean_distance": 0.8,
         "n_problems": 25
       },
       "nietzsche": {
-        "mean_distance": 0.72,
+        "mean_distance": 0.8,
         "n_problems": 25
       },
       "aristotle": {
-        "mean_distance": 0.88,
+        "mean_distance": 0.64,
         "n_problems": 25
       },
       "plato": {
@@ -307,23 +307,23 @@
     "fairness_of_reasoning": {
       "kant": {
         "solver_mention_rate": 0.02666666666666667,
-        "own_tradition_vocab_overlap": 0.185
+        "own_tradition_vocab_overlap": 0.1625
       },
       "nietzsche": {
-        "solver_mention_rate": 0.06666666666666667,
-        "own_tradition_vocab_overlap": 0.015555555555555553
+        "solver_mention_rate": 0.04,
+        "own_tradition_vocab_overlap": 0.031111111111111107
       },
       "aristotle": {
-        "solver_mention_rate": 0.06666666666666667,
-        "own_tradition_vocab_overlap": 0.06133333333333334
+        "solver_mention_rate": 0.05333333333333334,
+        "own_tradition_vocab_overlap": 0.05333333333333333
       },
       "plato": {
-        "solver_mention_rate": 0.09333333333333334,
-        "own_tradition_vocab_overlap": 0.015384615384615385
+        "solver_mention_rate": 0.05333333333333334,
+        "own_tradition_vocab_overlap": 0.006153846153846154
       },
       "camus": {
-        "solver_mention_rate": 0.09333333333333334,
-        "own_tradition_vocab_overlap": 0.032
+        "solver_mention_rate": 0.02666666666666667,
+        "own_tradition_vocab_overlap": 0.050666666666666665
       }
     },
     "winner_tradition_distribution_by_judge": {
@@ -336,75 +336,75 @@
       ],
       "counts": {
         "kant": {
-          "kant": 7,
+          "kant": 5,
           "nietzsche": 0,
-          "aristotle": 12,
-          "plato": 6,
-          "camus": 0
-        },
-        "nietzsche": {
-          "kant": 3,
-          "nietzsche": 2,
           "aristotle": 15,
           "plato": 4,
           "camus": 1
         },
+        "nietzsche": {
+          "kant": 1,
+          "nietzsche": 1,
+          "aristotle": 16,
+          "plato": 6,
+          "camus": 1
+        },
         "aristotle": {
-          "kant": 0,
+          "kant": 1,
           "nietzsche": 0,
-          "aristotle": 21,
+          "aristotle": 20,
           "plato": 3,
           "camus": 1
         },
         "plato": {
-          "kant": 3,
+          "kant": 2,
           "nietzsche": 0,
-          "aristotle": 13,
-          "plato": 8,
+          "aristotle": 16,
+          "plato": 6,
           "camus": 1
         },
         "camus": {
-          "kant": 4,
-          "nietzsche": 1,
+          "kant": 2,
+          "nietzsche": 0,
           "aristotle": 15,
-          "plato": 4,
+          "plato": 7,
           "camus": 1
         }
       },
       "proportions": {
         "kant": {
-          "kant": 0.28,
+          "kant": 0.2,
           "nietzsche": 0.0,
-          "aristotle": 0.48,
-          "plato": 0.24,
-          "camus": 0.0
-        },
-        "nietzsche": {
-          "kant": 0.12,
-          "nietzsche": 0.08,
           "aristotle": 0.6,
           "plato": 0.16,
           "camus": 0.04
         },
+        "nietzsche": {
+          "kant": 0.04,
+          "nietzsche": 0.04,
+          "aristotle": 0.64,
+          "plato": 0.24,
+          "camus": 0.04
+        },
         "aristotle": {
-          "kant": 0.0,
+          "kant": 0.04,
           "nietzsche": 0.0,
-          "aristotle": 0.84,
+          "aristotle": 0.8,
           "plato": 0.12,
           "camus": 0.04
         },
         "plato": {
-          "kant": 0.12,
+          "kant": 0.08,
           "nietzsche": 0.0,
-          "aristotle": 0.52,
-          "plato": 0.32,
+          "aristotle": 0.64,
+          "plato": 0.24,
           "camus": 0.04
         },
         "camus": {
-          "kant": 0.16,
-          "nietzsche": 0.04,
+          "kant": 0.08,
+          "nietzsche": 0.0,
           "aristotle": 0.6,
-          "plato": 0.16,
+          "plato": 0.28,
           "camus": 0.04
         }
       }
@@ -424,8 +424,8 @@
       },
       "full_debate": {
         "n": 25,
-        "correct": 6,
-        "accuracy": 0.24
+        "correct": 10,
+        "accuracy": 0.4
       }
     },
     "fallback_rate": 0.84

@@ -35,7 +35,7 @@
     "majority_vote_tradition": "plato",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": false,
-    "full_debate_tradition": "aristotle",
+    "full_debate_tradition": "plato",
     "full_debate_correct": false
   },
   {
@@ -48,8 +48,8 @@
     "majority_vote_tradition": "aristotle",
     "majority_vote_correct": true,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "kant",
-    "full_debate_correct": false
+    "full_debate_tradition": "aristotle",
+    "full_debate_correct": true
   },
   {
     "problem_id": "prob_005",
@@ -61,8 +61,8 @@
     "majority_vote_tradition": "aristotle",
     "majority_vote_correct": true,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "plato",
-    "full_debate_correct": false
+    "full_debate_tradition": "aristotle",
+    "full_debate_correct": true
   },
   {
     "problem_id": "prob_006",
@@ -87,8 +87,8 @@
     "majority_vote_tradition": "plato",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": false,
-    "full_debate_tradition": "plato",
-    "full_debate_correct": false
+    "full_debate_tradition": "aristotle",
+    "full_debate_correct": true
   },
   {
     "problem_id": "prob_008",
@@ -139,7 +139,7 @@
     "majority_vote_tradition": "aristotle",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "aristotle",
+    "full_debate_tradition": "plato",
     "full_debate_correct": false
   },
   {
@@ -230,7 +230,7 @@
     "majority_vote_tradition": "nietzsche",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "aristotle",
+    "full_debate_tradition": "plato",
     "full_debate_correct": false
   },
   {
@@ -243,8 +243,8 @@
     "majority_vote_tradition": "kant",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "plato",
-    "full_debate_correct": false
+    "full_debate_tradition": "aristotle",
+    "full_debate_correct": true
   },
   {
     "problem_id": "prob_020",
@@ -256,7 +256,7 @@
     "majority_vote_tradition": "kant",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "kant",
+    "full_debate_tradition": "plato",
     "full_debate_correct": false
   },
   {
@@ -295,7 +295,7 @@
     "majority_vote_tradition": "plato",
     "majority_vote_correct": false,
     "majority_vote_used_fallback": true,
-    "full_debate_tradition": "plato",
+    "full_debate_tradition": "camus",
     "full_debate_correct": false
   },
   {

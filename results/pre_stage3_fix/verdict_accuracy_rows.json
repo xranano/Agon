@@ -22,7 +22,7 @@
     "category": "classical_ethics_and_moral_dilemmas",
     "difficulty": "hard",
     "expected_strongest_tradition": "camus",
-    "winner_tradition": "aristotle",
+    "winner_tradition": "plato",
     "correct": false,
     "label_agreement": 1.0
   },
@@ -31,8 +31,8 @@
     "category": "political_philosophy_and_justice",
     "difficulty": "hard",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "kant",
-    "correct": false,
+    "winner_tradition": "aristotle",
+    "correct": true,
     "label_agreement": 0.6666666666666666
   },
   {
@@ -40,8 +40,8 @@
     "category": "political_philosophy_and_justice",
     "difficulty": "medium",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "plato",
-    "correct": false,
+    "winner_tradition": "aristotle",
+    "correct": true,
     "label_agreement": 0.6666666666666666
   },
   {
@@ -58,8 +58,8 @@
     "category": "knowledge_truth_and_reality",
     "difficulty": "hard",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "plato",
-    "correct": false,
+    "winner_tradition": "aristotle",
+    "correct": true,
     "label_agreement": 0.6666666666666666
   },
   {
@@ -94,7 +94,7 @@
     "category": "classical_ethics_and_moral_dilemmas",
     "difficulty": "hard",
     "expected_strongest_tradition": "nietzsche",
-    "winner_tradition": "aristotle",
+    "winner_tradition": "plato",
     "correct": false,
     "label_agreement": 0.6666666666666666
   },
@@ -157,7 +157,7 @@
     "category": "human_nature_and_the_good_life",
     "difficulty": "hard",
     "expected_strongest_tradition": "camus",
-    "winner_tradition": "aristotle",
+    "winner_tradition": "plato",
     "correct": false,
     "label_agreement": 1.0
   },
@@ -166,8 +166,8 @@
     "category": "knowledge_truth_and_reality",
     "difficulty": "medium",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "plato",
-    "correct": false,
+    "winner_tradition": "aristotle",
+    "correct": true,
     "label_agreement": 0.6666666666666666
   },
   {
@@ -175,7 +175,7 @@
     "category": "knowledge_truth_and_reality",
     "difficulty": "medium",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "kant",
+    "winner_tradition": "plato",
     "correct": false,
     "label_agreement": 0.6666666666666666
   },
@@ -202,7 +202,7 @@
     "category": "power_society_and_the_individual",
     "difficulty": "medium",
     "expected_strongest_tradition": "aristotle",
-    "winner_tradition": "plato",
+    "winner_tradition": "camus",
     "correct": false,
     "label_agreement": 0.6666666666666666
   },
